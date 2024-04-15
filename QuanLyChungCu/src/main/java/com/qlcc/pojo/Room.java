@@ -4,9 +4,9 @@
  */
 package com.qlcc.pojo;
 
+import customAnnotation.RoomUnique;
 import java.io.Serializable;
 import java.util.Set;
-import javax.annotation.Nullable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,9 +19,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -34,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
     @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id"),
     @NamedQuery(name = "Room.findByName", query = "SELECT r FROM Room r WHERE r.name = :name"),
-    @NamedQuery(name = "Room.findByStatus", query = "SELECT r FROM Room r WHERE r.status = :status")})
+    @NamedQuery(name = "Room.findByStatus", query = "SELECT r FROM Room r WHERE r.status = :status"),
+    @NamedQuery(name = "Room.findByImage", query = "SELECT r FROM Room r WHERE r.image = :image")})
 public class Room implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,24 +47,27 @@ public class Room implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 20)
+    @Size(min = 3, max = 20, message = "{room.name.sizeMsg}")
+    @NotNull(message = "{room.name.notNullMsg}")
     @Column(name = "name")
+    @RoomUnique(message = "{room.name.errorMsg}")
     private String name;
     @Size(max = 50)
     @Column(name = "status")
     private String status;
-    @Nullable
-    @OneToMany(mappedBy = "room")
-    private Set<Image> imageSet;
+    @Size(max = 255)
+    @Column(name = "image")
+    private String image;
     @JoinColumn(name = "roomType", referencedColumnName = "id")
     @ManyToOne
     private Roomtype roomtype;
-    @Nullable
     @OneToMany(mappedBy = "room")
     private Set<Invoice> invoiceSet;
-    @Nullable
     @OneToMany(mappedBy = "room")
     private Set<User> userSet;
+
+    @Transient
+    private MultipartFile file;
 
     public Room() {
     }
@@ -93,13 +100,12 @@ public class Room implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
-    public Set<Image> getImageSet() {
-        return imageSet;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageSet(Set<Image> imageSet) {
-        this.imageSet = imageSet;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Roomtype getRoomtype() {
@@ -151,6 +157,20 @@ public class Room implements Serializable {
     @Override
     public String toString() {
         return "com.qlcc.pojo.Room[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
 }

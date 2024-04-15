@@ -13,12 +13,16 @@
         <put-attribute name="title" value="Trang chủ quản trị" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
-    <definition name="users" extends="baseLayout">
-        <put-attribute name="title" value="Cư dân" />
-        <put-attribute name="content" value="/WEB-INF/pages/users.jsp" />
-    </definition>
     <definition name="room-list" extends="baseLayout">
         <put-attribute name="title" value="Room" />
         <put-attribute name="content" value="/WEB-INF/pages/rooms.jsp" />
+    </definition>
+    <definition name="user" extends="baseLayout">
+        <put-attribute name="title" value="User" />
+        <put-attribute name="content" value="/WEB-INF/pages/user.jsp" />
+    </definition>
+    <definition name="user_list" extends="baseLayout">
+        <put-attribute name="title" value="Users" />
+        <put-attribute name="content" value="/WEB-INF/pages/user_list.jsp" />
     </definition>
 </tiles-definitions>

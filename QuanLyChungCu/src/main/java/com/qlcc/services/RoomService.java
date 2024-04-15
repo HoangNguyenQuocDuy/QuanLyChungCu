@@ -22,6 +22,7 @@ public interface RoomService {
 
     void deleteRoom(int id);
 
-    public int getTotalRooms();
+    int getTotalRooms();
 
+    boolean isRoomNameExists(String roomName);
 }

@@ -17,29 +17,54 @@ import org.springframework.stereotype.Service;
  * @author DELL
  */
 @Service
-public class UserServiceImpl implements  UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepo;
-    
+
     @Override
     public List<User> getUsers(Map<String, String> params) {
         return userRepo.getUsers(params);
     }
 
     @Override
-    public void addOrUpdate(User u) {
-        
+    public void addOrUpdate(User user) throws Exception {
+        if (user.getId() == null) {
+            user.setStatus("Active");
+            user.setRoleName("CUSTOMER");
+        }
+
+        userRepo.addOrUpdate(user);
     }
 
     @Override
     public User getUserById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return userRepo.getUserById(id);
     }
 
     @Override
     public void deleteUser(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public boolean isUsernameExists(String username) {
+        return userRepo.isUsernameExists(username);
+    }
+
+    @Override
+    public boolean isEmailExists(String email) {
+        return userRepo.isEmailExists(email);
+    }
+
+    @Override
+    public boolean isPhoneExists(String phone) {
+        return userRepo.isPhoneExists(phone);
+    }
+
+    @Override
+    public int getTotalUsers() {
+        return userRepo.getTotalUsers();
+    }
+
 }

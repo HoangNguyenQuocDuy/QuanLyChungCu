@@ -45,12 +45,24 @@ public class UserRepositoryImpl implements UserRepository {
         if (params.containsKey("username")) {
             hql += " AND u.username = :username";
         }
-        int page = Integer.parseInt(params.get("page"));
+
+        int page = 1;
+        if (params.containsKey("page")) {
+            page = Integer.parseInt(params.get("page"));
+        }
+
         Query query = s.createQuery(hql);
 
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            query.setParameter(entry.getKey(), entry.getValue());
+        if (params.containsKey("phone")) {
+            query.setParameter("phone", params.get("phone"));
         }
+        if (params.containsKey("email")) {
+            query.setParameter("email", params.get("email"));
+        }
+        if (params.containsKey("username")) {
+            query.setParameter("username", params.get("username"));
+        }
+
         int pageSize = Integer.parseInt(env.getProperty("user.pageSize").toString());
 
         int startPosition = (page - 1) * pageSize;
@@ -63,7 +75,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void addOrUpdate(User u) {
         Session s = factory.getObject().getCurrentSession();
-        if (u.getId() > 0) {
+        if (u.getId() != null) {
             s.update(u);
         } else {
             s.save(u);
@@ -81,6 +93,57 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = factory.getObject().getCurrentSession();
         User p = getUserById(id);
         s.delete(p);
+    }
+
+    //Lặp code - sửa sau
+    @Override
+    public boolean isUsernameExists(String username) {
+        Session s = factory.getObject().getCurrentSession();
+        Query query = s.createQuery("FROM User WHERE username = :username", User.class);
+        query.setParameter("username", username);
+        List<User> result = query.getResultList();
+        
+        if (result == null){
+            return false;
+        }
+        
+        return result.size() > 0;
+    }
+
+    @Override
+    public boolean isEmailExists(String email) {
+        Session s = factory.getObject().getCurrentSession();
+        Query query = s.createQuery("FROM User WHERE email = :email", User.class);
+        query.setParameter("email", email);
+        List<User> result = query.getResultList();
+        
+        if (result == null){
+            return false;
+        }
+        
+        return result.size() > 0;
+    }
+
+    @Override
+    public boolean isPhoneExists(String phone) {
+        Session s = factory.getObject().getCurrentSession();
+        Query query = s.createQuery("FROM User WHERE phone = :phone", User.class);
+        query.setParameter("phone", phone);
+        List<User> result = query.getResultList();
+        
+        if (result == null){
+            return false;
+        }
+        
+        return result.size() > 0;
+    }
+
+    @Override
+    public int getTotalUsers() {
+        Session s = factory.getObject().getCurrentSession();
+        Query query = s.createQuery("SELECT COUNT(*) FROM User");
+
+        return ((Number) query.getSingleResult()).intValue();
     }
 
 }

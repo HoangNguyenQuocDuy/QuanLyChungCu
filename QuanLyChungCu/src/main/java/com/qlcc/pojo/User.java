@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import customAnnotation.UserUnique;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -51,24 +52,28 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{user.username.notNullMsg}")
+    @Size(min = 6, max = 18, message = "{user.username.sizeMsg}")
     @Column(name = "username")
+    @UserUnique(message = "Username must be unique", value = "username")
     private String username;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{user.password.notNullMsg}")
+    @Size(min = 6, max = 18, message = "{user.password.sizeMsg}")
     @Column(name = "password")
     private String password;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotNull(message = "{user.email.notNullMsg}")
+    @Size(min = 10, max = 40, message = "{user.email.sizeMsg}")
     @Column(name = "email")
+    @UserUnique(message = "Email must be unique", value = "email")
     private String email;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 20)
+    @Size(min = 9, max = 12, message = "{user.phone.sizeMsg}")
+    @NotNull(message = "{user.phone.notNullMsg}")
     @Column(name = "phone")
+    @UserUnique(message = "Phone must be unique", value = "phone")
     private String phone;
     @Size(max = 255)
     @Column(name = "avatar")
@@ -251,5 +256,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.qlcc.pojo.User[ id=" + id + " ]";
     }
-    
+
 }

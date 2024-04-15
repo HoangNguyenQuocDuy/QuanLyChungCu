@@ -6,7 +6,9 @@ package com.qlcc.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.qlcc.formatters.RoomFormatter;
 import com.qlcc.formatters.RoomTypeFormatter;
+import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -47,16 +51,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         configurer.enable();
     }
 
-//    @Bean
-//    public InternalResourceViewResolver
-//            getInternalResourceViewResolver() {
-//        InternalResourceViewResolver resolver
-//                = new InternalResourceViewResolver();
-//        resolver.setViewClass(JstlView.class);
-//        resolver.setPrefix("/WEB-INF/pages/");
-//        resolver.setSuffix(".jsp");
-//        return resolver;
-//    }
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource m = new ResourceBundleMessageSource();
@@ -79,6 +73,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new RoomTypeFormatter());
+        registry.addFormatter(new RoomFormatter());
     }
 
     @Bean
@@ -98,5 +93,19 @@ public class WebAppContextConfig implements WebMvcConfigurer {
                         "api_secret", env.getProperty("cloudinary.api-secret"),
                         "secure", true));
         return cloudinary;
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("quocduy6114@gmail.com");
+        mailSender.setPassword("sdtp ahlt xkzk ptyh");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.smtp.starttls.enable", "true");
+
+        return mailSender;
     }
 }

@@ -13,8 +13,20 @@ import java.util.Map;
  * @author DELL
  */
 public interface UserRepository {
+
     List<User> getUsers(Map<String, String> params);
+
     void addOrUpdate(User u);
+
     User getUserById(int id);
+
     void deleteUser(int id);
+
+    boolean isUsernameExists(String username);
+
+    boolean isEmailExists(String email);
+
+    boolean isPhoneExists(String phone);
+
+    int getTotalUsers();
 }

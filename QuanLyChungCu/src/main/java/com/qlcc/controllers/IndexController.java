@@ -38,22 +38,23 @@ public class IndexController {
     private RoomTypeService roomTypeService;
 
     @ModelAttribute
-    public void commonAtrr(Model model) {
+    public void commonAtrr(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("roomtypes", roomTypeService.getRoomtypes());
+        model.addAttribute("rooms", roomService.getRooms(params));
+
     }
 
     @RequestMapping("/")
     public String index(Model model, @RequestParam Map<String, String> params) {
         List<Room> rooms = roomService.getRooms(params);
 
-        int totalRooms = roomService.getTotalRooms(); 
-        int pageSize = Integer.parseInt(env.getProperty("user.pageSize")); 
+        int totalRooms = roomService.getTotalRooms();
+        int pageSize = Integer.parseInt(env.getProperty("user.pageSize"));
         int totalPages = (int) Math.ceil((double) totalRooms / pageSize);
-        
+
         model.addAttribute("rooms", rooms);
         model.addAttribute("totalPages", totalPages);
 
-        model.addAttribute("rooms", rooms);
         return "index";
     }
 }

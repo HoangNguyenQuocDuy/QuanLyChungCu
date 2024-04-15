@@ -65,6 +65,7 @@ public class RoomRepositoryImpl implements RoomRepository {
         if (r.getId() != null) {
             s.update(r);
         } else {
+            r.setStatus("blank");
             s.save(r);
         }
     }
@@ -89,5 +90,19 @@ public class RoomRepositoryImpl implements RoomRepository {
         Query query = s.createQuery("SELECT COUNT(*) FROM Room");
 
         return ((Number) query.getSingleResult()).intValue();
+    }
+
+    @Override
+    public boolean isRoomNameExists(String roomName) {
+        Session s = factory.getObject().getCurrentSession();
+        Query query = s.createQuery("FROM Room WHERE name= :name", Room.class);
+        query.setParameter("name", roomName);
+        List<Room> result = query.getResultList();
+        
+        if (result == null){
+            return false;
+        }
+        
+        return result.size() > 0;
     }
 }

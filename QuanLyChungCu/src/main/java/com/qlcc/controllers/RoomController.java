@@ -45,7 +45,7 @@ public class RoomController {
     @PostMapping("/")
     public String addRoomProcess(Model model, @ModelAttribute(value = "room") @Valid Room room,
             BindingResult rs) {
-        if (!rs.hasErrors()) {
+        if (!rs.hasErrors() || room.getId() != null) {
             try {
                 roomService.addOrUpdate(room);
 
