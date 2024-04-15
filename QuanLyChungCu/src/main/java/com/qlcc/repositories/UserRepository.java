@@ -29,4 +29,6 @@ public interface UserRepository {
     boolean isPhoneExists(String phone);
 
     int getTotalUsers();
+    
+    User getUserByUsername(String username);
 }

@@ -7,12 +7,13 @@ package com.qlcc.services;
 import com.qlcc.pojo.User;
 import java.util.List;
 import java.util.Map;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  *
  * @author DELL
  */
-public interface UserService {
+public interface UserService extends UserDetailsService{
 
     List<User> getUsers(Map<String, String> params);
 
@@ -29,4 +30,6 @@ public interface UserService {
     boolean isPhoneExists(String phone);
     
     int getTotalUsers();
+    
+    User getUserByUsername(String username);
 }

@@ -3,8 +3,10 @@ D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Entryrigh
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Payment.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\impl\UserServiceImpl.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\UserService.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\configs\SpringSecrityConfig.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\RoomController.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Roomtype.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\customAnnotation\UserUnique.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\configs\WebAppContextConfig.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\repositories\impl\UserRepositoryImpl.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Invoice.java
@@ -35,4 +37,7 @@ D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Locker.ja
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Room.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\repositories\impl\RoomRepositoryImpl.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\repositories\RoomRepository.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\customAnnotation\RoomUnique.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\repositories\RoomTypeRepository.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\validators\RoomUniqueValidator.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\validators\UserUniqueValidator.java

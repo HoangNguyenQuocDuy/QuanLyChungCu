@@ -6,6 +6,7 @@ com\qlcc\repositories\impl\UserRepositoryImpl.class
 com\qlcc\formatters\RoomTypeFormatter.class
 com\qlcc\services\UserService.class
 com\qlcc\pojo\Order1.class
+com\qlcc\configs\SecurrityInit.class
 com\qlcc\resources\JavaEE8Resource.class
 com\qlcc\formatters\RoomFormatter.class
 validators\UserUniqueValidator.class
@@ -27,6 +28,7 @@ com\qlcc\configs\WebAppContextConfig.class
 com\qlcc\pojo\Roomtype.class
 com\qlcc\repositories\impl\RoomRepositoryImpl.class
 com\qlcc\repositories\impl\RoomTypeRepositoryImpl.class
+com\qlcc\configs\SpringSecrityConfig.class
 com\qlcc\pojo\Survey.class
 com\qlcc\pojo\Payment.class
 com\qlcc\pojo\Locker.class

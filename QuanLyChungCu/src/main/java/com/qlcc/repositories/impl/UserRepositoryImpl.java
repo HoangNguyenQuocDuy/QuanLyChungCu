@@ -102,11 +102,11 @@ public class UserRepositoryImpl implements UserRepository {
         Query query = s.createQuery("FROM User WHERE username = :username", User.class);
         query.setParameter("username", username);
         List<User> result = query.getResultList();
-        
-        if (result == null){
+
+        if (result == null) {
             return false;
         }
-        
+
         return result.size() > 0;
     }
 
@@ -116,11 +116,11 @@ public class UserRepositoryImpl implements UserRepository {
         Query query = s.createQuery("FROM User WHERE email = :email", User.class);
         query.setParameter("email", email);
         List<User> result = query.getResultList();
-        
-        if (result == null){
+
+        if (result == null) {
             return false;
         }
-        
+
         return result.size() > 0;
     }
 
@@ -130,11 +130,11 @@ public class UserRepositoryImpl implements UserRepository {
         Query query = s.createQuery("FROM User WHERE phone = :phone", User.class);
         query.setParameter("phone", phone);
         List<User> result = query.getResultList();
-        
-        if (result == null){
+
+        if (result == null) {
             return false;
         }
-        
+
         return result.size() > 0;
     }
 
@@ -144,6 +144,15 @@ public class UserRepositoryImpl implements UserRepository {
         Query query = s.createQuery("SELECT COUNT(*) FROM User");
 
         return ((Number) query.getSingleResult()).intValue();
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        Session s = factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User WHERE username=:username");
+        q.setParameter("username", username);
+        
+        return (User) q.getSingleResult();
     }
 
 }

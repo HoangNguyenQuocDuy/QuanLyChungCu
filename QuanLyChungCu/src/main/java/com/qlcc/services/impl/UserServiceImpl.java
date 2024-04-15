@@ -7,20 +7,29 @@ package com.qlcc.services.impl;
 import com.qlcc.pojo.User;
 import com.qlcc.repositories.UserRepository;
 import com.qlcc.services.UserService;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
  *
  * @author DELL
  */
-@Service
+@Service()
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getUsers(Map<String, String> params) {
@@ -32,6 +41,7 @@ public class UserServiceImpl implements UserService {
         if (user.getId() == null) {
             user.setStatus("Active");
             user.setRoleName("CUSTOMER");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
         userRepo.addOrUpdate(user);
@@ -65,6 +75,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public int getTotalUsers() {
         return userRepo.getTotalUsers();
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        User user = userRepo.getUserByUsername(username);
+        return user;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User u = this.getUserByUsername(username);
+        if (u == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(u.getRoleName()));
+
+        return new org.springframework.security.core.userdetails.User(u.getUsername(), u.getPassword(), authorities);
     }
 
 }
