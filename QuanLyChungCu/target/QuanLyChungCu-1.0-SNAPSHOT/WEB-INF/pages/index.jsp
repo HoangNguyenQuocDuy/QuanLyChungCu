@@ -6,7 +6,16 @@
     <a href="/QuanLyChungCu/rooms/" type="button" class="btn btn-success">Add room</a>
 
     <form action="<c:url value="/" />" class="d-flex">
-        <input class="form-control me-2" name="kw" type="search" placeholder="Search room...">
+        <input class="form-control me-3" style="width: 300px;" name="name" type="search" placeholder="Search room name...">
+        <select class="form-select" id="status" name="status">
+            <option value="blank" selected>blank</option>
+            <option value="rent">rent</option>
+        </select>
+        <select class="form-select ms-3 me-4" id="type" name="type">
+            <c:forEach items="${roomtypes}" var="rt">
+                <option value="${rt.type}" selected>${rt.type}</option>
+            </c:forEach>
+        </select>
         <button class="btn btn-primary" type="submit">Search</button>
     </form>
 </div>
@@ -29,8 +38,8 @@
             <td>${r.roomtype.price} $</td>
             <td><img class="rounded img-fluid" src="${r.image}" width="200" alt="${r.name}"></td>
             <td>
-                <button class="btn btn-danger">Delete</button>
                 <c:url value="/rooms/${r.id}" var="url" />
+                <button onclick="deleteRoom('${url}')" class="btn btn-danger">Delete</button>
                 <a href="${url}" class="btn btn-info">Update</a>
             </td>
         </tr>
@@ -65,3 +74,5 @@
         </div>
     </div>
 </div>
+
+<script src="<c:url value="/js/script.js" />"></script>

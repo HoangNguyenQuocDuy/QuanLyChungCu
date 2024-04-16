@@ -25,4 +25,8 @@
         <put-attribute name="title" value="Users" />
         <put-attribute name="content" value="/WEB-INF/pages/user_list.jsp" />
     </definition>
+    <definition name="locker_list" extends="baseLayout">
+        <put-attribute name="title" value="Lockers" />
+        <put-attribute name="content" value="/WEB-INF/pages/locker_list.jsp" />
+    </definition>
 </tiles-definitions>

@@ -20,7 +20,9 @@ public interface UserRepository {
 
     User getUserById(int id);
 
-    void deleteUser(int id);
+    void deleteUser(int id) throws Exception;
+    
+    void blockUser(int id);
 
     boolean isUsernameExists(String username);
 

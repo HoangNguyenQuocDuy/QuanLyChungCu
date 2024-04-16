@@ -32,4 +32,6 @@ public interface UserService extends UserDetailsService{
     int getTotalUsers();
     
     User getUserByUsername(String username);
+    
+    void blockUser(int id) throws Exception;
 }

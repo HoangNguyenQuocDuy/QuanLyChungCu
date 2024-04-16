@@ -4,8 +4,12 @@
  */
 package com.qlcc.services.impl;
 
+import com.qlcc.pojo.Locker;
+import com.qlcc.pojo.Room;
 import com.qlcc.pojo.User;
 import com.qlcc.repositories.UserRepository;
+import com.qlcc.services.LockerService;
+import com.qlcc.services.RoomService;
 import com.qlcc.services.UserService;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +34,10 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoomService roomService;
+    @Autowired
+    private LockerService lockerService;
 
     @Override
     public List<User> getUsers(Map<String, String> params) {
@@ -42,6 +50,8 @@ public class UserServiceImpl implements UserService {
             user.setStatus("Active");
             user.setRoleName("CUSTOMER");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+        } else if (user.getStatus().equals("Block")) {
+            user.setStatus("Active");
         }
 
         userRepo.addOrUpdate(user);
@@ -94,6 +104,33 @@ public class UserServiceImpl implements UserService {
         authorities.add(new SimpleGrantedAuthority(u.getRoleName()));
 
         return new org.springframework.security.core.userdetails.User(u.getUsername(), u.getPassword(), authorities);
+    }
+
+    @Override
+    public void blockUser(int id) throws Exception {
+        User user = getUserById(id);
+
+        if (user == null) {
+            throw new Exception("User not found!");
+        }
+
+        Room room = roomService.getRoomById(user.getRoom().getId());
+        Locker locker = lockerService.getLockerById(user.getLocker().getId());
+
+        if (room == null) {
+            throw new Exception("Room not found!");
+        }
+        
+        if (locker == null) {
+            throw new Exception("Locker not found!");
+        }
+
+        room.setStatus("Blank");
+        roomService.addOrUpdate(room);
+        locker.setStatus("Blank");
+        lockerService.addOrUpdate(locker);
+
+        userRepo.blockUser(id);
     }
 
 }

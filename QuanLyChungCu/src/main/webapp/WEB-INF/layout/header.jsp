@@ -15,6 +15,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/users" />">Users</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/lockers" />">Lockers</a>
+                </li>
             </ul>   
         </div>
     </div>

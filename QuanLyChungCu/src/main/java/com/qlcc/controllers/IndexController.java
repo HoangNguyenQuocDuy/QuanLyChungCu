@@ -40,7 +40,7 @@ public class IndexController {
     @ModelAttribute
     public void commonAtrr(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("roomtypes", roomTypeService.getRoomtypes());
-        model.addAttribute("rooms", roomService.getRooms(params));
+//        model.addAttribute("rooms", roomService.getRooms(params));
 
     }
 

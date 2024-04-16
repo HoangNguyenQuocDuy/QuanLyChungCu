@@ -36,14 +36,20 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = factory.getObject().getCurrentSession();
         String hql = "FROM User u WHERE 1=1";
 
-        if (params.containsKey("phone")) {
-            hql += " AND u.phone = :phone";
+        if (params.containsKey("phone") && !params.get("phone").equals("")) {
+            hql += " AND u.phone LIKE :phone";
         }
-        if (params.containsKey("email")) {
-            hql += " AND u.email = :email";
+        if (params.containsKey("email") && !params.get("email").equals("")) {
+            hql += " AND u.email LIKE :email";
         }
-        if (params.containsKey("username")) {
-            hql += " AND u.username = :username";
+        if (params.containsKey("username") && !params.get("username").equals("")) {
+            hql += " AND u.username LIKE :username";
+        }
+        if (params.containsKey("status") && !params.get("status").equals("")) {
+            hql += " AND u.status LIKE :status";
+        }
+        if (params.containsKey("roomName") && !params.get("roomName").equals("")) {
+            hql += " AND u.room.name LIKE :roomName";
         }
 
         int page = 1;
@@ -53,14 +59,20 @@ public class UserRepositoryImpl implements UserRepository {
 
         Query query = s.createQuery(hql);
 
-        if (params.containsKey("phone")) {
-            query.setParameter("phone", params.get("phone"));
+        if (params.containsKey("phone") && !params.get("phone").isEmpty()) {
+            query.setParameter("phone", "%" + params.get("phone") + "%");
         }
-        if (params.containsKey("email")) {
-            query.setParameter("email", params.get("email"));
+        if (params.containsKey("email") && !params.get("email").isEmpty()) {
+            query.setParameter("email", "%" + params.get("email") + "%");
         }
-        if (params.containsKey("username")) {
-            query.setParameter("username", params.get("username"));
+        if (params.containsKey("username") && !params.get("username").isEmpty()) {
+            query.setParameter("username", "%" + params.get("username") + "%");
+        }
+        if (params.containsKey("status") && !params.get("status").isEmpty()) {
+            query.setParameter("status", "%" + params.get("status") + "%");
+        }
+        if (params.containsKey("roomName") && !params.get("roomName").isEmpty()) {
+            query.setParameter("roomName", "%" + params.get("roomName") + "%");
         }
 
         int pageSize = Integer.parseInt(env.getProperty("user.pageSize").toString());
@@ -91,8 +103,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void deleteUser(int id) {
         Session s = factory.getObject().getCurrentSession();
-        User p = getUserById(id);
-        s.delete(p);
+        User user = getUserById(id);
+        s.delete(user);
     }
 
     //Lặp code - sửa sau
@@ -151,8 +163,22 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM User WHERE username=:username");
         q.setParameter("username", username);
-        
+
         return (User) q.getSingleResult();
+    }
+
+    @Override
+    public void blockUser(int id) {
+        Session s = factory.getObject().getCurrentSession();
+        User user = getUserById(id);
+
+        if (user != null && user.getStatus().equals("Active")) {
+            user.setStatus("Block");
+            user.setRoom(null);
+            user.setLocker(null);
+
+            s.update(user);
+        }
     }
 
 }

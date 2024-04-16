@@ -20,7 +20,7 @@ public interface RoomRepository {
 
     Room getRoomById(int id);
 
-    void deleteRoom(int id);
+    void deleteRoom(int id) throws Exception;
 
     int getTotalRooms();
     

@@ -54,11 +54,11 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull(message = "{user.username.notNullMsg}")
     @Size(min = 6, max = 18, message = "{user.username.sizeMsg}")
-    @Column(name = "username")
     @UserUnique(message = "Username must be unique", value = "username")
+    @Column(name = "username")
     private String username;
     @Basic(optional = false)
-    @NotNull(message = "{user.password.notNullMsg}")
+     @NotNull(message = "{user.password.notNullMsg}")
     @Size(min = 6, max = 255, message = "{user.password.sizeMsg}")
     @Column(name = "password")
     private String password;
@@ -90,11 +90,12 @@ public class User implements Serializable {
     @ManyToMany
     private Set<Surveyresult> surveyresultSet;
     @OneToMany(mappedBy = "userId")
-    private Set<Locker> lockerSet;
-    @OneToMany(mappedBy = "userId")
     private Set<Feedback> feedbackSet;
     @OneToMany(mappedBy = "userId")
     private Set<Payment> paymentSet;
+    @JoinColumn(name = "locker", referencedColumnName = "id")
+    @ManyToOne
+    private Locker locker;
     @JoinColumn(name = "room", referencedColumnName = "id")
     @ManyToOne
     private Room room;
@@ -189,15 +190,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Set<Locker> getLockerSet() {
-        return lockerSet;
-    }
-
-    public void setLockerSet(Set<Locker> lockerSet) {
-        this.lockerSet = lockerSet;
-    }
-
-    @XmlTransient
     public Set<Feedback> getFeedbackSet() {
         return feedbackSet;
     }
@@ -213,6 +205,14 @@ public class User implements Serializable {
 
     public void setPaymentSet(Set<Payment> paymentSet) {
         this.paymentSet = paymentSet;
+    }
+
+    public Locker getLocker() {
+        return locker;
+    }
+
+    public void setLocker(Locker locker) {
+        this.locker = locker;
     }
 
     public Room getRoom() {

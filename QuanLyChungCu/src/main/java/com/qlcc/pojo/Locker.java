@@ -12,12 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -30,7 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Locker.findAll", query = "SELECT l FROM Locker l"),
-    @NamedQuery(name = "Locker.findById", query = "SELECT l FROM Locker l WHERE l.id = :id")})
+    @NamedQuery(name = "Locker.findById", query = "SELECT l FROM Locker l WHERE l.id = :id"),
+    @NamedQuery(name = "Locker.findByStatus", query = "SELECT l FROM Locker l WHERE l.status = :status")})
 public class Locker implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,9 +39,11 @@ public class Locker implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    @ManyToOne
-    private User userId;
+    @Size(max = 50)
+    @Column(name = "status")
+    private String status;
+    @OneToMany(mappedBy = "locker")
+    private Set<User> userSet;
     @OneToMany(mappedBy = "lockerId")
     private Set<Order1> order1Set;
 
@@ -60,12 +62,21 @@ public class Locker implements Serializable {
         this.id = id;
     }
 
-    public User getUserId() {
-        return userId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @XmlTransient
+    public Set<User> getUserSet() {
+        return userSet;
+    }
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
     }
 
     @XmlTransient

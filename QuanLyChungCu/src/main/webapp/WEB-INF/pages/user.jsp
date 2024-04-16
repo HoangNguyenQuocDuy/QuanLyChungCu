@@ -37,6 +37,21 @@
             <form:hidden path="password" />
             <form:hidden path="email" />
             <form:hidden path="phone" />
+            <!--            <div class="form-floating mb-3 mt-3">
+            <form:select class="form-select" id="status" name="status" path="status">
+                <c:choose>
+                    <c:when test="${user.status == 'Active'}">
+                        <option value="Active" selected>Active</option>
+                        <option value="Block">Block</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="Active">Active</option>
+                        <option value="Block" selected>Block</option>
+                    </c:otherwise>
+                </c:choose>
+            </form:select>
+            <label for="status" class="form-label">Select status (select one):</label>
+        </div>-->
         </c:otherwise>
     </c:choose>
 
@@ -55,6 +70,22 @@
             </c:forEach>
         </form:select>
         <label for="roomtype" class="form-label">Select room (select one):</label>
+    </div>
+
+    <div class="form-floating">
+        <form:select class="form-select" id="locker" name="locker" path="locker">
+            <c:forEach items="${lockers}" var="locker">
+                <c:choose>
+                    <c:when test="${locker.id == user.locker.id}">
+                        <option value="${locker.id}" selected>${locker.id}</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${locker.id}">${locker.id}</option>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </form:select>
+        <label for="roomtype" class="form-label">Select locker (select one):</label>
     </div>
 
     <div class="form-floating">

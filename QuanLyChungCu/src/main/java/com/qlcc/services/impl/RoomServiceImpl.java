@@ -37,7 +37,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void addOrUpdate(Room r) {
-        if (!r.getFile().isEmpty()) {
+        if (r.getFile() != null && !r.getFile().isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(r.getFile().getBytes(), ObjectUtils.asMap("folder", "quanlychungcu"));
                 r.setImage(res.get("secure_url").toString());
@@ -54,7 +54,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void deleteRoom(int id) {
+    public void deleteRoom(int id) throws Exception{
         roomRepository.deleteRoom(id);
     }
 

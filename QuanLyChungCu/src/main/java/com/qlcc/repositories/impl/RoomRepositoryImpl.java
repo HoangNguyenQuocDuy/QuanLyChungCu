@@ -4,7 +4,6 @@
  */
 package com.qlcc.repositories.impl;
 
-import com.qlcc.pojo.Invoice;
 import com.qlcc.pojo.Room;
 import com.qlcc.repositories.RoomRepository;
 import java.util.List;
@@ -37,8 +36,16 @@ public class RoomRepositoryImpl implements RoomRepository {
         Session s = factory.getObject().getCurrentSession();
         String hql = "FROM Room r WHERE 1=1";
 
-        if (params.containsKey("type")) {
-            hql += " AND r.roomType.type= :type";
+        if (params.containsKey("type") && !params.get("type").equals("")) {
+            hql += " AND r.roomtype.type LIKE :type";
+        }
+        
+        if (params.containsKey("name") && !params.get("name").equals("")) {
+            hql += " AND r.name LIKE :name";
+        }
+        
+        if (params.containsKey("status") && !params.get("status").equals("")) {
+            hql += " AND r.status LIKE :status";
         }
 
         int page = 1;
@@ -48,14 +55,24 @@ public class RoomRepositoryImpl implements RoomRepository {
         }
         Query query = s.createQuery(hql);
 
-        if (params.containsKey("type")) {
-            query.setParameter("type", params.get("type"));
+        if (params.containsKey("type") && !params.get("type").isEmpty()) {
+            query.setParameter("type", "%" + params.get("type") + "%");
         }
+        if (params.containsKey("status") && !params.get("status").isEmpty()) {
+            query.setParameter("status", "%" + params.get("status") + "%");
+        }
+        if (params.containsKey("name") && !params.get("name").isEmpty()) {
+            query.setParameter("name", "%" + params.get("name") + "%");
+        }
+        
         int pageSize = Integer.parseInt(env.getProperty("user.pageSize"));
+        
+        if (!params.containsKey("list")) {
+            int startPosition = (page - 1) * pageSize;
+            query.setFirstResult(startPosition);
+            query.setMaxResults(pageSize);
+        }
 
-        int startPosition = (page - 1) * pageSize;
-        query.setFirstResult(startPosition);
-        query.setMaxResults(pageSize);
 
         return query.getResultList();
     }
@@ -66,7 +83,7 @@ public class RoomRepositoryImpl implements RoomRepository {
         if (r.getId() != null) {
             s.update(r);
         } else {
-            r.setStatus("blank");
+            r.setStatus("Blank");
             s.save(r);
         }
     }
@@ -79,29 +96,27 @@ public class RoomRepositoryImpl implements RoomRepository {
     }
 
     @Override
-    public void deleteRoom(int id) {
-//        Session s = factory.getObject().getCurrentSession();
-//        Room room = getRoomById(id);
-//
-//        Query invoiceQuery = s.createQuery("FROM Invoice WHERE room = :room");
-//        invoiceQuery.setParameter("room", room);
-//        List<Invoice> invoices = invoiceQuery.getResultList();
-//
-//        // Xử lý các hóa đơn tham chiếu đến phòng
-//        for (Invoice invoice : invoices) {
-//            // Xóa hoặc thực hiện hành động tương ứng với mỗi hóa đơn
-//            s.delete(invoice);
-//        }
-//
-//        Query userQuery = s.createQuery("SELECT COUNT(u) FROM User u WHERE u.room = :room");
-//        userQuery.setParameter("room", room);
-//        Long userCount = (Long) userQuery.uniqueResult();
-//
-//        if (userCount > 0) {
-//            throw new RuntimeException("Cannot delete room because it is referenced by users.");
-//        } else {
-//            s.delete(room);
-//        }
+    public void deleteRoom(int id) throws Exception {
+        Session s = factory.getObject().getCurrentSession();
+        Room room = getRoomById(id);
+
+        Query invoiceQuery = s.createQuery("SELECT COUNT(*) FROM Invoice WHERE room = :room");
+        invoiceQuery.setParameter("room", room);
+        int invoiceCount = ((Number) invoiceQuery.getSingleResult()).intValue();
+
+        if (invoiceCount > 0) {
+            throw new Exception("Cannot delete room because it is referenced by invoices.");
+        }
+
+        Query userQuery = s.createQuery("SELECT COUNT(*) FROM User WHERE room = :room");
+        userQuery.setParameter("room", room);
+        int userCount = ((Number) userQuery.getSingleResult()).intValue();
+
+        if (userCount > 0) {
+            throw new Exception("Cannot delete room because it is referenced by users.");
+        } else {
+            s.delete(room);
+        }
     }
 
     @Override
