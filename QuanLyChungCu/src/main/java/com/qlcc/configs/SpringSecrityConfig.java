@@ -4,6 +4,14 @@
  */
 package com.qlcc.configs;
 
+import com.qlcc.pojo.Invoice;
+import com.qlcc.pojo.Room;
+import com.qlcc.services.InvoiceService;
+import com.qlcc.services.InvoicetypeService;
+import com.qlcc.services.RoomService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,6 +19,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,6 +40,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 @Configuration
 @EnableWebSecurity
 @EnableTransactionManagement
+@EnableScheduling
 @ComponentScan(basePackages = {
     "com.qlcc.controllers",
     "com.qlcc.repositories",
@@ -43,6 +54,15 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private Environment env;
+
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    private InvoiceService invoiceService;
+    
+    @Autowired
+    private InvoicetypeService invoicetypeService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -85,4 +105,23 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
 //        http.logout().logoutSuccessUrl("/login");
     }
 
+    //Make room rental invoice at 9am on the 25th of each month
+    @Scheduled(cron = "0 0 9 25 * ?")
+    public void createInvoices() {
+        Map<String, String> paramsRoom = new HashMap<>();
+        paramsRoom.put("status", "Rented");
+        paramsRoom.put("list", "true");
+        List<Room> rooms = roomService.getRooms(paramsRoom);
+
+        for (Room room : rooms) {
+            Invoice invoice = new Invoice();
+            invoice.setRoom(room);
+            invoice.setAmount(room.getRoomtype().getPrice());
+            invoice.setDescription("");
+            invoice.setInvoiceType(invoicetypeService.getInvoicetypeById(3));
+
+            invoiceService.addOrUpdate(invoice);
+        }
+    }
+    
 }

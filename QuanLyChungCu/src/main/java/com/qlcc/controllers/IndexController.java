@@ -4,9 +4,13 @@
  */
 package com.qlcc.controllers;
 
+import com.qlcc.pojo.Locker;
 import com.qlcc.pojo.Room;
+import com.qlcc.services.InvoicetypeService;
+import com.qlcc.services.LockerService;
 import com.qlcc.services.RoomService;
 import com.qlcc.services.RoomTypeService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +41,29 @@ public class IndexController {
     @Autowired
     private RoomTypeService roomTypeService;
 
-    @ModelAttribute
-    public void commonAtrr(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("roomtypes", roomTypeService.getRoomtypes());
-//        model.addAttribute("rooms", roomService.getRooms(params));
+    @Autowired
+    private LockerService lockerService;
+    
+    @Autowired
+    private InvoicetypeService invoicetypeService;
 
+    @ModelAttribute
+    public void commonAtrr(Model model, @RequestParam Map<String, String> paramsRequest) {
+        model.addAttribute("roomtypes", roomTypeService.getRoomtypes());
+        model.addAttribute("invoicetypes", invoicetypeService.getInvoicetypes());
+
+//        model.addAttribute("rooms", roomService.getRooms(params));
+        Map<String, String> paramsLocker = new HashMap<>();
+        paramsLocker.put("status", "Using");
+        paramsLocker.put("list", "true");
+        List<Locker> lockers = lockerService.getLockers(paramsLocker);
+
+        Map<String, String> paramsRoom = new HashMap<>();
+        paramsRoom.put("status", "Rented");
+        paramsRoom.put("list", "true");
+        List<Room> rooms = roomService.getRooms(paramsRoom);
+
+        model.addAttribute("roomsUsing", rooms);
     }
 
     @RequestMapping("/")

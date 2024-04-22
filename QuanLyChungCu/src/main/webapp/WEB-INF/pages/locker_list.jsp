@@ -3,15 +3,19 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <h1 class="text-center text-info mt-4">Locker management</h1>
-<div class="d-flex justify-content-between mb-3">
+<div class="d-flex justify-content-between mb-3 align-items-end">
     <c:url value="/lockers/" var="url" />
     <button onClick="addLocker('${url}')" type="button" class="btn btn-success">Add locker</button>
 
-    <form action="<c:url value="/lockers" />" class="d-flex">
-        <select  class="form-select" id="status" name="status" path="status">
-            <option value="Blank" selected>Blank</option>
-            <option value="Using">Using</option>
-        </select>
+    <form action="<c:url value="/lockers" />" class="d-flex align-items-end">
+        <div class="me-4">
+            <label class="d-flex justify-content-center mb-2" for="status">Status</label>
+            <select style="width: 140px" class="form-select" id="status" name="status" path="status">
+                <option value="Blank" selected>Blank</option>
+                <option value="Using">Using</option>
+            </select>
+        </div> 
+
         <button class="btn btn-primary ms-5" type="submit">Search</button>
     </form>
 </div>
@@ -33,7 +37,7 @@
                         <p class="text-success">${locker.status}</p>
                     </c:otherwise>
                 </c:choose>
-                
+
             </td>
             <td>
                 <c:url value="/lockers/${locker.id}" var="url" />

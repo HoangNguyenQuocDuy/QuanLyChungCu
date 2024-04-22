@@ -45,7 +45,7 @@ public class Locker implements Serializable {
     @OneToMany(mappedBy = "locker")
     private Set<User> userSet;
     @OneToMany(mappedBy = "lockerId")
-    private Set<Order1> order1Set;
+    private Set<Userorder> userorderSet;
 
     public Locker() {
     }
@@ -80,12 +80,12 @@ public class Locker implements Serializable {
     }
 
     @XmlTransient
-    public Set<Order1> getOrder1Set() {
-        return order1Set;
+    public Set<Userorder> getUserorderSet() {
+        return userorderSet;
     }
 
-    public void setOrder1Set(Set<Order1> order1Set) {
-        this.order1Set = order1Set;
+    public void setUserorderSet(Set<Userorder> userorderSet) {
+        this.userorderSet = userorderSet;
     }
 
     @Override

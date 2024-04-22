@@ -3,18 +3,37 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <h1 class="text-center text-info mt-4">User management</h1>
-<div class="d-flex justify-content-between mb-3">
-    <a href="/QuanLyChungCu/users/" type="button" class="btn btn-success">Add user</a>
+<div class="d-flex justify-content-between mb-3 align-items-end">
+    <div class="d-flex align-items-center">
+        <a style="height: 40px" href="/QuanLyChungCu/users/" class="btn btn-success">Add User</a>
+    </div>
 
-    <form action="<c:url value="/users" />" class="d-flex">
-        <input class="form-control me-2" name="username" type="search" placeholder="Search username...">
-        <input class="form-control me-2" name="email" type="search" placeholder="Search email...">
-        <input class="form-control me-2" name="phone" type="search" placeholder="Search phone...">
-        <select  class="form-select" id="status" name="status" path="status">
-            <option value="Active" selected>Active</option>
-            <option value="Block">Block</option>
-        </select>
-        <input class="form-control me-2" name="roomName" type="search" placeholder="Room name...">
+    <form action="<c:url value="/users" />" class="d-flex align-items-end">
+        <div class="me-4"> 
+            <input style="width: 140px" class="form-control me-2" name="username" type="search" placeholder="Username...">
+        </div>
+        <div class="me-4"> 
+            <input style="width: 140px" class="form-control me-2" name="email" type="search" placeholder="Email...">
+        </div>
+        <div class="me-4"> 
+            <input style="width: 140px" class="form-control me-2" name="phone" type="search" placeholder="Phone...">
+        </div>
+        <div class="me-4">
+            <label class="d-flex justify-content-center mb-2" for="status">Status</label>
+            <select style="width: 160px" class="form-select" id="status" name="status" path="status">
+                <option value="Active" selected>Active</option>
+                <option value="Block">Block</option>
+            </select>
+        </div> 
+
+        <div class="me-4">
+            <label class="d-flex justify-content-center mb-2" for="room">Room</label>
+            <select style="width: 140px" class="form-select" id="room" name="room">
+                <c:forEach items="${roomsUsing}" var="r">
+                    <option value="${r.id}">${r.name}</option>
+                </c:forEach>
+            </select>
+        </div>
 
         <button class="btn btn-primary" type="submit">Search</button>
     </form>
@@ -54,8 +73,10 @@
                     <c:when test="${u.avatar != null}">
                         <img class="rounded img-fluid" src="${u.avatar}" width="200" alt="${u.avatar}">
                     </c:when>
+                    <c:otherwise>
+                        -----
+                    </c:otherwise>
                 </c:choose>
-                -----
             </td>
             <td>${u.room.name}</td>
             <td>${u.locker.id}</td>

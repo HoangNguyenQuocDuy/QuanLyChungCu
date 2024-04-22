@@ -19,24 +19,26 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author DELL
  */
 @Entity
-@Table(name = "order")
+@Table(name = "userorder")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o"),
-    @NamedQuery(name = "Order1.findById", query = "SELECT o FROM Order1 o WHERE o.id = :id"),
-    @NamedQuery(name = "Order1.findByDate", query = "SELECT o FROM Order1 o WHERE o.date = :date"),
-    @NamedQuery(name = "Order1.findByStatus", query = "SELECT o FROM Order1 o WHERE o.status = :status"),
-    @NamedQuery(name = "Order1.findByCreatedAt", query = "SELECT o FROM Order1 o WHERE o.createdAt = :createdAt"),
-    @NamedQuery(name = "Order1.findByUpdatedAt", query = "SELECT o FROM Order1 o WHERE o.updatedAt = :updatedAt")})
-public class Order1 implements Serializable {
+    @NamedQuery(name = "Userorder.findAll", query = "SELECT u FROM Userorder u"),
+    @NamedQuery(name = "Userorder.findById", query = "SELECT u FROM Userorder u WHERE u.id = :id"),
+    @NamedQuery(name = "Userorder.findByStatus", query = "SELECT u FROM Userorder u WHERE u.status = :status"),
+    @NamedQuery(name = "Userorder.findByCreatedAt", query = "SELECT u FROM Userorder u WHERE u.createdAt = :createdAt"),
+    @NamedQuery(name = "Userorder.findByUpdatedAt", query = "SELECT u FROM Userorder u WHERE u.updatedAt = :updatedAt"),
+    @NamedQuery(name = "Userorder.findByImage", query = "SELECT u FROM Userorder u WHERE u.image = :image")})
+public class Userorder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,9 +46,6 @@ public class Order1 implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
     @Size(max = 50)
     @Column(name = "status")
     private String status;
@@ -56,14 +55,20 @@ public class Order1 implements Serializable {
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+    @Size(max = 255)
+    @Column(name = "image")
+    private String image;
     @JoinColumn(name = "lockerId", referencedColumnName = "id")
     @ManyToOne
     private Locker lockerId;
+    
+    @Transient
+    private MultipartFile file;
 
-    public Order1() {
+    public Userorder() {
     }
 
-    public Order1(Integer id) {
+    public Userorder(Integer id) {
         this.id = id;
     }
 
@@ -73,14 +78,6 @@ public class Order1 implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getStatus() {
@@ -107,6 +104,14 @@ public class Order1 implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Locker getLockerId() {
         return lockerId;
     }
@@ -125,10 +130,10 @@ public class Order1 implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Order1)) {
+        if (!(object instanceof Userorder)) {
             return false;
         }
-        Order1 other = (Order1) object;
+        Userorder other = (Userorder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -137,7 +142,21 @@ public class Order1 implements Serializable {
 
     @Override
     public String toString() {
-        return "com.qlcc.pojo.Order1[ id=" + id + " ]";
+        return "com.qlcc.pojo.Userorder[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

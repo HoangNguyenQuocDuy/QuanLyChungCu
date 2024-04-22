@@ -46,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
             hql += " AND u.username LIKE :username";
         }
         if (params.containsKey("status") && !params.get("status").equals("")) {
-            hql += " AND u.status LIKE :status";
+            hql += " AND u.status = :status";
         }
         if (params.containsKey("roomName") && !params.get("roomName").equals("")) {
             hql += " AND u.room.name LIKE :roomName";
@@ -69,7 +69,7 @@ public class UserRepositoryImpl implements UserRepository {
             query.setParameter("username", "%" + params.get("username") + "%");
         }
         if (params.containsKey("status") && !params.get("status").isEmpty()) {
-            query.setParameter("status", "%" + params.get("status") + "%");
+            query.setParameter("status", params.get("status"));
         }
         if (params.containsKey("roomName") && !params.get("roomName").isEmpty()) {
             query.setParameter("roomName", "%" + params.get("roomName") + "%");

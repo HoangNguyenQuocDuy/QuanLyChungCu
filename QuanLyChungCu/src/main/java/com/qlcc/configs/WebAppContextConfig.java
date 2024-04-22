@@ -6,6 +6,7 @@ package com.qlcc.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.qlcc.formatters.InvoicetypeFormatter;
 import com.qlcc.formatters.LockerFormatter;
 import com.qlcc.formatters.RoomFormatter;
 import com.qlcc.formatters.RoomTypeFormatter;
@@ -77,6 +78,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new RoomTypeFormatter());
         registry.addFormatter(new RoomFormatter());
         registry.addFormatter(new LockerFormatter());
+        registry.addFormatter(new InvoicetypeFormatter());
     }
 
     @Override

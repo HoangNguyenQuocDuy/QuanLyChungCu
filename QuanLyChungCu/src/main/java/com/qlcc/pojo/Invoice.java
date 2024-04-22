@@ -26,6 +26,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -37,7 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i"),
     @NamedQuery(name = "Invoice.findById", query = "SELECT i FROM Invoice i WHERE i.id = :id"),
-    @NamedQuery(name = "Invoice.findByName", query = "SELECT i FROM Invoice i WHERE i.name = :name"),
     @NamedQuery(name = "Invoice.findByAmount", query = "SELECT i FROM Invoice i WHERE i.amount = :amount"),
     @NamedQuery(name = "Invoice.findByDueDate", query = "SELECT i FROM Invoice i WHERE i.dueDate = :dueDate"),
     @NamedQuery(name = "Invoice.findByStatus", query = "SELECT i FROM Invoice i WHERE i.status = :status"),
@@ -51,17 +51,15 @@ public class Invoice implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 100)
-    @Column(name = "name")
-    private String name;
     @Lob
     @Size(max = 65535)
-    @Column(name = "desc")
-    private String desc;
+    @Column(name = "description")
+    private String description;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private BigDecimal amount;
     @Column(name = "dueDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date dueDate;
     @Size(max = 50)
@@ -69,12 +67,17 @@ public class Invoice implements Serializable {
     private String status;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createdAt;
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date updatedAt;
     @OneToMany(mappedBy = "invoice")
     private Set<Payment> paymentSet;
+    @JoinColumn(name = "invoiceType", referencedColumnName = "id")
+    @ManyToOne
+    private Invoicetype invoiceType;
     @JoinColumn(name = "room", referencedColumnName = "id")
     @ManyToOne
     private Room room;
@@ -92,22 +95,6 @@ public class Invoice implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public BigDecimal getAmount() {
@@ -159,6 +146,14 @@ public class Invoice implements Serializable {
         this.paymentSet = paymentSet;
     }
 
+    public Invoicetype getInvoiceType() {
+        return invoiceType;
+    }
+
+    public void setInvoiceType(Invoicetype invoiceType) {
+        this.invoiceType = invoiceType;
+    }
+
     public Room getRoom() {
         return room;
     }
@@ -191,5 +186,19 @@ public class Invoice implements Serializable {
     public String toString() {
         return "com.qlcc.pojo.Invoice[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

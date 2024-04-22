@@ -54,11 +54,11 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull(message = "{user.username.notNullMsg}")
     @Size(min = 6, max = 18, message = "{user.username.sizeMsg}")
-    @UserUnique(message = "Username must be unique", value = "username")
     @Column(name = "username")
+    @UserUnique(message = "Username must be unique", value = "username")
     private String username;
     @Basic(optional = false)
-     @NotNull(message = "{user.password.notNullMsg}")
+    @NotNull(message = "{user.password.notNullMsg}")
     @Size(min = 6, max = 255, message = "{user.password.sizeMsg}")
     @Column(name = "password")
     private String password;
@@ -256,5 +256,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.qlcc.pojo.User[ id=" + id + " ]";
     }
-
+    
 }

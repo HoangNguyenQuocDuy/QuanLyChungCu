@@ -2,20 +2,29 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <h1 class="text-center text-info mt-4">Room management</h1>
-<div class="d-flex justify-content-between mb-3">
-    <a href="/QuanLyChungCu/rooms/" type="button" class="btn btn-success">Add room</a>
+<div class="d-flex justify-content-between mb-3 align-items-end">
+    <div class="d-flex align-items-center">
+        <a style="height: 40px" href="/QuanLyChungCu/rooms/" class="btn btn-success">Add Room</a>
+    </div>
 
-    <form action="<c:url value="/" />" class="d-flex">
-        <input class="form-control me-3" style="width: 300px;" name="name" type="search" placeholder="Search room name...">
-        <select class="form-select" id="status" name="status">
-            <option value="blank" selected>blank</option>
-            <option value="rent">rent</option>
-        </select>
-        <select class="form-select ms-3 me-4" id="type" name="type">
-            <c:forEach items="${roomtypes}" var="rt">
-                <option value="${rt.type}" selected>${rt.type}</option>
-            </c:forEach>
-        </select>
+    <form action="<c:url value="/" />" class="d-flex align-items-end">
+        <input class="form-control me-3" style="width: 160px;" name="name" type="search" placeholder="Search room name...">
+        <div>
+            <label class="d-flex justify-content-center mb-2" for="status">Status</label>
+            <select style="width: 160px" class="form-select" id="status" name="status">
+                <option value="Blank" selected>Blank</option>
+                <option value="Rent">Rent</option>
+            </select>
+        </div>   
+        <div class="me-4">
+            <label class="d-flex justify-content-center mb-2" for="type">Type</label>
+            <select class="form-select ms-3 me-4" id="type" name="type">
+                <c:forEach items="${roomtypes}" var="rt">
+                    <option value="${rt.type}" selected>${rt.type}</option>
+                </c:forEach>
+            </select>
+        </div> 
+
         <button class="btn btn-primary" type="submit">Search</button>
     </form>
 </div>

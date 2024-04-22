@@ -17,8 +17,6 @@ import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -95,7 +93,7 @@ public class UserController {
     }
 
     @PostMapping("/users/")
-    public String addRoomProcess(Model model, @ModelAttribute(value = "user") @Valid User user,
+    public String addUserProcess(Model model, @ModelAttribute(value = "user") @Valid User user,
             BindingResult rs) {
         if (!rs.hasErrors() || user.getId() != null) {
             try {

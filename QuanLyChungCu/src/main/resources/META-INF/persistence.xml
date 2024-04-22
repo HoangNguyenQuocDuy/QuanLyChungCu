@@ -18,5 +18,8 @@
     <class>com.qlcc.pojo.ResidentOrder</class>
     <class>com.qlcc.pojo.UserOrder</class>
     <class>com.qlcc.pojo.Roomtype</class>
+    <class>com.qlcc.pojo.Package</class>
+    <class>com.qlcc.pojo.Userorder</class>
+    <class>com.qlcc.pojo.Invoicetype</class>
   </persistence-unit>
 </persistence>

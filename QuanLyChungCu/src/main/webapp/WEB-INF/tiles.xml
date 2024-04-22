@@ -29,4 +29,20 @@
         <put-attribute name="title" value="Lockers" />
         <put-attribute name="content" value="/WEB-INF/pages/locker_list.jsp" />
     </definition>
+    <definition name="order" extends="baseLayout">
+        <put-attribute name="title" value="Order" />
+        <put-attribute name="content" value="/WEB-INF/pages/order.jsp" />
+    </definition>
+    <definition name="order_list" extends="baseLayout">
+        <put-attribute name="title" value="Orders" />
+        <put-attribute name="content" value="/WEB-INF/pages/order_list.jsp" />
+    </definition>
+    <definition name="invoice" extends="baseLayout">
+        <put-attribute name="title" value="Invoice" />
+        <put-attribute name="content" value="/WEB-INF/pages/invoice.jsp" />
+    </definition>
+    <definition name="invoice_list" extends="baseLayout">
+        <put-attribute name="title" value="Invoices" />
+        <put-attribute name="content" value="/WEB-INF/pages/invoice_list.jsp" />
+    </definition>
 </tiles-definitions>

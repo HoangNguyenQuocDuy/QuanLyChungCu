@@ -3,7 +3,7 @@
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">My Sale App</a>
+        <a class="navbar-brand" href="#">DV Apartment</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,6 +17,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/lockers" />">Lockers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/orders" />">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/invoices" />">Invoices</a>
                 </li>
             </ul>   
         </div>

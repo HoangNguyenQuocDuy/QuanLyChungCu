@@ -38,7 +38,7 @@ public class LockerRepositoryImpl implements LockerRepository {
         String hql = "FROM Locker l WHERE 1=1";
 
         if (params.containsKey("status") && !params.get("status").equals("")) {
-            hql += " AND l.status LIKE :status";
+            hql += " AND l.status = :status";
         }
 
         int page = 1;
@@ -49,14 +49,16 @@ public class LockerRepositoryImpl implements LockerRepository {
         Query query = s.createQuery(hql);
 
         if (params.containsKey("status") && !params.get("status").equals("")) {
-            query.setParameter("status", "%" + params.get("status") + "%");
+            query.setParameter("status", params.get("status"));
         }
 
         int pageSize = Integer.parseInt(env.getProperty("user.pageSize").toString());
 
-        int startPosition = (page - 1) * pageSize;
-        query.setFirstResult(startPosition);
-        query.setMaxResults(pageSize);
+        if (!params.containsKey("list")) {
+            int startPosition = (page - 1) * pageSize;
+            query.setFirstResult(startPosition);
+            query.setMaxResults(pageSize);
+        }
 
         return query.getResultList();
     }
@@ -86,9 +88,21 @@ public class LockerRepositoryImpl implements LockerRepository {
         userQuery.setParameter("locker", locker);
         int userCount = ((Number) userQuery.getSingleResult()).intValue();
 
+        Query orderQuery = s.createQuery("SELECT COUNT(*) FROM Userorder "
+                + "WHERE status='Pending' AND lockerId = :locker");
+        orderQuery.setParameter("locker", locker);
+        int orderCount = ((Number) orderQuery.getSingleResult()).intValue();
+
         if (userCount > 0) {
             throw new Exception("Cannot delete locker because it is referenced by user.");
+        } else if (orderCount > 0) {
+            throw new Exception("Cannot delete locker because it has orders with status is Pending.");
         } else {
+            Query deleteQuery = s.createQuery("DELETE FROM Userorder "
+                    + "WHERE status = 'Received' AND lockerId = :locker");
+            deleteQuery.setParameter("locker", locker);
+            deleteQuery.executeUpdate();
+
             s.delete(locker);
         }
     }
