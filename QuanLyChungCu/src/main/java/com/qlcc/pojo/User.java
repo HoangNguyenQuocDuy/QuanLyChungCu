@@ -8,14 +8,13 @@ import customAnnotation.UserUnique;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -84,11 +83,8 @@ public class User implements Serializable {
     @Size(max = 50)
     @Column(name = "roleName")
     private String roleName;
-    @JoinTable(name = "user_surveyresult", joinColumns = {
-        @JoinColumn(name = "userId", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "surveyResultId", referencedColumnName = "id")})
-    @ManyToMany
-    private Set<Surveyresult> surveyresultSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Surveyresponse> surveyresponseSet;
     @OneToMany(mappedBy = "userId")
     private Set<Feedback> feedbackSet;
     @OneToMany(mappedBy = "userId")
@@ -181,12 +177,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Set<Surveyresult> getSurveyresultSet() {
-        return surveyresultSet;
+    public Set<Surveyresponse> getSurveyresponseSet() {
+        return surveyresponseSet;
     }
 
-    public void setSurveyresultSet(Set<Surveyresult> surveyresultSet) {
-        this.surveyresultSet = surveyresultSet;
+    public void setSurveyresponseSet(Set<Surveyresponse> surveyresponseSet) {
+        this.surveyresponseSet = surveyresponseSet;
     }
 
     @XmlTransient

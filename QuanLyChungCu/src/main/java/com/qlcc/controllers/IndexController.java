@@ -43,7 +43,7 @@ public class IndexController {
 
     @Autowired
     private LockerService lockerService;
-    
+
     @Autowired
     private InvoicetypeService invoicetypeService;
 
@@ -64,6 +64,7 @@ public class IndexController {
         List<Room> rooms = roomService.getRooms(paramsRoom);
 
         model.addAttribute("roomsUsing", rooms);
+        model.addAttribute("lockersUsing", lockers);
     }
 
     @RequestMapping("/")

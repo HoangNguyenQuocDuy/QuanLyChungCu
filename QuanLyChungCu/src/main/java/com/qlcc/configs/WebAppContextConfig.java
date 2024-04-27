@@ -10,6 +10,7 @@ import com.qlcc.formatters.InvoicetypeFormatter;
 import com.qlcc.formatters.LockerFormatter;
 import com.qlcc.formatters.RoomFormatter;
 import com.qlcc.formatters.RoomTypeFormatter;
+import com.qlcc.formatters.SurveyOptionFormatter;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -79,6 +80,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new RoomFormatter());
         registry.addFormatter(new LockerFormatter());
         registry.addFormatter(new InvoicetypeFormatter());
+        registry.addFormatter(new SurveyOptionFormatter());
     }
 
     @Override

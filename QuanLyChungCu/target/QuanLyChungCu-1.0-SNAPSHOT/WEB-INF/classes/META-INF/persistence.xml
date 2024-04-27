@@ -21,5 +21,9 @@
     <class>com.qlcc.pojo.Package</class>
     <class>com.qlcc.pojo.Userorder</class>
     <class>com.qlcc.pojo.Invoicetype</class>
+    <class>com.qlcc.pojo.Surveyanswer</class>
+    <class>com.qlcc.pojo.Surveyresponse</class>
+    <class>com.qlcc.pojo.Surveyquestion</class>
+    <class>com.qlcc.pojo.Surveyoption</class>
   </persistence-unit>
 </persistence>

@@ -45,4 +45,12 @@
         <put-attribute name="title" value="Invoices" />
         <put-attribute name="content" value="/WEB-INF/pages/invoice_list.jsp" />
     </definition>
+    <definition name="survey" extends="baseLayout">
+        <put-attribute name="title" value="Survey" />
+        <put-attribute name="content" value="/WEB-INF/pages/survey.jsp" />
+    </definition>
+    <definition name="survey_list" extends="baseLayout">
+        <put-attribute name="title" value="Surveys" />
+        <put-attribute name="content" value="/WEB-INF/pages/survey_list.jsp" />
+    </definition>
 </tiles-definitions>

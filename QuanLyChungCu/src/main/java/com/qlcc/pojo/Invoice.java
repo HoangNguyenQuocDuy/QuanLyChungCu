@@ -26,7 +26,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -59,7 +58,6 @@ public class Invoice implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
     @Column(name = "dueDate")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date dueDate;
     @Size(max = 50)
@@ -67,11 +65,9 @@ public class Invoice implements Serializable {
     private String status;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createdAt;
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date updatedAt;
     @OneToMany(mappedBy = "invoice")
     private Set<Payment> paymentSet;
@@ -95,6 +91,14 @@ public class Invoice implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getAmount() {
@@ -186,19 +190,5 @@ public class Invoice implements Serializable {
     public String toString() {
         return "com.qlcc.pojo.Invoice[ id=" + id + " ]";
     }
-
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+    
 }

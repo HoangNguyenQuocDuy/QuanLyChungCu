@@ -8,21 +8,20 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -31,14 +30,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author DELL
  */
 @Entity
-@Table(name = "surveyresult")
+@Table(name = "surveyresponse")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Surveyresult.findAll", query = "SELECT s FROM Surveyresult s"),
-    @NamedQuery(name = "Surveyresult.findById", query = "SELECT s FROM Surveyresult s WHERE s.id = :id"),
-    @NamedQuery(name = "Surveyresult.findByCreatedAt", query = "SELECT s FROM Surveyresult s WHERE s.createdAt = :createdAt"),
-    @NamedQuery(name = "Surveyresult.findByUpdatedAt", query = "SELECT s FROM Surveyresult s WHERE s.updatedAt = :updatedAt")})
-public class Surveyresult implements Serializable {
+    @NamedQuery(name = "Surveyresponse.findAll", query = "SELECT s FROM Surveyresponse s"),
+    @NamedQuery(name = "Surveyresponse.findById", query = "SELECT s FROM Surveyresponse s WHERE s.id = :id"),
+    @NamedQuery(name = "Surveyresponse.findByCreatedAt", query = "SELECT s FROM Surveyresponse s WHERE s.createdAt = :createdAt")})
+public class Surveyresponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,26 +44,22 @@ public class Surveyresult implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "content")
-    private String content;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @Column(name = "updatedAt")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
-    @ManyToMany(mappedBy = "surveyresultSet")
-    private Set<User> userSet;
-    @JoinColumn(name = "survey", referencedColumnName = "id")
-    @ManyToOne
-    private Survey survey;
+    @JoinColumn(name = "surveyId", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Survey surveyId;
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User userId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "responseId")
+    private Set<Surveyanswer> surveyanswerSet;
 
-    public Surveyresult() {
+    public Surveyresponse() {
     }
 
-    public Surveyresult(Integer id) {
+    public Surveyresponse(Integer id) {
         this.id = id;
     }
 
@@ -77,14 +71,6 @@ public class Surveyresult implements Serializable {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -93,29 +79,29 @@ public class Surveyresult implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public Survey getSurveyId() {
+        return surveyId;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setSurveyId(Survey surveyId) {
+        this.surveyId = surveyId;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @XmlTransient
-    public Set<User> getUserSet() {
-        return userSet;
+    public Set<Surveyanswer> getSurveyanswerSet() {
+        return surveyanswerSet;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
-    }
-
-    public Survey getSurvey() {
-        return survey;
-    }
-
-    public void setSurvey(Survey survey) {
-        this.survey = survey;
+    public void setSurveyanswerSet(Set<Surveyanswer> surveyanswerSet) {
+        this.surveyanswerSet = surveyanswerSet;
     }
 
     @Override
@@ -128,10 +114,10 @@ public class Surveyresult implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Surveyresult)) {
+        if (!(object instanceof Surveyresponse)) {
             return false;
         }
-        Surveyresult other = (Surveyresult) object;
+        Surveyresponse other = (Surveyresponse) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -140,7 +126,7 @@ public class Surveyresult implements Serializable {
 
     @Override
     public String toString() {
-        return "com.qlcc.pojo.Surveyresult[ id=" + id + " ]";
+        return "com.qlcc.pojo.Surveyresponse[ id=" + id + " ]";
     }
     
 }
