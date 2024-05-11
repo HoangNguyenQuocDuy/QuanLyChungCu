@@ -13,11 +13,13 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     </head>
-    <body>
+    <body style="height: 100vh">
         <tiles:insertAttribute name="header" />
-        <section class="container">
-            <tiles:insertAttribute name="content" />
-        </section>
-        <tiles:insertAttribute name="footer" />
+        <div style="height: calc(100vh - 40px) !important;" class="h-100 d-flex flex-column justify-content-between">
+            <section class="container">
+                <tiles:insertAttribute name="content" />
+            </section>
+            <tiles:insertAttribute name="footer" />
+        </div>
     </body>
 </html>

@@ -30,25 +30,39 @@ public class SurveyResponseRepositoryImpl implements SurveyResponseRepository {
     public List<Surveyresponse> getSurveys(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
         String hql = "FROM Surveyresponse sr WHERE 1=1";
-        
+
         if (params.containsKey("surveyId") && !params.get("surveyId").equals("")) {
-            hql += " AND l.surveyId.id = :surveyId";
+            hql += " AND sr.surveyId.id = :surveyId";
         }
-        
+
+        if (params.containsKey("userId") && !params.get("userId").equals("")) {
+            hql += " AND sr.userId.id = :userId";
+        }
+
         Query query = s.createQuery(hql);
 
         if (params.containsKey("surveyId") && !params.get("surveyId").equals("")) {
-            query.setParameter("surveyId", params.get("surveyId"));
+            query.setParameter("surveyId", Integer.parseInt(params.get("surveyId")));
         }
-        
+        if (params.containsKey("userId") && !params.get("userId").equals("")) {
+            query.setParameter("userId", Integer.parseInt(params.get("userId")));
+        }
+
         return query.getResultList();
     }
 
     @Override
-    public void addSurvey(Surveyresponse surveyResponse) {
+    public int addSurveyResponse(Surveyresponse surveyResponse) {
+        Session s = factory.getObject().getCurrentSession();
+        
+        return (int) s.save(surveyResponse);
+    }
+
+    @Override
+    public Surveyresponse getSurveyResponseById(int id) {
         Session s = factory.getObject().getCurrentSession();
 
-        s.save(surveyResponse);
+        return s.get(Surveyresponse.class, id);
     }
 
 }

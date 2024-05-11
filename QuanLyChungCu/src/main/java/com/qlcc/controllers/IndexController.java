@@ -6,10 +6,12 @@ package com.qlcc.controllers;
 
 import com.qlcc.pojo.Locker;
 import com.qlcc.pojo.Room;
+import com.qlcc.pojo.Survey;
 import com.qlcc.services.InvoicetypeService;
 import com.qlcc.services.LockerService;
 import com.qlcc.services.RoomService;
 import com.qlcc.services.RoomTypeService;
+import com.qlcc.services.SurveyService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,12 +49,14 @@ public class IndexController {
     @Autowired
     private InvoicetypeService invoicetypeService;
 
+    @Autowired
+    private SurveyService surveyService;
+
     @ModelAttribute
     public void commonAtrr(Model model, @RequestParam Map<String, String> paramsRequest) {
         model.addAttribute("roomtypes", roomTypeService.getRoomtypes());
         model.addAttribute("invoicetypes", invoicetypeService.getInvoicetypes());
 
-//        model.addAttribute("rooms", roomService.getRooms(params));
         Map<String, String> paramsLocker = new HashMap<>();
         paramsLocker.put("status", "Using");
         paramsLocker.put("list", "true");
@@ -63,8 +67,14 @@ public class IndexController {
         paramsRoom.put("list", "true");
         List<Room> rooms = roomService.getRooms(paramsRoom);
 
+        Map<String, String> paramsSurvey = new HashMap<>();
+        paramsSurvey.put("list", "true");
+        List<Survey> surveys = surveyService.getSurveys(paramsSurvey);
+
         model.addAttribute("roomsUsing", rooms);
         model.addAttribute("lockersUsing", lockers);
+        model.addAttribute("surveys", surveys);
+
     }
 
     @RequestMapping("/")

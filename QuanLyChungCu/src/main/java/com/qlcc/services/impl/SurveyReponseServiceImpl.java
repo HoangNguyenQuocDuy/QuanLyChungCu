@@ -11,11 +11,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author DELL
  */
+@Service
 public class SurveyReponseServiceImpl implements SurveyResponseService{
     
     @Autowired
@@ -27,10 +29,15 @@ public class SurveyReponseServiceImpl implements SurveyResponseService{
     }
 
     @Override
-    public void addSurvey(Surveyresponse surveyResponse) {
+    public int addSurveyResponse(Surveyresponse surveyResponse) {
         surveyResponse.setCreatedAt(new Date());
         
-        surveyResponseRepo.addSurvey(surveyResponse);
+        return surveyResponseRepo.addSurveyResponse(surveyResponse);
+    }
+
+    @Override
+    public Surveyresponse getSurveyResponseById(int id) {
+        return surveyResponseRepo.getSurveyResponseById(id);
     }
     
 }

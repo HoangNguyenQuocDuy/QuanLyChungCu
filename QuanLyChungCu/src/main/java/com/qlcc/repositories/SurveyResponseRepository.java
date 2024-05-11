@@ -15,5 +15,7 @@ import java.util.Map;
 public interface SurveyResponseRepository {
     List<Surveyresponse> getSurveys(Map<String, String> params); 
     
-    void addSurvey(Surveyresponse survey);
+    int addSurveyResponse(Surveyresponse surveyResponse);
+    
+    Surveyresponse getSurveyResponseById(int id);
 }

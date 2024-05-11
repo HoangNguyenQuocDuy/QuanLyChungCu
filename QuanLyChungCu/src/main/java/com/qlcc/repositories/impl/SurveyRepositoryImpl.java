@@ -60,17 +60,20 @@ public class SurveyRepositoryImpl implements SurveyRepository {
 
         Query<Survey> q = s.createQuery(criteriaQuery);
 
-        int page = 1;
-        int pageSize = Integer.parseInt(env.getProperty("user.pageSize").toString());
+        if (!params.containsKey("list")) {
+            int page = 1;
+            int pageSize = Integer.parseInt(env.getProperty("user.pageSize").toString());
+            int startPosition = (page - 1) * pageSize;
+            q.setFirstResult(startPosition);
+            q.setMaxResults(pageSize);
+            if (params.containsKey("page")) {
+                page = Integer.parseInt(params.get("page"));
+            }
+            int offset = (page - 1) * pageSize;
 
-        if (params.containsKey("page")) {
-            page = Integer.parseInt(params.get("page"));
+            q.setFirstResult(offset);
+            q.setMaxResults(pageSize);
         }
-
-        int offset = (page - 1) * pageSize;
-
-        q.setFirstResult(offset);
-        q.setMaxResults(pageSize);
 
         return q.getResultList();
     }
