@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <h1 class="text-center text-info mt-4">Order management</h1>
 <c:if test="${!empty errMsg}">
@@ -56,11 +57,11 @@
                 </c:choose>
             </td>
             <td>${o.lockerId.id}</td>
-            <td>${o.createdAt}</td>
+            <td><fmt:formatDate value="${o.createdAt}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
             <td>
                 <c:choose>
                     <c:when test="${o.updatedAt != null}">
-                        <p>${o.updatedAt}</p>
+                        <p><fmt:formatDate value="${o.updatedAt}" pattern="dd/MM/yyyy HH:mm:ss" /></p>
                     </c:when>
                     <c:otherwise>
                         <p>-----</p>
@@ -68,7 +69,7 @@
                 </c:choose>
             </td>
             <td>
-                <c:url value="/orders/${o.id}" var="url" />
+                <c:url value="/api/orders/${o.id}" var="url" />
                 <button onClick="deleteOrder('${url}')" class="btn btn-danger">Delete</button>
                 <button onClick="confirmOrder('${url}')" class="btn btn-info">Update</button>
             </td>

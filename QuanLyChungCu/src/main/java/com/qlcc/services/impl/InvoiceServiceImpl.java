@@ -40,6 +40,9 @@ public class InvoiceServiceImpl implements InvoiceService {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(currentDate);
                 calendar.add(Calendar.DAY_OF_MONTH, 5);
+                calendar.set(Calendar.HOUR_OF_DAY, 23);
+                calendar.set(Calendar.MINUTE, 59);
+                calendar.set(Calendar.SECOND, 0);
 
                 invoice.setDueDate(new Date(calendar.getTimeInMillis()));
             }
@@ -48,7 +51,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         } else {
             invoice.setUpdatedAt(currentDate);
         }
-        
+
         invoiceRepo.addOrUpdate(invoice);
     }
 

@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
  * @author DELL
  */
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("/api/rooms")
 public class ApiRoomController {
 
     @Autowired

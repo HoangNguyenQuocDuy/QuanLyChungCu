@@ -6,8 +6,10 @@ package com.qlcc.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.qlcc.converter.StringToDateConverter;
 import com.qlcc.formatters.InvoicetypeFormatter;
 import com.qlcc.formatters.LockerFormatter;
+import com.qlcc.formatters.RelativeFormatter;
 import com.qlcc.formatters.RoomFormatter;
 import com.qlcc.formatters.RoomTypeFormatter;
 import com.qlcc.formatters.SurveyOptionFormatter;
@@ -81,6 +83,8 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new LockerFormatter());
         registry.addFormatter(new InvoicetypeFormatter());
         registry.addFormatter(new SurveyOptionFormatter());
+        registry.addFormatter(new RelativeFormatter());
+        registry.addConverter(new StringToDateConverter());
     }
 
     @Override

@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -42,8 +43,10 @@ public class Locker implements Serializable {
     @Size(max = 50)
     @Column(name = "status")
     private String status;
+    @JsonIgnore
     @OneToMany(mappedBy = "locker")
     private Set<User> userSet;
+    @JsonIgnore
     @OneToMany(mappedBy = "lockerId")
     private Set<Userorder> userorderSet;
 

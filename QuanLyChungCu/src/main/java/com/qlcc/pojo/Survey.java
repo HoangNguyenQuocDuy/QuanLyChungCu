@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -63,8 +64,10 @@ public class Survey implements Serializable {
     @Size(max = 6)
     @Column(name = "status")
     private String status;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
     private Set<Surveyresponse> surveyresponseSet;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
     private List<Surveyquestion> surveyquestionSet;
 

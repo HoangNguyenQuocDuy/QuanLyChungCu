@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -53,6 +54,7 @@ public class Surveyresponse implements Serializable {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "responseId")
     private Set<Surveyanswer> surveyanswerSet;
 

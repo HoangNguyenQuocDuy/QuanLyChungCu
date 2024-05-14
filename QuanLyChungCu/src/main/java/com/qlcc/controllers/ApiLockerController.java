@@ -22,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
  * @author DELL
  */
 @RestController
-@RequestMapping("/lockers")
+@RequestMapping("/api/lockers")
 public class ApiLockerController {
     
     @Autowired

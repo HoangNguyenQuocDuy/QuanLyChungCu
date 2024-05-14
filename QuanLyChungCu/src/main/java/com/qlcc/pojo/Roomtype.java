@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -47,6 +48,7 @@ public class Roomtype implements Serializable {
     @Size(max = 50)
     @Column(name = "type")
     private String type;
+    @JsonIgnore
     @OneToMany(mappedBy = "roomtype")
     private Set<Room> roomSet;
 

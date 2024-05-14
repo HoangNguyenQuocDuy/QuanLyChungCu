@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -52,6 +53,7 @@ public class Surveyoption implements Serializable {
     @JoinColumn(name = "questionId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Surveyquestion questionId;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "optionId")
     private Set<Surveyanswer> surveyanswerSet;
 

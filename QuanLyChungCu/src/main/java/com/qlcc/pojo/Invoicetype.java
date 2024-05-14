@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -42,6 +43,7 @@ public class Invoicetype implements Serializable {
     @Size(max = 100)
     @Column(name = "type")
     private String type;
+    @JsonIgnore
     @OneToMany(mappedBy = "invoiceType")
     private Set<Invoice> invoiceSet;
 

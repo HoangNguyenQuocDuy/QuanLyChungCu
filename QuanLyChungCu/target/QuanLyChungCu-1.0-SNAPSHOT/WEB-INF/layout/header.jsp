@@ -22,6 +22,9 @@
                     <a class="nav-link" href="<c:url value="/orders" />">Orders</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/parkings" />">Parking Right</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/invoices" />">Invoices</a>
                 </li>
                 <li class="nav-item">

@@ -42,7 +42,7 @@ public class InvoiceController {
 
             model.addAttribute("totalPages", totalPages);
             model.addAttribute("invoices", invoiceService.getInvoices(paramsRequest));
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             model.addAttribute("errMsg", ex.toString());
             System.err.println("Err: " + ex.getMessage());
         }

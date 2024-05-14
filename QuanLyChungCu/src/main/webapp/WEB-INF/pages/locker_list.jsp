@@ -40,7 +40,7 @@
 
             </td>
             <td>
-                <c:url value="/lockers/${locker.id}" var="url" />
+                <c:url value="/api/lockers/${locker.id}" var="url" />
                 <button onClick="deleteLocker('${url}')" class="btn btn-danger">Delete</button>
             </td>
         </tr>

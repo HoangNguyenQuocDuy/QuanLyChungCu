@@ -34,9 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p"),
     @NamedQuery(name = "Payment.findById", query = "SELECT p FROM Payment p WHERE p.id = :id"),
     @NamedQuery(name = "Payment.findByAmount", query = "SELECT p FROM Payment p WHERE p.amount = :amount"),
-    @NamedQuery(name = "Payment.findByMethod", query = "SELECT p FROM Payment p WHERE p.method = :method"),
-    @NamedQuery(name = "Payment.findByCreatedAt", query = "SELECT p FROM Payment p WHERE p.createdAt = :createdAt"),
-    @NamedQuery(name = "Payment.findByUpdatedAt", query = "SELECT p FROM Payment p WHERE p.updatedAt = :updatedAt")})
+    @NamedQuery(name = "Payment.findByCreatedAt", query = "SELECT p FROM Payment p WHERE p.createdAt = :createdAt")})
 public class Payment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,16 +45,19 @@ public class Payment implements Serializable {
     private Integer id;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
-    private BigDecimal amount;
+    private long amount;
     @Size(max = 50)
-    @Column(name = "method")
-    private String method;
+    @Column(name = "bankCode")
+    private String bankCode;
+    @Size(max = 255)
+    @Column(name = "bankTranNo")
+    private String bankTranNo;
+    @Size(max = 255)
+    @Column(name = "transactionNo")
+    private String transactionNo;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @Column(name = "updatedAt")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
     @JoinColumn(name = "invoice", referencedColumnName = "id")
     @ManyToOne
     private Invoice invoice;
@@ -79,20 +80,12 @@ public class Payment implements Serializable {
         this.id = id;
     }
 
-    public BigDecimal getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
     }
 
     public Date getCreatedAt() {
@@ -101,14 +94,6 @@ public class Payment implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public Invoice getInvoice() {
@@ -130,7 +115,7 @@ public class Payment implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (getId() != null ? getId().hashCode() : 0);
         return hash;
     }
 
@@ -141,7 +126,7 @@ public class Payment implements Serializable {
             return false;
         }
         Payment other = (Payment) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -149,7 +134,49 @@ public class Payment implements Serializable {
 
     @Override
     public String toString() {
-        return "com.qlcc.pojo.Payment[ id=" + id + " ]";
+        return "com.qlcc.pojo.Payment[ id=" + getId() + " ]";
+    }
+
+    /**
+     * @return the bankCode
+     */
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    /**
+     * @param bankCode the bankCode to set
+     */
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    /**
+     * @return the bankTranNo
+     */
+    public String getBankTranNo() {
+        return bankTranNo;
+    }
+
+    /**
+     * @param bankTranNo the bankTranNo to set
+     */
+    public void setBankTranNo(String bankTranNo) {
+        this.bankTranNo = bankTranNo;
+    }
+
+    /**
+     * @return the transactionNo
+     */
+    public String getTransactionNo() {
+        return transactionNo;
+    }
+
+    /**
+     * @param transactionNo the transactionNo to set
+     */
+    public void setTransactionNo(String transactionNo) {
+        this.transactionNo = transactionNo;
     }
     
 }

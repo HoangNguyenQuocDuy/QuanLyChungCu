@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import customAnnotation.RoomUnique;
 import java.io.Serializable;
 import java.util.Set;
@@ -61,8 +62,10 @@ public class Room implements Serializable {
     @JoinColumn(name = "roomType", referencedColumnName = "id")
     @ManyToOne
     private Roomtype roomtype;
+    @JsonIgnore
     @OneToMany(mappedBy = "room")
     private Set<Invoice> invoiceSet;
+    @JsonIgnore
     @OneToMany(mappedBy = "room")
     private Set<User> userSet;
 

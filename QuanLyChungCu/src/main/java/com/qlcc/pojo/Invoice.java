@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -58,7 +59,7 @@ public class Invoice implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
     @Column(name = "dueDate")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
     @Size(max = 50)
     @Column(name = "status")
@@ -69,6 +70,7 @@ public class Invoice implements Serializable {
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+    @JsonIgnore
     @OneToMany(mappedBy = "invoice")
     private Set<Payment> paymentSet;
     @JoinColumn(name = "invoiceType", referencedColumnName = "id")

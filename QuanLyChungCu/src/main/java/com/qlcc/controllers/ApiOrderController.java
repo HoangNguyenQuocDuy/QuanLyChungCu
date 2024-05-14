@@ -22,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
  * @author DELL
  */
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class ApiOrderController {
 
     @Autowired

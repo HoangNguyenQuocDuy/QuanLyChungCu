@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import customAnnotation.UserUnique;
 import java.io.Serializable;
 import java.util.Set;
@@ -20,10 +21,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -83,10 +86,13 @@ public class User implements Serializable {
     @Size(max = 50)
     @Column(name = "roleName")
     private String roleName;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Surveyresponse> surveyresponseSet;
+    @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private Set<Feedback> feedbackSet;
+    @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private Set<Payment> paymentSet;
     @JoinColumn(name = "locker", referencedColumnName = "id")
@@ -95,8 +101,12 @@ public class User implements Serializable {
     @JoinColumn(name = "room", referencedColumnName = "id")
     @ManyToOne
     private Room room;
+    @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private Set<Relative> relativeSet;
+    
+    @Transient
+    private MultipartFile file;
 
     public User() {
     }
@@ -251,6 +261,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.qlcc.pojo.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

@@ -21,7 +21,14 @@
     <div class="form-floating mt-3">
         <form:select class="form-select" id="invoiceType" name="invoiceType" path="invoiceType">
             <c:forEach items="${invoicetypes}" var="it">
-                <option value="${it.id}">${it.type}</option>
+                <c:choose>
+                    <c:when test="${it.id == invoice.invoiceType.id}">
+                        <option selected="selected" value="${it.id}">${it.type}</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${it.id}">${it.type}</option>
+                    </c:otherwise>
+                </c:choose>
             </c:forEach>
         </form:select>
         <label for="invoiceType" class="form-label">Select type (select one):</label>
@@ -37,7 +44,7 @@
     </div>
 
     <div class="form-floating mb-3 mt-3">
-        <form:input class="form-control" id="dueDate" name="dueDate" type="text" placeholder="Due Date" path="dueDate" readonly="true" />
+        <form:input class="form-control" id="dueDate" name="dueDate" type="datetime" placeholder="Due Date" path="dueDate" readonly="true" />
         <label for="dueDate">Due Date</label>
     </div>
 
@@ -62,9 +69,10 @@
 <script>
     $(function () {
         $('#dueDate').datepicker({
-            dateFormat: 'yy-mm-dd',
+            dateFormat: 'yy-mm-dd 23:59:00',
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            minDate: 1
         });
     });
 </script>

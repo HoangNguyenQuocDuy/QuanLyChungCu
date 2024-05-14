@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <h1 class="text-center text-info mt-4 mb-4">Invoice management</h1>
 <div class="d-flex justify-content-between mb-4 align-items-end">
@@ -68,7 +69,7 @@
             <td>${i.id}</td>
             <td>${i.invoiceType.type}</td>
             <td>${i.amount} $</td>
-            <td>${i.dueDate}</td>
+            <td><fmt:formatDate value="${i.dueDate}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
             <td>
                 <c:choose>
                     <c:when test="${i.status == 'Unpaid'}">
@@ -80,8 +81,8 @@
                 </c:choose>
 
             </td>
-            <td>${i.createdAt}</td>
-            <td>${i.updatedAt}</td>
+            <td><fmt:formatDate value="${i.createdAt}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+            <td><fmt:formatDate value="${i.updatedAt}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
             <td>${i.room.name}</td>
             <td>${i.description}</td>
             <td>
