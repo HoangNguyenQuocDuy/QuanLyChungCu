@@ -4,7 +4,7 @@
  */
 package com.qlcc.services.impl;
 
-import com.qlcc.pojo.Parkingright;
+import com.qlcc.pojo.ParkingRight;
 import com.qlcc.repositories.ParkingRightRepository;
 import com.qlcc.services.ParkingRightService;
 import java.util.List;
@@ -17,23 +17,23 @@ import org.springframework.stereotype.Service;
  * @author DELL
  */
 @Service
-public class ParkingRightServiceImpl implements  ParkingRightService{
+public class ParkingRightServiceImpl implements ParkingRightService{
     
     @Autowired
     private ParkingRightRepository parkingRightRepo;
 
     @Override
-    public void addOrUpdate(Parkingright pr) {
+    public void addOrUpdate(ParkingRight pr) {
         parkingRightRepo.addOrUpdate(pr);
     }
 
     @Override
-    public List<Parkingright> getParkingRight(Map<String, String> params) {
+    public List<ParkingRight> getParkingRight(Map<String, String> params) {
         return parkingRightRepo.getParkingRight(params);
     }
 
     @Override
-    public Parkingright getParkingRightById(int id) {
+    public ParkingRight getParkingRightById(int id) {
         return parkingRightRepo.getParkingRightById(id);
     }
 
@@ -43,8 +43,8 @@ public class ParkingRightServiceImpl implements  ParkingRightService{
     }
 
     @Override
-    public int getTotalParkings() {
-        return parkingRightRepo.getTotalParkings();
+    public int getTotalParkingRights() {
+        return parkingRightRepo.getTotalParkingRights();
     }
     
 }

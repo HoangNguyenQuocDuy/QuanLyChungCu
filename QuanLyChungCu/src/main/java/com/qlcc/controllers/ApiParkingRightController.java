@@ -4,7 +4,7 @@
  */
 package com.qlcc.controllers;
 
-import com.qlcc.pojo.Parkingright;
+import com.qlcc.pojo.ParkingRight;
 import com.qlcc.pojo.Relative;
 import com.qlcc.services.ParkingRightService;
 import com.qlcc.services.RelativeService;
@@ -26,19 +26,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/parkings")
-public class ApiParkingController {
-
+public class ApiParkingRightController {
+    
     @Autowired
     private ParkingRightService parkingRightService;
-
+    
     @Autowired
     private RelativeService relativeService;
-
+    
     @PostMapping(path = "/", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
-        MediaType.MULTIPART_FORM_DATA_VALUE
     })
-    public ResponseEntity<?> createParking(@RequestBody Map<String, String> params) {
+    public ResponseEntity<?> createParkingRight(@RequestBody Map<String, String> params) {
         try {
             Relative relative = relativeService.getRelativeById(Integer.parseInt(params.get("relativeId")));
 
@@ -47,8 +46,10 @@ public class ApiParkingController {
                         "Relative not found with ID: " + params.get("relativeId"));
             }
 
-            Parkingright pr = new Parkingright();
+            ParkingRight pr = new ParkingRight();
             pr.setRelativeId(relative);
+            pr.setLicensePlates(params.get("licensePlates"));
+            pr.setTypeOfVehicle(params.get("typeOfVehicle"));
 
             parkingRightService.addOrUpdate(pr);
 
@@ -62,10 +63,10 @@ public class ApiParkingController {
     @PutMapping(path = "/{pId}", consumes = {
         MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<?> updateParking(@RequestBody Map<String, String> params,
+    public ResponseEntity<?> updateParkingRight(@RequestBody Map<String, String> params,
             @PathVariable("pId") int pId) {
         try {
-            Parkingright pr = parkingRightService.getParkingRightById(pId);
+            ParkingRight pr = parkingRightService.getParkingRightById(pId);
 
             if (pr == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

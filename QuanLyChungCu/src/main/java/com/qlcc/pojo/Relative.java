@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -45,23 +47,28 @@ public class Relative implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 100)
+    @NotNull(message = "Name of related is required!")
     @Column(name = "name")
     private String name;
+    @NotNull(message = "Type of related is required!")
     @Size(max = 50)
     @Column(name = "type")
     private String type;
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
+    @JsonIgnore
     @OneToMany(mappedBy = "relativeId")
-    private Set<Entryright> entryrightSet;
+    private Set<ParkingRight> entryrightSet;
     @OneToMany(mappedBy = "relativeId")
-    private Set<Parkingright> parkingrightSet;
+    @JsonIgnore
+    private Set<EntryRight> parkingrightSet;
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @ManyToOne
     private User userId;
-    
-     @Transient
+
+    @JsonIgnore
+    @Transient
     private MultipartFile file;
 
     public Relative() {
@@ -96,20 +103,20 @@ public class Relative implements Serializable {
     }
 
     @XmlTransient
-    public Set<Entryright> getEntryrightSet() {
+    public Set<ParkingRight> getEntryrightSet() {
         return entryrightSet;
     }
 
-    public void setEntryrightSet(Set<Entryright> entryrightSet) {
+    public void setEntryrightSet(Set<ParkingRight> entryrightSet) {
         this.entryrightSet = entryrightSet;
     }
 
     @XmlTransient
-    public Set<Parkingright> getParkingrightSet() {
+    public Set<EntryRight> getParkingrightSet() {
         return parkingrightSet;
     }
 
-    public void setParkingrightSet(Set<Parkingright> parkingrightSet) {
+    public void setParkingrightSet(Set<EntryRight> parkingrightSet) {
         this.parkingrightSet = parkingrightSet;
     }
 
@@ -173,5 +180,5 @@ public class Relative implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-    
+
 }

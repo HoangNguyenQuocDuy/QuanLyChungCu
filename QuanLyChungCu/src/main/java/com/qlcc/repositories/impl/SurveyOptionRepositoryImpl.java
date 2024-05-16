@@ -34,11 +34,19 @@ public class SurveyOptionRepositoryImpl implements SurveyOptionRepository{
         if (params.containsKey("questionId") && !params.get("questionId").equals("")) {
             hql += " AND so.questionId.id = :questionId";
         }
+        
+        if (params.containsKey("surveyId") && !params.get("surveyId").equals("")) {
+            hql += " AND so.questionId.surveyId.id = :surveyId";
+        }
 
         Query query = s.createQuery(hql);
 
         if (params.containsKey("questionId") && !params.get("questionId").equals("")) {
-            query.setParameter("questionId", Integer.parseInt(params.get("questionId")));
+            query.setParameter("questionId", Integer.valueOf(params.get("questionId")));
+        }
+        
+        if (params.containsKey("surveyId") && !params.get("surveyId").equals("")) {
+            query.setParameter("surveyId", Integer.valueOf(params.get("surveyId")));
         }
 
         return query.getResultList();

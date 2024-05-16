@@ -2,12 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<h1 class="text-center text-info mt-4">Parking management</h1>
+<h1 class="text-center text-info mt-4">Parking Right Management</h1>
 <c:if test="${!empty errMsg}">
     <div class="alert alert-danger">${errMsg}</div>
 </c:if>
 <div class="d-flex justify-content-between mb-3 align-items-end">
-    <form action="<c:url value="/parkings" />" class="d-flex mt-4 w-100 justify-content-end align-items-end">
+    <form action="<c:url value="/entries" />" class="d-flex mt-4 w-100 justify-content-end align-items-end">
         <div class="me-4">
             <label class="d-flex justify-content-center mb-2" for="status">Status</label>
             <select style="width: 140px;" class="form-select ms-3 me-4" id="status" name="status">
@@ -27,13 +27,15 @@
         <button class="btn btn-primary" type="submit">Search</button>
     </form>
 </div>
+
 <table class="table table-hover mt-4">
     <tr>
         <th>Id</th> 
         <th>Status</th>
         <th>Related Name</th>
-        <th>Related</th>
         <th>Room</th>
+        <th>Type of vehicle</th>
+        <th>License plates</th>
         <th>Created at</th>
         <th>Updated at</th>
         <th>Action</th>
@@ -55,8 +57,9 @@
                 </c:choose>
             </td>
             <td>${p.relativeId.name}</td>
-            <td>${p.relativeId.type}</td>
             <td>${p.relativeId.userId.room.name}</td>
+            <td>${p.typeOfVehicle}</td>
+            <td>${p.licensePlates}</td>
             <td><fmt:formatDate value="${p.createdAt}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
             <td>
                 <c:choose>
@@ -70,8 +73,8 @@
             </td>
             <td>
                 <c:url value="/api/parkings/${p.id}" var="url" />
-                <button onClick="updateParking('${url}', 'Confirmed')" class="btn btn-info">Confirm</button>
-                <button onClick="updateParking('${url}', 'Canceled')" class="btn btn-danger">Cancel</button>
+                <button onClick="updateParkingRight('${url}', 'Confirmed')" class="btn btn-info">Confirm</button>
+                <button onClick="updateParkingRight('${url}', 'Canceled')" class="btn btn-danger">Cancel</button>
             </td>
         </tr>
     </c:forEach>

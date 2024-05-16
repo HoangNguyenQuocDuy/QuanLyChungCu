@@ -4,6 +4,7 @@
  */
 package com.qlcc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -62,6 +63,7 @@ public class Userorder implements Serializable {
     @ManyToOne
     private Locker lockerId;
     
+    @JsonIgnore
     @Transient
     private MultipartFile file;
 

@@ -4,12 +4,10 @@
   <persistence-unit name="my_persistence_unit">
     <class>com.qlcc.pojo.Image</class>
     <class>com.qlcc.pojo.Survey</class>
-    <class>com.qlcc.pojo.Entryright</class>
     <class>com.qlcc.pojo.Surveyresult</class>
     <class>com.qlcc.pojo.User</class>
     <class>com.qlcc.pojo.Locker</class>
     <class>com.qlcc.pojo.Order1</class>
-    <class>com.qlcc.pojo.Parkingright</class>
     <class>com.qlcc.pojo.Relative</class>
     <class>com.qlcc.pojo.Invoice</class>
     <class>com.qlcc.pojo.Room</class>
@@ -25,5 +23,7 @@
     <class>com.qlcc.pojo.Surveyresponse</class>
     <class>com.qlcc.pojo.Surveyquestion</class>
     <class>com.qlcc.pojo.Surveyoption</class>
+    <class>com.qlcc.pojo.ParkingRight</class>
+    <class>com.qlcc.pojo.EntryRight</class>
   </persistence-unit>
 </persistence>

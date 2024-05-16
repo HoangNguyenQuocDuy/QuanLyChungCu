@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author DELL
  */
 @Controller
-public class ParkingController {
+public class ParkingRightController {
     
     @Autowired
     private ParkingRightService parkingRightService;
@@ -30,9 +30,9 @@ public class ParkingController {
     public String createView(Model model, @RequestParam Map<String, String> paramsRequest) {
 
         try {
-            int totalOrders = parkingRightService.getTotalParkings();
+            int totalEntryRights = parkingRightService.getTotalParkingRights();
             int pageSize = Integer.parseInt(env.getProperty("user.pageSize"));
-            int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
+            int totalPages = (int) Math.ceil((double) totalEntryRights / pageSize);
 
 
             model.addAttribute("totalPages", totalPages);
@@ -43,5 +43,4 @@ public class ParkingController {
         }
         return "parking_list";
     }
-    
 }

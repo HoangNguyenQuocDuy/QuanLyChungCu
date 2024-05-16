@@ -8,8 +8,8 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Tiêu đề khảo sát</th>
-                    <th>Số lượt trả lới</th>
+                    <th>Title</th>
+                    <th>Response Count</th>
                 </tr>
             </thead>
             <tbody>

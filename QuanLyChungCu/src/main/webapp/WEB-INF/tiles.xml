@@ -59,7 +59,19 @@
         <put-attribute name="content" value="/WEB-INF/pages/stats.jsp" />
     </definition>
     <definition name="parking_list" extends="baseLayout">
-        <put-attribute name="title" value="Parkings" />
+        <put-attribute name="title" value="Parking Rights" />
         <put-attribute name="content" value="/WEB-INF/pages/parking_list.jsp" />
+    </definition>
+    <definition name="entry_list" extends="baseLayout">
+        <put-attribute name="title" value="Entry Rights" />
+        <put-attribute name="content" value="/WEB-INF/pages/entry_list.jsp" />
+    </definition>
+    <definition name="feedback_list" extends="baseLayout">
+        <put-attribute name="title" value="Feedbacks" />
+        <put-attribute name="content" value="/WEB-INF/pages/feedback_list.jsp" />
+    </definition>
+    <definition name="feedback" extends="baseLayout">
+        <put-attribute name="title" value="Feedback" />
+        <put-attribute name="content" value="/WEB-INF/pages/feedback.jsp" />
     </definition>
 </tiles-definitions>

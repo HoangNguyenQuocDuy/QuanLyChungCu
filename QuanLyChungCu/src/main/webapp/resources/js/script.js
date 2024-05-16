@@ -154,10 +154,42 @@ function confirmOrder(url) {
     }
 }
 
-function updateParking(url, status) {
+function updateEntryRight(url, status) {
     let actionText = status === 'Confirmed' ? 'confirm' : 'cancel';
 
-    if (confirm(`Do you want to ${actionText} this parking?`) === true) {
+    if (confirm(`Do you want to ${actionText} this entry right?`) === true) {
+        fetch(url, {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({status: status})
+        }).then(res => {
+            console.info(res);
+            if (res.status === 200)
+                location.reload();
+            else {
+                res.text().then(html => {
+                    const regex = /<b>Message<\/b>\s*(.*?)<p>/;
+                    const match = html.match(regex);
+                    if (match && match.length > 1) {
+                        const errorMessage = match[1].substring(0, match[1].indexOf("</p>"));
+                        alert("Error: " + errorMessage);
+                    } else {
+                        alert("Error: Unknown error occurred.");
+                    }
+                });
+            }
+        }).catch(err => {
+            alert("Fetch Error: " + err);
+        });
+    }
+}
+
+function updateParkingRight(url, status) {
+    let actionText = status === 'Confirmed' ? 'confirm' : 'cancel';
+
+    if (confirm(`Do you want to ${actionText} this parking right?`) === true) {
         fetch(url, {
             method: "put",
             headers: {

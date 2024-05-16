@@ -22,6 +22,9 @@
                     <a class="nav-link" href="<c:url value="/orders" />">Orders</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/entries" />">Entry Right</a>
+                </li>
+                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/parkings" />">Parking Right</a>
                 </li>
                 <li class="nav-item">
@@ -29,6 +32,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/surveys" />">Surveys</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/feedbacks" />">Feedbacks</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/stats" />">Stats</a>

@@ -4,7 +4,7 @@
  */
 package com.qlcc.services;
 
-import com.qlcc.pojo.Parkingright;
+import com.qlcc.pojo.ParkingRight;
 import java.util.List;
 import java.util.Map;
 
@@ -14,13 +14,13 @@ import java.util.Map;
  */
 public interface ParkingRightService {
 
-    void addOrUpdate(Parkingright pr);
+    void addOrUpdate(ParkingRight pr);
 
-    List<Parkingright> getParkingRight(Map<String, String> params);
+    List<ParkingRight> getParkingRight(Map<String, String> params);
 
-    Parkingright getParkingRightById(int id);
+    ParkingRight getParkingRightById(int id);
 
     void deleteParkingRight(int id);
-    
-    int getTotalParkings();
+
+    int getTotalParkingRights();
 }

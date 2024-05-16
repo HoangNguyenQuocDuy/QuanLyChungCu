@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,10 +31,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "parkingright")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Parkingright.findAll", query = "SELECT p FROM Parkingright p"),
-    @NamedQuery(name = "Parkingright.findById", query = "SELECT p FROM Parkingright p WHERE p.id = :id"),
-    @NamedQuery(name = "Parkingright.findByStatus", query = "SELECT p FROM Parkingright p WHERE p.status = :status")})
-public class Parkingright implements Serializable {
+    @NamedQuery(name = "ParkingRight.findAll", query = "SELECT p FROM ParkingRight p"),
+    @NamedQuery(name = "ParkingRight.findById", query = "SELECT p FROM ParkingRight p WHERE p.id = :id"),
+    @NamedQuery(name = "ParkingRight.findByStatus", query = "SELECT p FROM ParkingRight p WHERE p.status = :status"),
+    @NamedQuery(name = "ParkingRight.findByTypeOfVehicle", query = "SELECT e FROM ParkingRight e WHERE e.typeOfVehicle = :typeOfVehicle"),
+    @NamedQuery(name = "ParkingRight.findByLicensePlates", query = "SELECT e FROM ParkingRight e WHERE e.licensePlates = :licensePlates")})
+public class ParkingRight implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,6 +44,14 @@ public class Parkingright implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @NotNull(message = "Type of vehicle is required!")
+    @Size(max = 50)
+    @Column(name = "typeOfVehicle")
+    private String typeOfVehicle;
+    @NotNull(message = "License plates is required!")
+    @Size(max = 20)
+    @Column(name = "licensePlates")
+    private String licensePlates;
     @Size(max = 50)
     @Column(name = "status")
     private String status;
@@ -54,10 +65,10 @@ public class Parkingright implements Serializable {
     @ManyToOne
     private Relative relativeId;
 
-    public Parkingright() {
+    public ParkingRight() {
     }
 
-    public Parkingright(Integer id) {
+    public ParkingRight(Integer id) {
         this.id = id;
     }
 
@@ -69,12 +80,20 @@ public class Parkingright implements Serializable {
         this.id = id;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTypeOfVehicle() {
+        return typeOfVehicle;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTypeOfVehicle(String typeOfVehicle) {
+        this.typeOfVehicle = typeOfVehicle;
+    }
+
+    public String getLicensePlates() {
+        return licensePlates;
+    }
+
+    public void setLicensePlates(String licensePlates) {
+        this.licensePlates = licensePlates;
     }
 
     public Relative getRelativeId() {
@@ -95,10 +114,10 @@ public class Parkingright implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Parkingright)) {
+        if (!(object instanceof ParkingRight)) {
             return false;
         }
-        Parkingright other = (Parkingright) object;
+        ParkingRight other = (ParkingRight) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +126,21 @@ public class Parkingright implements Serializable {
 
     @Override
     public String toString() {
-        return "com.qlcc.pojo.Parkingright[ id=" + id + " ]";
+        return "com.qlcc.pojo.Entryright[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**
@@ -137,5 +170,5 @@ public class Parkingright implements Serializable {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-    
+
 }

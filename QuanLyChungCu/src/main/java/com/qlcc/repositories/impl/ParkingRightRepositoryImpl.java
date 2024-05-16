@@ -4,7 +4,7 @@
  */
 package com.qlcc.repositories.impl;
 
-import com.qlcc.pojo.Parkingright;
+import com.qlcc.pojo.ParkingRight;
 import com.qlcc.repositories.ParkingRightRepository;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +34,7 @@ public class ParkingRightRepositoryImpl implements ParkingRightRepository {
     private Environment env;
 
     @Override
-    public void addOrUpdate(Parkingright pr) {
+    public void addOrUpdate(ParkingRight pr) {
         Session s = factory.getObject().getCurrentSession();
         Date currentDate = new Date();
 
@@ -49,9 +49,9 @@ public class ParkingRightRepositoryImpl implements ParkingRightRepository {
     }
 
     @Override
-    public List<Parkingright> getParkingRight(Map<String, String> params) {
+    public List<ParkingRight> getParkingRight(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
-        String hql = "FROM Parkingright pr WHERE 1=1";
+        String hql = "FROM ParkingRight pr WHERE 1=1";
 
         if (params.containsKey("roomId") && !params.get("roomId").equals("")) {
             hql += " AND pr.relativeId.userId.room.id = :roomId";
@@ -86,24 +86,24 @@ public class ParkingRightRepositoryImpl implements ParkingRightRepository {
     }
 
     @Override
-    public Parkingright getParkingRightById(int id) {
+    public ParkingRight getParkingRightById(int id) {
         Session s = factory.getObject().getCurrentSession();
 
-        return s.get(Parkingright.class, id);
+        return s.get(ParkingRight.class, id);
     }
 
     @Override
     public void deleteParkingRight(int id) {
         Session s = factory.getObject().getCurrentSession();
-        Parkingright pr = getParkingRightById(id);
+        ParkingRight pr = getParkingRightById(id);
 
         s.delete(pr);
     }
 
     @Override
-    public int getTotalParkings() {
+    public int getTotalParkingRights() {
         Session s = factory.getObject().getCurrentSession();
-        Query query = s.createQuery("SELECT COUNT(*) FROM Parkingright");
+        Query query = s.createQuery("SELECT COUNT(*) FROM ParkingRight");
 
         return ((Number) query.getSingleResult()).intValue();
     }

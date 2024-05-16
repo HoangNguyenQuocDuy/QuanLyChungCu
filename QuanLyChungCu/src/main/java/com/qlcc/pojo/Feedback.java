@@ -43,6 +43,9 @@ public class Feedback implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 255)
+    @Column(name = "title")
+    private String title;
     @Lob
     @Size(max = 65535)
     @Column(name = "content")
@@ -127,6 +130,20 @@ public class Feedback implements Serializable {
     @Override
     public String toString() {
         return "com.qlcc.pojo.Feedback[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
     
 }

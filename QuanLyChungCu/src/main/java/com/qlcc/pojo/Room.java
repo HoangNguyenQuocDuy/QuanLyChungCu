@@ -68,7 +68,8 @@ public class Room implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "room")
     private Set<User> userSet;
-
+    
+    @JsonIgnore
     @Transient
     private MultipartFile file;
 

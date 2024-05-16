@@ -5,6 +5,7 @@
 package com.qlcc.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -27,11 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "entryright")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Entryright.findAll", query = "SELECT e FROM Entryright e"),
-    @NamedQuery(name = "Entryright.findById", query = "SELECT e FROM Entryright e WHERE e.id = :id"),
-    @NamedQuery(name = "Entryright.findByTypeOfVehicle", query = "SELECT e FROM Entryright e WHERE e.typeOfVehicle = :typeOfVehicle"),
-    @NamedQuery(name = "Entryright.findByLicensePlates", query = "SELECT e FROM Entryright e WHERE e.licensePlates = :licensePlates")})
-public class Entryright implements Serializable {
+    @NamedQuery(name = "EntryRight.findAll", query = "SELECT e FROM EntryRight e"),
+    @NamedQuery(name = "EntryRight.findById", query = "SELECT e FROM EntryRight e WHERE e.id = :id")})
+public class EntryRight implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,19 +41,22 @@ public class Entryright implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
-    @Column(name = "typeOfVehicle")
-    private String typeOfVehicle;
-    @Size(max = 20)
-    @Column(name = "licensePlates")
-    private String licensePlates;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "createdAt")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @Column(name = "updatedAt")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
     @JoinColumn(name = "relativeId", referencedColumnName = "id")
     @ManyToOne
     private Relative relativeId;
 
-    public Entryright() {
+    public EntryRight() {
     }
 
-    public Entryright(Integer id) {
+    public EntryRight(Integer id) {
         this.id = id;
     }
 
@@ -64,20 +68,12 @@ public class Entryright implements Serializable {
         this.id = id;
     }
 
-    public String getTypeOfVehicle() {
-        return typeOfVehicle;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTypeOfVehicle(String typeOfVehicle) {
-        this.typeOfVehicle = typeOfVehicle;
-    }
-
-    public String getLicensePlates() {
-        return licensePlates;
-    }
-
-    public void setLicensePlates(String licensePlates) {
-        this.licensePlates = licensePlates;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Relative getRelativeId() {
@@ -98,10 +94,10 @@ public class Entryright implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Entryright)) {
+        if (!(object instanceof EntryRight)) {
             return false;
         }
-        Entryright other = (Entryright) object;
+        EntryRight other = (EntryRight) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -110,7 +106,35 @@ public class Entryright implements Serializable {
 
     @Override
     public String toString() {
-        return "com.qlcc.pojo.Entryright[ id=" + id + " ]";
+        return "com.qlcc.pojo.Parkingright[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt the createdAt to set
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * @return the updatedAt
+     */
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * @param updatedAt the updatedAt to set
+     */
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 }
