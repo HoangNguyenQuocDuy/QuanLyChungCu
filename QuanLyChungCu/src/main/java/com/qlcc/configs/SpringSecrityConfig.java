@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,6 +32,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  *
@@ -59,9 +64,12 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private InvoiceService invoiceService;
-    
+
     @Autowired
     private InvoicetypeService invoicetypeService;
+
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -89,19 +97,34 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.PATCH).permitAll()
-                .anyRequest().permitAll();
-//            .authorizeRequests()
-//            .antMatchers("/login", "Showroom/api/v1/auth/**").permitAll()
-//            .anyRequest().authenticated();
-//            .and()
-//            .formLogin().loginPage("/login")
-//            .usernameParameter("username")
-//            .passwordParameter("password")
-//            .defaultSuccessUrl("/").failureUrl("/login?error");
-//        
-//        http.logout().logoutSuccessUrl("/login");
+                .antMatchers(HttpMethod.POST, "/api/relatives/**").hasAnyRole("CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/api/relatives/**").hasAnyRole("CUSTOMER")
+                .antMatchers(HttpMethod.POST, "/api/feedbacks/**").hasAnyRole("CUSTOMER")
+                .antMatchers(HttpMethod.PUT, "/api/feedbacks/**").hasAnyRole("CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/api/feedbacks/**").hasAnyRole("CUSTOMER")
+                //                .antMatchers(HttpMethod.GET, ).hasAnyRole("CUSTOMER")
+                .antMatchers(HttpMethod.POST, "/api/surveyAnswers/").hasAnyRole("CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/api/rooms/**").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/orders/**").hasAnyRole("ADMIN")
+                .antMatchers("/orders", "/orders/**", "/rooms/**", "/lockers",
+                        "/invoices", "/invoices/**", "/feedbacks", "/entries",
+                        "/api/users/**", "/api/lockers/**", "/entries", "/parkings")
+                .hasAnyRole("ADMIN")
+                .antMatchers("/api/auth/login", "/", "/api/payments/callback/**/**",
+                        "/api/payments/**").permitAll()
+                .anyRequest().authenticated();
+        http.formLogin()
+                .usernameParameter("username")
+                .passwordParameter("password");
+        http.formLogin().defaultSuccessUrl("/")
+                .failureUrl("/login?error");
+        http.logout().logoutSuccessUrl("/login");
+        http.exceptionHandling()
+                .accessDeniedPage("/login?accessDenied");
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     //Make room rental invoice at 9am on the 25th of each month
@@ -122,5 +145,18 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
             invoiceService.addOrUpdate(invoice);
         }
     }
-    
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
 }

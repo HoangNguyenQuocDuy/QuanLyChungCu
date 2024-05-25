@@ -13,7 +13,6 @@ import com.qlcc.services.InvoiceService;
 import com.qlcc.services.PaymentService;
 import com.qlcc.services.UserService;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -43,16 +42,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/payments")
 public class ApiPaymentController {
-    
+
     @Autowired
     private PaymentService paymentService;
-    
+
     @Autowired
     private InvoiceService invoiceService;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @GetMapping("/")
     ResponseEntity<?> createPage(HttpServletRequest req) throws UnsupportedEncodingException {
         String vnp_Version = "2.1.0";
@@ -63,12 +62,11 @@ public class ApiPaymentController {
         String vnp_IpAddr = ConfigVNPay.getIpAddress(req);
         String vnp_TmnCode = ConfigVNPay.vnp_TmnCode;
 
-//        int amount = Integer.parseInt(req.getParameter("amount"));
         Map vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(10000 * 100));
+        vnp_Params.put("vnp_Amount", String.valueOf(Integer.parseInt(req.getParameter("amount")) * 100));
         vnp_Params.put("vnp_CurrCode", "VND");
 //        vnp_Params.put("vnp_BankCode", "NCB");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
@@ -88,8 +86,8 @@ public class ApiPaymentController {
         //Add Params of 2.1.0 Version
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
-        String callbackUrl = "http://localhost:8080/QuanLyChungCu/api/payments/callback/1/1";
-//                + "/" + req.getParameter("userId") + req.getParameter("invoicerentId");
+        String callbackUrl = "http://localhost:8080/QuanLyChungCu/api/payments/callback/"
+                + req.getParameter("userId") + "/" + req.getParameter("invoicerentId");
         vnp_Params.put("vnp_ReturnUrl", callbackUrl);
 
         List fieldNames = new ArrayList(vnp_Params.keySet());
@@ -130,7 +128,7 @@ public class ApiPaymentController {
 
     @GetMapping("/callback/{userId}/{invoicerentId}")
     public ResponseEntity<?> processPaymentCallback(HttpServletRequest req,
-            @PathVariable("invoicerentId") int invoicerentId, 
+            @PathVariable("invoicerentId") int invoicerentId,
             @PathVariable("userId") int userId) throws Exception {
         if (req.getParameter("vnp_ResponseCode").equals("00")) {
             Payment payment = new Payment();
@@ -143,7 +141,7 @@ public class ApiPaymentController {
             Invoice invoice = invoiceService.getInvoiceById(invoicerentId);
             invoice.setStatus("Paid");
             invoiceService.addOrUpdate(invoice);
-            
+
             User user = userService.getUserById(userId);
 
             payment.setInvoice(invoice);
@@ -156,7 +154,7 @@ public class ApiPaymentController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> getPayments(@RequestParam Map<String, String> params) {
+    public ResponseEntity<?> getPayments(@RequestParam Map<String, String> params) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(paymentService.getPayments(params));
     }
 }

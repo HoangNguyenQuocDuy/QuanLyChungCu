@@ -16,5 +16,5 @@ public interface PaymentService {
 
     void addPayment(Payment payment);
 
-    List<Payment> getPayments(Map<String, String> params);
+    List<Payment> getPayments(Map<String, String> params) throws Exception;
 }

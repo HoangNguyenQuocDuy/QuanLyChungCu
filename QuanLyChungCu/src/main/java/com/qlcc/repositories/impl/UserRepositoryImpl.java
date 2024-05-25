@@ -8,6 +8,7 @@ import com.qlcc.pojo.User;
 import com.qlcc.repositories.UserRepository;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,7 +165,13 @@ public class UserRepositoryImpl implements UserRepository {
         Query q = s.createQuery("FROM User WHERE username=:username");
         q.setParameter("username", username);
 
-        return (User) q.getSingleResult();
+        User user = null;
+        try {
+            user = (User) q.getSingleResult();
+            return user;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override

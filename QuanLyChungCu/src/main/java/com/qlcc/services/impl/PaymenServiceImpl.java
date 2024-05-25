@@ -28,7 +28,7 @@ public class PaymenServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> getPayments(Map<String, String> params) {
+    public List<Payment> getPayments(Map<String, String> params) throws Exception {
         return paymentRepo.getPayments(params);
     }
 
