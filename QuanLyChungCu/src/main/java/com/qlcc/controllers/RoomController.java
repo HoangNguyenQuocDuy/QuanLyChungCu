@@ -6,6 +6,7 @@ package com.qlcc.controllers;
 
 import com.qlcc.pojo.Room;
 import com.qlcc.services.RoomService;
+import java.security.Principal;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping("/")
-    public String addRoomView(Model model) {
+    public String addRoomView(Model model, Principal p) {
         model.addAttribute("room", new Room());
 
         return "room-list";

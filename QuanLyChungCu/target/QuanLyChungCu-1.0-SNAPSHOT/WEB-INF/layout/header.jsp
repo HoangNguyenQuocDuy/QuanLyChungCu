@@ -8,38 +8,54 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/" />">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/users" />">Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/lockers" />">Lockers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/orders" />">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/entries" />">Entry Right</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/parkings" />">Parking Right</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/invoices" />">Invoices</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/surveys" />">Surveys</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/feedbacks" />">Feedbacks</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/stats" />">Stats</a>
-                </li>
-            </ul>   
+            <div class="navbar-nav me-auto justify-content-between w-100">
+                <div class="d-flex ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/" />">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/users" />">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/lockers" />">Lockers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/orders" />">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/entries" />">Entry Right</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/parkings" />">Parking Right</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/invoices" />">Invoices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/surveys" />">Surveys</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/feedbacks" />">Feedbacks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/stats" />">Stats</a>
+                    </li>
+                </div>
+                <c:choose>
+                    <c:when test="${pageContext.request.userPrincipal.name != null}">
+                        <div class="d-flex align-items-center">
+                            <li style="color: #fff; margin-right: 10px">
+                                Welcome! ${pageContext.request.userPrincipal.name}
+                            </li>
+                            <li>
+                                <button type="button" class="btn btn-primary">
+                                    <a style="text-decoration: none; color: #fff" href="<c:url value="/logout" />">Logout</a>
+                                </button>
+                            </li>
+                        </div>
+                    </c:when>
+                </c:choose>
+            </div>   
         </div>
     </div>
 </nav>

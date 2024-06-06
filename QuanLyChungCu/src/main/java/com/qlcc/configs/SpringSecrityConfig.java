@@ -96,25 +96,6 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/relatives/**").hasAnyRole("CUSTOMER")
-                .antMatchers(HttpMethod.DELETE, "/api/relatives/**").hasAnyRole("CUSTOMER")
-                .antMatchers(HttpMethod.POST, "/api/feedbacks/**").hasAnyRole("CUSTOMER")
-                .antMatchers(HttpMethod.PUT, "/api/feedbacks/**").hasAnyRole("CUSTOMER")
-                .antMatchers(HttpMethod.DELETE, "/api/feedbacks/**").hasAnyRole("CUSTOMER")
-                //                .antMatchers(HttpMethod.GET, ).hasAnyRole("CUSTOMER")
-                .antMatchers(HttpMethod.POST, "/api/surveyAnswers/").hasAnyRole("CUSTOMER")
-                .antMatchers(HttpMethod.DELETE, "/api/rooms/**").hasAnyRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/orders/**").hasAnyRole("ADMIN")
-                .antMatchers("/orders", "/orders/**", "/rooms/**", "/lockers",
-                        "/invoices", "/invoices/**", "/feedbacks", "/entries",
-                        "/api/users/**", "/api/lockers/**", "/entries", "/parkings")
-                .hasAnyRole("ADMIN")
-                .antMatchers("/api/auth/login", "/", "/api/payments/callback/**/**",
-                        "/api/payments/**").permitAll()
-                .anyRequest().authenticated();
         http.formLogin()
                 .usernameParameter("username")
                 .passwordParameter("password");
@@ -123,6 +104,26 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutSuccessUrl("/login");
         http.exceptionHandling()
                 .accessDeniedPage("/login?accessDenied");
+        http.csrf().disable()
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/relatives/**").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.DELETE, "/api/relatives/**").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.POST, "/api/feedbacks/**").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.PUT, "/api/feedbacks/**").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.DELETE, "/api/feedbacks/**").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.POST, "/api/surveyAnswers/").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.DELETE, "/api/rooms/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.POST, "/api/orders/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/orders", "/orders/**", "/rooms/**", "/lockers",
+                        "/invoices", "/invoices/**", "/feedbacks", "/entries",
+                        "/users", "/entries", "/parkings")
+                .access("hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.POST, "/api/users/**", "/api/lockers/**")
+                .hasAnyRole("ROLE_ADMIN")
+//                "/api/payments/callback/**/**", "/api/payments/**"
+                .antMatchers("/api/auth/login").permitAll()
+                .anyRequest().authenticated();
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

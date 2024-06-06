@@ -5,6 +5,7 @@
 package com.qlcc.controllers;
 
 import com.qlcc.services.RoomService;
+import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -28,7 +29,7 @@ public class ApiRoomController {
 
     @DeleteMapping("/{roomId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRoom(Model model, @PathVariable("roomId") int roomId) {
+    public void deleteRoom(Model model, @PathVariable("roomId") int roomId, Principal p) {
         try {
             roomService.deleteRoom(roomId);
         } catch (Exception ex) {

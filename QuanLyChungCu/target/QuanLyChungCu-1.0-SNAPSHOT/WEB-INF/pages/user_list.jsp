@@ -83,7 +83,7 @@
             <td>
                 <c:choose>
                     <c:when test="${u.status == 'Active'}">
-                        <c:url value="/users/${u.id}" var="url" />
+                        <c:url value="/api/users/${u.id}" var="url" />
                         <button onclick="blockUser('${url}')" class="btn btn-danger">Block</button>
                     </c:when>
                 </c:choose>

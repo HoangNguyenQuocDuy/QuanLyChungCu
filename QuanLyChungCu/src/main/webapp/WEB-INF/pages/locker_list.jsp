@@ -4,7 +4,7 @@
 
 <h1 class="text-center text-info mt-4">Locker management</h1>
 <div class="d-flex justify-content-between mb-3 align-items-end">
-    <c:url value="/lockers/" var="url" />
+    <c:url value="/api/lockers/" var="url" />
     <button onClick="addLocker('${url}')" type="button" class="btn btn-success">Add locker</button>
 
     <form action="<c:url value="/lockers" />" class="d-flex align-items-end">
