@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService {
     public void addOrUpdate(User user) throws Exception {
 
         if (user.getId() == null) {
-            user.setStatus("Active");
-            user.setRoleName("CUSTOMER");
+            user.setStatus("New");
+            user.setRoleName("ROLE_CUSTOMER");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else if (user.getStatus().equals("Block")) {
             user.setStatus("Active");

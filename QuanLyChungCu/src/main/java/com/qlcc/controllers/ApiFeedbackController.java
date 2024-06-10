@@ -145,26 +145,13 @@ public class ApiFeedbackController {
         }
     }
 
-    @DeleteMapping(path = "/{fbId}", consumes = {
-        MediaType.APPLICATION_JSON_VALUE,})
-    public ResponseEntity<?> deleteFeedback(@RequestBody Map<String, String> params,
-            @PathVariable("fbId") int fbId) {
+    @DeleteMapping(path = "/{fbId}")
+    public ResponseEntity<?> deleteFeedback(@PathVariable("fbId") int fbId) {
         try {
             Feedback fb = feedbackService.getFeedbackById(fbId);
             if (fb == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                         "Feedback not found with ID: " + fbId);
-            }
-
-            User user = userService.getUserById(Integer.parseInt(params.get("userId")));
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                        "User not found with ID: " + params.get("userId"));
-            }
-
-            if (!Objects.equals(fb.getUserId().getId(), user.getId())) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                        "User doesnt occupy this feedback!");
             }
 
             feedbackService.deleteFeedback(fbId);

@@ -42,6 +42,8 @@
     <tr>
         <th>Id</th> 
         <th>Username</th>
+        <th>First name</th>
+        <th>Last name</th>
         <th>Email</th>
         <th>Phone</th>
         <th>Locker</th>
@@ -55,6 +57,8 @@
         <tr>
             <td>${u.id}</td>
             <td>${u.username}</td>
+            <td>${u.firstname}</td>
+            <td>${u.lastname}</td>
             <td>${u.email}</td>
             <td>${u.phone}</td>
             <td>${u.locker.id}</td>

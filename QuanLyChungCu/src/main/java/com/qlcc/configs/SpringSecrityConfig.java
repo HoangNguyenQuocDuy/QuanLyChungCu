@@ -117,7 +117,7 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/orders/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/orders", "/orders/**", "/rooms/**", "/lockers",
                         "/invoices", "/invoices/**", "/feedbacks", "/entries",
-                        "/users", "/entries", "/parkings")
+                        "/users", "/entries", "/parkings", "/")
                 .access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.POST, "/api/users/**", "/api/lockers/**")
                 .hasAnyRole("ROLE_ADMIN")

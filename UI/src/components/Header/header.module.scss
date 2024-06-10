@@ -1,0 +1,19 @@
+.wrapper {
+    background-image: url('../../assets/images/header.jpg');
+    background-size: cover;
+    background-position: 50%;
+    height: 665px;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        background-color: #1d293e;
+        opacity: .6;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 665px;
+    }
+}

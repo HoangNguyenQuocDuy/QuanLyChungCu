@@ -1,0 +1,24 @@
+.container {
+
+
+    .btnBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 32px 0;
+        
+        button {
+            transition: .25s;
+            font-size: 1.6rem;
+            padding: 19px 60px;
+            color: #fff;
+            background-color: var(--line-nav-bar);
+            border-radius: 12px;
+            opacity: 0.6;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

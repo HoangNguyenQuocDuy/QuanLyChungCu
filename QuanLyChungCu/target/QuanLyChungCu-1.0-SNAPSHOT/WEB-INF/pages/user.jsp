@@ -12,6 +12,14 @@
     <c:choose>
         <c:when test="${empty user.id}">
             <div class="form-floating mb-3 mt-3">
+                <form:input class="form-control"  id="firstname"  placeholder="First name" path="firstname" />
+                <label for="name">First name</label>
+            </div>
+                <div class="form-floating mb-3 mt-3">
+                <form:input class="form-control"  id="lastname"  placeholder="Last name" path="lastname" />
+                <label for="name">Last name</label>
+            </div>
+            <div class="form-floating mb-3 mt-3">
                 <form:input class="form-control"  id="name"  placeholder="Username" path="username" />
                 <label for="name">Username</label>
             </div>
@@ -37,6 +45,8 @@
             <form:hidden path="password" />
             <form:hidden path="email" />
             <form:hidden path="phone" />
+            <form:hidden path="firstname" />
+            <form:hidden path="lastname" />
             <!--            <div class="form-floating mb-3 mt-3">
             <form:select class="form-select" id="status" name="status" path="status">
                 <c:choose>

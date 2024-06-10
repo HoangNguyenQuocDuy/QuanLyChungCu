@@ -1,0 +1,9 @@
+.wrapper {
+    padding: 20px 60px 0;
+
+    font-size: 1.6rem;
+
+    &.nav {
+        margin-top: var(--height-nav);
+    }
+}

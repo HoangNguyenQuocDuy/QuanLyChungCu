@@ -52,6 +52,16 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull(message = "{user.firstname.notNullMsg}")
+    @Size(min = 1, max = 20, message = "{user.firstname.sizeMsg}")
+    @Column(name = "firstname")
+    private String firstname;
+    @Basic(optional = false)
+    @NotNull(message = "{user.lastname.notNullMsg}")
+    @Size(min = 1, max = 20, message = "{user.lastname.sizeMsg}")
+    @Column(name = "lastname")
+    private String lastname;
+    @Basic(optional = false)
     @NotNull(message = "{user.username.notNullMsg}")
     @Size(min = 6, max = 18, message = "{user.username.sizeMsg}")
     @Column(name = "username")
@@ -275,6 +285,34 @@ public class User implements Serializable {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the firstname
+     */
+    public String getFirstname() {
+        return firstname;
+    }
+
+    /**
+     * @param firstname the firstname to set
+     */
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    /**
+     * @return the lastname
+     */
+    public String getLastname() {
+        return lastname;
+    }
+
+    /**
+     * @param lastname the lastname to set
+     */
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
     
 }
