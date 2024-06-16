@@ -1,9 +1,9 @@
 import classnames from 'classnames/bind'
 import { IoIosLogOut, IoMdLogIn } from "react-icons/io";
-import { FaUsers } from "react-icons/fa";
+import { FaRegAddressCard, FaUsers } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
+import { BsPerson } from "react-icons/bs";
 
 import styles from './navbar.module.scss'
 import image from '../../assets/images'
@@ -20,7 +20,7 @@ import { LiaFileInvoiceDollarSolid } from 'react-icons/lia';
 const cx = classnames.bind(styles)
 
 function Navbar() {
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const [isActive, setIsActive] = useState(false)
@@ -29,6 +29,7 @@ function Navbar() {
     const handleLogout = () => {
         dispatch(logout())
         dispatch(clearUser())
+        navigate('/')
     }
 
     useEffect(() => {
@@ -66,10 +67,6 @@ function Navbar() {
                         <IoHomeOutline size={24} />
                         <span >Home</span>
                     </NavLink>
-                    <div className={cx('item')}>
-                        <FaUsers size={24} />
-                        <span>About US</span>
-                    </div>
                     {
                         user.hasOwnProperty('user') ? <>
                             <NavLink to={routes.locker} className={(nav) => {
@@ -102,16 +99,34 @@ function Navbar() {
                                 <MdOutlineDocumentScanner size={24} />
                                 <span>Feedbacks</span>
                             </NavLink>
+                            <NavLink to={routes.services} className={(nav) => {
+                                return cx('item', { active: nav.isActive });
+                            }}>
+                                <FaRegAddressCard size={24} />
+                                <span>Register Card</span>
+                            </NavLink>
+                            <NavLink to={routes.personal} className={(nav) => {
+                                return cx('item', { active: nav.isActive });
+                            }}>
+                                <BsPerson size={24} />
+                                <span>{`${user.user.firstname} ${user.user.lastname}`}</span>
+                            </NavLink>
                             <button onClick={handleLogout} className={cx('item')}>
                                 <IoIosLogOut size={24} /><span>Logout</span>
                             </button>
                         </> :
-                            <NavLink to={routes.login} className={(nav) => {
-                                return cx('item', { active: nav.isActive });
-                            }}>
-                                <IoMdLogIn size={24} />
-                                <span>Login</span>
-                            </NavLink>
+                            <>
+                                <div className={cx('item')}>
+                                    <FaUsers size={24} />
+                                    <span>About US</span>
+                                </div>
+                                <NavLink to={routes.login} className={(nav) => {
+                                    return cx('item', { active: nav.isActive });
+                                }}>
+                                    <IoMdLogIn size={24} />
+                                    <span>Login</span>
+                                </NavLink>
+                            </>
                     }
                 </div>
             </div>

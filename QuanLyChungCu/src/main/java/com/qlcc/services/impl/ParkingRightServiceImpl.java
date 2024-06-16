@@ -46,5 +46,10 @@ public class ParkingRightServiceImpl implements ParkingRightService{
     public int getTotalParkingRights() {
         return parkingRightRepo.getTotalParkingRights();
     }
+
+    @Override
+    public List<ParkingRight> getParkings(int customerId) {
+        return parkingRightRepo.getParkings(customerId);
+    }
     
 }

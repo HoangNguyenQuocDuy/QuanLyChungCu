@@ -113,15 +113,23 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/feedbacks/**").access("hasRole('ROLE_CUSTOMER')")
                 .antMatchers(HttpMethod.DELETE, "/api/feedbacks/**").access("hasRole('ROLE_CUSTOMER')")
                 .antMatchers(HttpMethod.POST, "/api/surveyAnswers/").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.GET, "/api/parkings/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.POST, "/api/parkings/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.GET, "/api/entries/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.POST, "/api/entries/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.POST, "/api/users/**")
+                .access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.GET, "/api/users/**")
+                .access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/api/rooms/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.POST, "/api/orders/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.GET, "/api/users/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/orders", "/orders/**", "/rooms/**", "/lockers",
                         "/invoices", "/invoices/**", "/feedbacks", "/entries",
                         "/users", "/entries", "/parkings", "/")
                 .access("hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.POST, "/api/users/**", "/api/lockers/**")
-                .hasAnyRole("ROLE_ADMIN")
-//                "/api/payments/callback/**/**", "/api/payments/**"
+                .antMatchers(HttpMethod.POST, "/api/users/block/**", "/api/lockers/**").access("hasRole('ROLE_ADMIN')")
+                //                "/api/payments/callback/**/**", "/api/payments/**"
                 .antMatchers("/api/auth/login").permitAll()
                 .anyRequest().authenticated();
 

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.qlcc.services.EntryRightService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -33,6 +35,16 @@ public class ApiEntryRightController {
 
     @Autowired
     private RelativeService relativeService;
+
+    @GetMapping("/")
+    public ResponseEntity<?> getParkingRights(@RequestParam int userId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    parkingRightService.getEntryRights(userId));
+        } catch (NumberFormatException ex) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ex.getMessage());
+        }
+    }
 
     @PostMapping(path = "/", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
@@ -71,7 +83,7 @@ public class ApiEntryRightController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                         "Entry right not found with ID: " + pId);
             }
-            
+
             pr.setStatus(params.get("status"));
 
             parkingRightService.addOrUpdate(pr);

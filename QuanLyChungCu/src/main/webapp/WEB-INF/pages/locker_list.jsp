@@ -1,29 +1,38 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:choose>
+    <c:when test="${not empty sessionScope.basename}">
+        <fmt:setBundle basename="locker_${sessionScope.basename}" scope="session" />
+    </c:when>
+    <c:otherwise>
+        <fmt:setBundle basename="locker" scope="session" />
+    </c:otherwise>
+</c:choose>
 
-<h1 class="text-center text-info mt-4">Locker management</h1>
+<h1 class="text-center text-info mt-4"><fmt:message key="title"/></h1>
 <div class="d-flex justify-content-between mb-3 align-items-end">
     <c:url value="/api/lockers/" var="url" />
-    <button onClick="addLocker('${url}')" type="button" class="btn btn-success">Add locker</button>
+    <button onClick="addLocker('${url}')" type="button" class="btn btn-success"><fmt:message key="addLocker"/></button>
 
     <form action="<c:url value="/lockers" />" class="d-flex align-items-end">
         <div class="me-4">
-            <label class="d-flex justify-content-center mb-2" for="status">Status</label>
+            <label class="d-flex justify-content-center mb-2" for="status"><fmt:message key="status"/></label>
             <select style="width: 140px" class="form-select" id="status" name="status" path="status">
                 <option value="Blank" selected>Blank</option>
                 <option value="Using">Using</option>
             </select>
         </div> 
 
-        <button class="btn btn-primary ms-5" type="submit">Search</button>
+        <button class="btn btn-primary ms-5" type="submit"><fmt:message key="search"/></button>
     </form>
 </div>
 <table class="table table-hover mt-4">
     <tr>
-        <th>Id</th> 
-        <th>Status</th>
-        <th>Action</th>
+        <th><fmt:message key="id"/></th> 
+        <th><fmt:message key="status"/></th>
+        <th><fmt:message key="action"/></th>
     </tr>
     <c:forEach items="${lockers}" var="locker">
         <tr>

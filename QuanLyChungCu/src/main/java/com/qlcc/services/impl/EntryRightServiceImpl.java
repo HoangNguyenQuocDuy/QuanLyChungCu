@@ -20,31 +20,36 @@ import com.qlcc.services.EntryRightService;
 public class EntryRightServiceImpl implements  EntryRightService{
     
     @Autowired
-    private EntryRightRepository parkingRightRepo;
+    private EntryRightRepository entryRightRepo;
 
     @Override
     public void addOrUpdate(EntryRight pr) {
-        parkingRightRepo.addOrUpdate(pr);
+        entryRightRepo.addOrUpdate(pr);
     }
 
     @Override
     public List<EntryRight> getEntryRight(Map<String, String> params) {
-        return parkingRightRepo.getEntryRight(params);
+        return entryRightRepo.getEntryRight(params);
     }
 
     @Override
     public EntryRight getEntryRightById(int id) {
-        return parkingRightRepo.getEntryRightById(id);
+        return entryRightRepo.getEntryRightById(id);
     }
 
     @Override
     public void deleteEntryRight(int id) {
-        parkingRightRepo.deleteEntryRight(id);
+        entryRightRepo.deleteEntryRight(id);
     }
 
     @Override
     public int getTotalEntryRights() {
-        return parkingRightRepo.getTotalEntryRights();
+        return entryRightRepo.getTotalEntryRights();
+    }
+
+    @Override
+    public List<EntryRight> getEntryRights(int customerId) {
+        return entryRightRepo.getEntryRights(customerId);
     }
     
 }

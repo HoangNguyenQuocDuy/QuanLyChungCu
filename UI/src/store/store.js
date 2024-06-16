@@ -7,6 +7,7 @@ import appSlice from "./slice/appSlice";
 import paymentSlice from "./slice/paymentSlice";
 import surveySlice from "./slice/surveySlice";
 import questionSubmitSlice from "./slice/questionSubmitSlice";
+import relativeSlice from "./slice/relativesSlice";
 
 
 const persistConfig = {
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     app: appSlice,
     payments: paymentSlice,
     surveys: surveySlice,
-    questionsSubmit: questionSubmitSlice
+    questionsSubmit: questionSubmitSlice,
+    relatives: relativeSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

@@ -7,7 +7,9 @@ const routes = {
     survey: '/surveys/:surveyId',
     invoice: '/invoices',
     feedback: '/feedbacks',
-    personal: '/personal'
+    personal: '/personal',
+    services: '/services',
+    newUser: 'newUser'
 }
 
 export default routes

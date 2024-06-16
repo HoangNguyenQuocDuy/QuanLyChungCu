@@ -58,21 +58,23 @@ public class UserServiceImpl implements UserService {
             user.setStatus("New");
             user.setRoleName("ROLE_CUSTOMER");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-        } else if (user.getStatus().equals("Block")) {
+        }
+        if (user.getStatus().equals("Block") || user.getStatus().equals("New")) {
             user.setStatus("Active");
-        } else if (user.getFile() != null && !user.getFile().isEmpty()) {
-            String storedPassword = userRepo.getUserById(user.getId()).getPassword();
-
-            if (!passwordEncoder.matches(user.getPassword(), storedPassword)) {
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
-            }
-
+        }
+        if (user.getFile() != null && !user.getFile().isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(user.getFile().getBytes(), ObjectUtils.asMap("folder", "quanlychungcu"));
                 user.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        
+        String storedPassword = userRepo.getUserById(user.getId()).getPassword();
+
+        if (!user.getPassword().equals(storedPassword)) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
         userRepo.addOrUpdate(user);

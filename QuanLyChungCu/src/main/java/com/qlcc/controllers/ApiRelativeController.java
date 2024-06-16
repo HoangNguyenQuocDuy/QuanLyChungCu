@@ -46,7 +46,7 @@ public class ApiRelativeController {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
-    public ResponseEntity<?> createRelative(@RequestPart MultipartFile[] files, 
+    public ResponseEntity<?> createRelative(@RequestPart MultipartFile[] files,
             @RequestParam Map<String, String> params) {
         try {
             User user = userService.getUserById(Integer.parseInt(params.get("userId")));
@@ -56,10 +56,11 @@ public class ApiRelativeController {
             }
 
             Relative relative = new Relative();
-            relative.setName(params.get("name"));
+            relative.setFirstname(params.get("firstname"));
+            relative.setLastname(params.get("lastname"));
             relative.setType(params.get("type"));
             relative.setUserId(user);
-            
+
             if (files.length > 0) {
                 relative.setFile(files[0]);
             }
@@ -101,14 +102,17 @@ public class ApiRelativeController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                         "Relative not found with ID: " + relativeId);
             }
-            
+
             if (files.length > 0) {
                 relative.setFile(files[0]);
             }
-            if(params.containsKey("name")) {
-                relative.setName(params.get("name"));
+            if (params.containsKey("firstname")) {
+                relative.setFirstname(params.get("firstname"));
             }
-            if(params.containsKey("type")) {
+            if (params.containsKey("lastname")) {
+                relative.setLastname(params.get("lastname"));
+            }
+            if (params.containsKey("type")) {
                 relative.setType(params.get("type"));
             }
 

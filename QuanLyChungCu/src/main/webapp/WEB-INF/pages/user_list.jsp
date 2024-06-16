@@ -1,11 +1,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<h1 class="text-center text-info mt-4">User management</h1>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:choose>
+    <c:when test="${not empty sessionScope.basename}">
+        <fmt:setBundle basename="user_${sessionScope.basename}" scope="session" />
+    </c:when>
+    <c:otherwise>
+        <fmt:setBundle basename="user" scope="session" />
+    </c:otherwise>
+</c:choose>
+<h1 class="text-center text-info mt-4"><fmt:message key="title"/></h1>
 <div class="d-flex justify-content-between mb-3 align-items-end">
     <div class="d-flex align-items-center">
-        <a style="height: 40px" href="/QuanLyChungCu/users/" class="btn btn-success">Add User</a>
+        <a style="height: 40px" href="/QuanLyChungCu/users/" class="btn btn-success"><fmt:message key="addUser"/></a>
     </div>
 
     <form action="<c:url value="/users" />" class="d-flex align-items-end">
@@ -21,13 +29,13 @@
         <div class="me-4">
             <label class="d-flex justify-content-center mb-2" for="status">Status</label>
             <select style="width: 160px" class="form-select" id="status" name="status" path="status">
-                <option value="Active" selected>Active</option>
-                <option value="Block">Block</option>
+                <option value="Active" selected><fmt:message key="active"/></option>
+                <option value="Block"><fmt:message key="block"/></option>
             </select>
         </div> 
 
         <div class="me-4">
-            <label class="d-flex justify-content-center mb-2" for="room">Room</label>
+            <label class="d-flex justify-content-center mb-2" for="room"><fmt:message key="room"/></label>
             <select style="width: 140px" class="form-select" id="room" name="room">
                 <c:forEach items="${roomsUsing}" var="r">
                     <option value="${r.id}">${r.name}</option>
@@ -35,23 +43,22 @@
             </select>
         </div>
 
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit"><fmt:message key="search"/></button>
     </form>
 </div>
 <table class="table table-hover mt-4">
     <tr>
-        <th>Id</th> 
-        <th>Username</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Locker</th>
-        <th>Status</th>
-        <th>Avatar</th>
-        <th>Room</th>
-        <th>Locker</th>
-        <th>Action</th>
+        <th><fmt:message key="id"/></th> 
+        <th><fmt:message key="username"/></th>
+        <th><fmt:message key="firstname"/></th>
+        <th><fmt:message key="lastname"/></th>
+        <th><fmt:message key="email"/></th>
+        <th><fmt:message key="phone"/></th>
+        <th><fmt:message key="locker"/></th>
+        <th><fmt:message key="status"/></th>
+        <th><fmt:message key="avatar"/></th>
+        <th><fmt:message key="room"/></th>
+        <th><fmt:message key="action"/></th>
     </tr>
     <c:forEach items="${users}" var="u">
         <tr>
@@ -83,16 +90,15 @@
                 </c:choose>
             </td>
             <td>${u.room.name}</td>
-            <td>${u.locker.id}</td>
             <td>
                 <c:choose>
                     <c:when test="${u.status == 'Active'}">
                         <c:url value="/api/users/${u.id}" var="url" />
-                        <button onclick="blockUser('${url}')" class="btn btn-danger">Block</button>
+                        <button onclick="blockUser('${url}')" class="btn btn-danger"><fmt:message key="block"/></button>
                     </c:when>
                 </c:choose>
                 <c:url value="/users/${u.id}" var="url" />
-                <a href="${url}" class="btn btn-info">Update</a>
+                <a href="${url}" class="btn btn-info"><fmt:message key="update"/></a>
             </td>
         </tr>
     </c:forEach>

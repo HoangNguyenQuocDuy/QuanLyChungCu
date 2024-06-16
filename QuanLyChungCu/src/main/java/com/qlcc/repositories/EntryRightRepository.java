@@ -21,6 +21,9 @@ public interface EntryRightRepository {
     EntryRight getEntryRightById(int id);
 
     void deleteEntryRight(int id);
-    
+
     int getTotalEntryRights();
+
+    List<EntryRight> getEntryRights(int customerId);
+
 }

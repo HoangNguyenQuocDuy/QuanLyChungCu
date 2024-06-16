@@ -9,7 +9,7 @@ import newRequest from '../../untils/request'
 import moment from 'moment';
 import ReactLoading from 'react-loading';
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import { LuPenLine } from 'react-icons/lu';
+import { notify } from '../../untils/notification';
 const cx = classnames.bind(styles)
 
 function Feedbacks() {
@@ -50,15 +50,15 @@ function Feedbacks() {
 
     const handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) {
-          return;
+            return;
         }
         handleGetFeedbacks();
-      };
-      
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-      }, [isLoading]);
+    }, [isLoading]);
 
     const handleAddFB = async (e) => {
         e.preventDefault()
@@ -79,10 +79,13 @@ function Feedbacks() {
                 .then(data => {
                     setIsShowAddBox(false)
                     handleGetFeedbacks()
-                    setIsLoading(false)
+                    notify('Feedback has been created!', 'success')
                 })
                 .catch(err => {
-                    alert('Error when create feedback: ', err)
+                    notify('Error when create feedback: ' + err, 'error')
+                })
+                .finally(() => {
+                    setIsLoading(false)
                 })
         }
     }
@@ -117,15 +120,17 @@ function Feedbacks() {
                 }
             })
                 .then((data) => {
-                    console.log(data.data)
+                    notify('Feedback has been deleted!', 'success')
                     handleGetFeedbacks()
-                    setIsLoading(false)
                     if (isShowAddBox) {
                         setIsShowAddBox(false)
                     }
                 })
                 .catch(err => {
-                    alert(`Error when delete feedback with id=${id}: `, err)
+                    notify(`Error when deleting feedback with id=${id}: ` + err, 'error')
+                })
+                .finally(() => {
+                    setIsLoading(false)
                 })
         }
     }

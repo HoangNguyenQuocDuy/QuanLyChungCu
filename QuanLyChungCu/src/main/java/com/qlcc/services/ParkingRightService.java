@@ -23,4 +23,6 @@ public interface ParkingRightService {
     void deleteParkingRight(int id);
 
     int getTotalParkingRights();
+
+    List<ParkingRight> getParkings(int customerId);
 }

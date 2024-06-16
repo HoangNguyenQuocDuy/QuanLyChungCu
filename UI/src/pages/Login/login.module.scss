@@ -166,6 +166,28 @@
                     outline: none;
                     margin-top: 16px;
                 }
+
+                .avatarBox {
+                    display: flex;
+                    width: 100%;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    ._avatar {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    img {
+                        margin-top: 10px;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: contain;
+                    }
+                }
             }
 
             button {
@@ -291,4 +313,42 @@
     color: var(--main-color);
     font-size: 1.4rem;
     margin-top: 10px;
+}
+
+.btnBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 10px;
+
+    .btn {
+        font-size: 1.6rem;
+        padding: 12px 20px;
+        border-radius: 10px;
+        color: #fff;
+        background-color: var(--main-color);
+        opacity: .7;
+        transition: .2s;
+
+        &.prevent {
+            pointer-events: none;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .loading {
+        position: absolute;
+        top: 30%;
+        // transform: translateY(-50%);
+        width: 40px !important;
+        height: 40px !important;
+    }
 }

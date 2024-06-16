@@ -7,13 +7,17 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         loadUser: (state, action) => {
+            console.log('action.payload: ', action.payload)
+            if (Object.keys(state).length !== 0) {
+                return { ...state, user: { ...action.payload } }
+            }
             return action.payload
         },
         clearUser: () => {
             return initialState
         }
     },
-    extraReducers: (builder) => {}
+    extraReducers: (builder) => { }
 })
 
 export const { loadUser, clearUser } = userSlice.actions

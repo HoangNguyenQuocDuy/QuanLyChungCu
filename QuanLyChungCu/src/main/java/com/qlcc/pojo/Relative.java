@@ -36,7 +36,6 @@ import org.springframework.web.multipart.MultipartFile;
 @NamedQueries({
     @NamedQuery(name = "Relative.findAll", query = "SELECT r FROM Relative r"),
     @NamedQuery(name = "Relative.findById", query = "SELECT r FROM Relative r WHERE r.id = :id"),
-    @NamedQuery(name = "Relative.findByName", query = "SELECT r FROM Relative r WHERE r.name = :name"),
     @NamedQuery(name = "Relative.findByType", query = "SELECT r FROM Relative r WHERE r.type = :type")})
 public class Relative implements Serializable {
 
@@ -46,10 +45,14 @@ public class Relative implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 100)
-    @NotNull(message = "Name of related is required!")
-    @Column(name = "name")
-    private String name;
+    @Size(max = 30)
+    @NotNull(message = "First name of related is required!")
+    @Column(name = "firstname")
+    private String firstname;
+    @Size(max = 30)
+    @NotNull(message = "Last name of related is required!")
+    @Column(name = "lastname")
+    private String lastname;
     @NotNull(message = "Type of related is required!")
     @Size(max = 50)
     @Column(name = "type")
@@ -84,14 +87,6 @@ public class Relative implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getType() {
@@ -179,6 +174,34 @@ public class Relative implements Serializable {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the firstname
+     */
+    public String getFirstname() {
+        return firstname;
+    }
+
+    /**
+     * @param firstname the firstname to set
+     */
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    /**
+     * @return the lastname
+     */
+    public String getLastname() {
+        return lastname;
+    }
+
+    /**
+     * @param lastname the lastname to set
+     */
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
 }

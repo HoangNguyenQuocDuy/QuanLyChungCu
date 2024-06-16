@@ -15,4 +15,6 @@ public interface StatsRepository {
     List<Object[]> getReportForSurveyQuestion(int surveyId, int questionId);
 
     List<Object[]> getCountResponseForSurvey();
+    
+    List<Object[]> getRevenueByMonth(int month, int year);
 }

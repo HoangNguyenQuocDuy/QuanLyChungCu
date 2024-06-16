@@ -3,6 +3,7 @@ import classnames from 'classnames/bind'
 import styles from './defaultLayout.module.scss'
 import Navbar from '../../components/Navbar';
 import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 const cx = classnames.bind(styles)
 
@@ -13,7 +14,8 @@ function DefaultLayout({ children }) {
     return (
         <>
             <Navbar />
-            <div className={cx('wrapper', {'nav': isActiveNavBar})}>
+            <ToastContainer />
+            <div className={cx('wrapper', { 'nav': isActiveNavBar })}>
                 {children}
             </div>
         </>

@@ -13,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,16 +29,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/parkings")
 public class ApiParkingRightController {
-    
+
     @Autowired
     private ParkingRightService parkingRightService;
-    
+
     @Autowired
     private RelativeService relativeService;
-    
+
+    @GetMapping("/")
+    public ResponseEntity<?> getParkingRights(@RequestParam int userId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    parkingRightService.getParkings(userId));
+        } catch (NumberFormatException ex) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ex.getMessage());
+        }
+    }
+
     @PostMapping(path = "/", consumes = {
-        MediaType.APPLICATION_JSON_VALUE,
-    })
+        MediaType.APPLICATION_JSON_VALUE,})
     public ResponseEntity<?> createParkingRight(@RequestBody Map<String, String> params) {
         try {
             Relative relative = relativeService.getRelativeById(Integer.parseInt(params.get("relativeId")));
@@ -72,7 +83,7 @@ public class ApiParkingRightController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                         "Parking right not found with ID: " + pId);
             }
-            
+
             pr.setStatus(params.get("status"));
 
             parkingRightService.addOrUpdate(pr);
@@ -83,4 +94,5 @@ public class ApiParkingRightController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ex.getMessage());
         }
     }
+
 }

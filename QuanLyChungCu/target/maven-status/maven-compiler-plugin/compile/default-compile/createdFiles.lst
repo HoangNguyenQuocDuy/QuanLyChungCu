@@ -37,6 +37,7 @@ com\qlcc\services\InvoiceService.class
 com\qlcc\configs\SecurrityInit.class
 validators\UserUniqueValidator.class
 com\qlcc\controllers\RoomController.class
+com\qlcc\dto\UserResponse.class
 com\qlcc\services\FeedbackService.class
 com\qlcc\services\impl\SurveyQuestionServiceImpl.class
 com\qlcc\controllers\ApiSurveyAnswerController.class
@@ -147,3 +148,4 @@ com\qlcc\repositories\impl\PaymentRepositoryImpl.class
 com\qlcc\repositories\SurveyAnswerRepository.class
 com\qlcc\dto\SurveyForm.class
 com\qlcc\services\impl\EmailServiceImpl.class
+com\qlcc\dto\UserResponse$UserResponseBuilder.class

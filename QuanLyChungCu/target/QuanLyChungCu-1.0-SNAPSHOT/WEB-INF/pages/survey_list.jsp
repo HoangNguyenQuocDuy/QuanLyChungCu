@@ -1,11 +1,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<h1 class="text-center text-info mt-4">Survey management</h1>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:choose>
+    <c:when test="${not empty sessionScope.basename}">
+        <fmt:setBundle basename="surveys_${sessionScope.basename}" scope="session" />
+    </c:when>
+    <c:otherwise>
+        <fmt:setBundle basename="surveys" scope="session" />
+    </c:otherwise>
+</c:choose>
+<h1 class="text-center text-info mt-4"><fmt:message key="title"/></h1>
 <div class="d-flex justify-content-between mb-3 align-items-end">
     <div class="d-flex align-items-center">
-        <a style="height: 40px" href="/QuanLyChungCu/surveys/" class="btn btn-success">Add Survey</a>
+        <a style="height: 40px" href="/QuanLyChungCu/surveys/" class="btn btn-success"><fmt:message key="addSurvey"/></a>
     </div>
 
     <form action="<c:url value="/surveys" />" class="d-flex align-items-end">
@@ -19,7 +27,7 @@
             <input style="width: 140px" class="form-control me-2" name="phone" type="search" placeholder="Phone...">
         </div>
         <div class="me-4">
-            <label class="d-flex justify-content-center mb-2" for="status">Status</label>
+            <label class="d-flex justify-content-center mb-2" for="status"><fmt:message key="status"/></label>
             <select style="width: 160px" class="form-select" id="status" name="status" path="status">
                 <option value="Active" selected>Active</option>
                 <option value="Block">Block</option>
@@ -27,7 +35,7 @@
         </div> 
 
         <div class="me-4">
-            <label class="d-flex justify-content-center mb-2" for="room">Room</label>
+            <label class="d-flex justify-content-center mb-2" for="room"><fmt:message key="room"/></label>
             <select style="width: 140px" class="form-select" id="room" name="room">
                 <c:forEach items="${roomsUsing}" var="r">
                     <option value="${r.id}">${r.name}</option>
@@ -35,16 +43,16 @@
             </select>
         </div>
 
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit"><fmt:message key="search"/></button>
     </form>
 </div>
 <table class="table table-hover mt-4">
     <tr>
-        <th>Id</th> 
-        <th>Title</th>
-        <th>Status</th>
-        <th>Description</th>
-        <th>Action</th>
+        <th><fmt:message key="id"/></th> 
+        <th><fmt:message key="Title"/></th>
+        <th><fmt:message key="status"/></th>
+        <th><fmt:message key="description"/></th>
+        <th><fmt:message key="Action"/></th>
     </tr>
     <c:forEach items="${surveys}" var="s">
         <tr>
@@ -64,7 +72,7 @@
             <td>${s.description}</td>
             <td>
                 <c:url value="/surveys/${s.id}" var="url" />
-                <a href="${url}" class="btn btn-info">View</a>
+                <a href="${url}" class="btn btn-info"><fmt:message key="view"/></a>
             </td>
         </tr>
     </c:forEach>

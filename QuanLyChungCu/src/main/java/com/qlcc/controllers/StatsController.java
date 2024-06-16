@@ -7,6 +7,7 @@ package com.qlcc.controllers;
 import com.qlcc.pojo.Surveyquestion;
 import com.qlcc.services.StatsService;
 import com.qlcc.services.SurveyQuestionService;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,16 @@ public class StatsController {
                 Integer.parseInt(surveyId), Integer.parseInt(questionId));
         model.addAttribute("statsCountQuestion", statsCountQuestion);
 
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        int currentMonth = currentDate.getMonthValue();
+        int year = Integer.parseInt(params.getOrDefault("year", String.valueOf(currentYear)));
+        int month = Integer.parseInt(params.getOrDefault("month", String.valueOf(currentMonth)));
+        List<Object[]> statsRevenueByMonth = statsService.getRevenueByMonth(month, year);
+        model.addAttribute("statsRevenueByMonth", statsRevenueByMonth);
+        model.addAttribute("month", month);
+        model.addAttribute("year", year);
+        
         return "stats";
     }
 

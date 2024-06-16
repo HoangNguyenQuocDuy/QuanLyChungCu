@@ -54,7 +54,8 @@ public class UserController {
         int totalUsers = userService.getTotalUsers();
         int pageSize = Integer.parseInt(env.getProperty("user.pageSize"));
         int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
-
+        params.put("roleName", "ROLE_CUSTOMER");
+        
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("users", userService.getUsers(params));
         return "user_list";

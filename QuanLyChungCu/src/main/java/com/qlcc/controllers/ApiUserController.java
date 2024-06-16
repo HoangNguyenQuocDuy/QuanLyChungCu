@@ -4,6 +4,7 @@
  */
 package com.qlcc.controllers;
 
+import com.qlcc.dto.UserResponse;
 import com.qlcc.pojo.User;
 import com.qlcc.services.UserService;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,13 +29,36 @@ import org.springframework.web.server.ResponseStatusException;
  * @author DELL
  */
 @RestController
-@RequestMapping("/api/users")
+//@RequestMapping("/api/users")
 public class ApiUserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/{userId}")
+    @GetMapping("/api/_users/")
+    public ResponseEntity<?> getUserNa(@RequestParam int userId) {
+        try {
+            User user = userService.getUserById(userId);
+            UserResponse userRes = new UserResponse();
+            userRes.setUsername(user.getUsername());
+            userRes.setStatus(user.getStatus());
+            userRes.setFirstname(user.getFirstname());
+            userRes.setLastname(user.getLastname());
+            userRes.setEmail(user.getEmail());
+            userRes.setPhone(user.getPhone());
+            userRes.setRoleName(user.getRoleName());
+            userRes.setLocker(user.getLocker());
+            userRes.setRoom(user.getRoom());
+            userRes.setId(user.getId());
+            userRes.setAvatar(user.getAvatar());
+
+            return ResponseEntity.status(HttpStatus.OK).body(userRes);
+        } catch (NumberFormatException ex) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/api/users/block/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public void blockUser(Model model, @PathVariable("userId") int userId) {
         try {
@@ -44,7 +69,7 @@ public class ApiUserController {
         }
     }
 
-    @PostMapping(path = "/{userId}", consumes = {
+    @PostMapping(path = "/api/users/{userId}", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
@@ -63,6 +88,18 @@ public class ApiUserController {
             }
             if (params.get("password") != null) {
                 user.setPassword(params.get("password"));
+            }
+            if (params.get("firstname") != null) {
+                user.setFirstname(params.get("firstname"));
+            }
+            if (params.get("lastname") != null) {
+                user.setLastname(params.get("lastname"));
+            }
+            if (params.get("email") != null) {
+                user.setEmail(params.get("email"));
+            }
+            if (params.get("phone") != null) {
+                user.setPhone(params.get("phone"));
             }
 
             userService.addOrUpdate(user);

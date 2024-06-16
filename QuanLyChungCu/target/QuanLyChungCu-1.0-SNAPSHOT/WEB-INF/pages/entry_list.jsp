@@ -1,15 +1,23 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:choose>
+    <c:when test="${not empty sessionScope.basename}">
+        <fmt:setBundle basename="entryright_${sessionScope.basename}" scope="session" />
+    </c:when>
+    <c:otherwise>
+        <fmt:setBundle basename="entryright" scope="session" />
+    </c:otherwise>
+</c:choose>
 
-<h1 class="text-center text-info mt-4">Entry Right Management</h1>
+<h1 class="text-center text-info mt-4"><fmt:message key="title"/></h1>
 <c:if test="${!empty errMsg}">
     <div class="alert alert-danger">${errMsg}</div>
 </c:if>
 <div class="d-flex justify-content-between mb-3 align-items-end">
     <form action="<c:url value="/entries" />" class="d-flex mt-4 w-100 justify-content-end align-items-end">
         <div class="me-4">
-            <label class="d-flex justify-content-center mb-2" for="status">Status</label>
+            <label class="d-flex justify-content-center mb-2" for="status"><fmt:message key="status"/></label>
             <select style="width: 140px;" class="form-select ms-3 me-4" id="status" name="status">
                 <option value="Pending" >Pending</option>
                 <option value="Confirmed" >Confirmed</option>
@@ -17,26 +25,26 @@
             </select>
         </div> 
         <div class="me-4">
-            <label class="d-flex justify-content-center mb-2" for="roomId">Room</label>
+            <label class="d-flex justify-content-center mb-2" for="roomId"><fmt:message key="room"/></label>
             <select style="width: 140px;" class="form-select ms-3 me-4" id="roomId" name="roomId">
                 <c:forEach items="${roomsUsing}" var="r">
                     <option value="${r.id}" >${r.name}</option>
                 </c:forEach>
             </select>
         </div> 
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit"><fmt:message key="search"/></button>
     </form>
 </div>
 <table class="table table-hover mt-4">
     <tr>
-        <th>Id</th> 
-        <th>Status</th>
-        <th>Related Name</th>
-        <th>Related</th>
-        <th>Room</th>
-        <th>Created at</th>
-        <th>Updated at</th>
-        <th>Action</th>
+        <th><fmt:message key="id"/></th> 
+        <th><fmt:message key="status"/></th>
+        <th><fmt:message key="relateName"/></th>
+        <th><fmt:message key="related"/></th>
+        <th><fmt:message key="room"/></th>
+        <th><fmt:message key="Createdat"/></th>
+        <th><fmt:message key="Updatedat"/></th>
+        <th><fmt:message key="Action"/></th>
     </tr>
     <c:forEach items="${entryRights}" var="p">
         <tr>
@@ -54,7 +62,7 @@
                     </c:otherwise>
                 </c:choose>
             </td>
-            <td>${p.relativeId.name}</td>
+            <td>${p.relativeId.firstname} ${p.relativeId.lastname}</td>
             <td>${p.relativeId.type}</td>
             <td>${p.relativeId.userId.room.name}</td>
             <td><fmt:formatDate value="${p.createdAt}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
@@ -70,8 +78,8 @@
             </td>
             <td>
                 <c:url value="/api/entries/${p.id}" var="url" />
-                <button onClick="updateEntryRight('${url}', 'Confirmed')" class="btn btn-info">Confirm</button>
-                <button onClick="updateEntryRight('${url}', 'Canceled')" class="btn btn-danger">Cancel</button>
+                <button onClick="updateEntryRight('${url}', 'Confirmed')" class="btn btn-info"><fmt:message key="confirm"/></button>
+                <button onClick="updateEntryRight('${url}', 'Canceled')" class="btn btn-danger"><fmt:message key="cancel"/></button>
             </td>
         </tr>
     </c:forEach>

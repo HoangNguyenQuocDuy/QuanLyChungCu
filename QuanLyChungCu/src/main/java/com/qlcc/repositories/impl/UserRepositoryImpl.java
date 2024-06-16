@@ -40,6 +40,9 @@ public class UserRepositoryImpl implements UserRepository {
         if (params.containsKey("phone") && !params.get("phone").equals("")) {
             hql += " AND u.phone LIKE :phone";
         }
+        if (params.containsKey("roleName") && !params.get("roleName").equals("")) {
+            hql += " AND u.roleName = :roleName";
+        }
         if (params.containsKey("email") && !params.get("email").equals("")) {
             hql += " AND u.email LIKE :email";
         }
@@ -74,6 +77,9 @@ public class UserRepositoryImpl implements UserRepository {
         }
         if (params.containsKey("roomName") && !params.get("roomName").isEmpty()) {
             query.setParameter("roomName", "%" + params.get("roomName") + "%");
+        }
+        if (params.containsKey("roleName") && !params.get("roleName").isEmpty()) {
+            query.setParameter("roleName", params.get("roleName"));
         }
 
         int pageSize = Integer.parseInt(env.getProperty("user.pageSize").toString());

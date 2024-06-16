@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import newRequest from "../../untils/request"
+import { useNavigate } from "react-router-dom"
 
 const initialState = {
     username: '',

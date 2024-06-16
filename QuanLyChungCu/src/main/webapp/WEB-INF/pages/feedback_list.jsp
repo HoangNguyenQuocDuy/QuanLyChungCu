@@ -1,33 +1,41 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:choose>
+    <c:when test="${not empty sessionScope.basename}">
+        <fmt:setBundle basename="feedback_${sessionScope.basename}" scope="session" />
+    </c:when>
+    <c:otherwise>
+        <fmt:setBundle basename="feedback" scope="session" />
+    </c:otherwise>
+</c:choose>
 
-<h1 class="text-center text-info mt-4">Feedback Management</h1>
+<h1 class="text-center text-info mt-4"><fmt:message key="title"/></h1>
 <c:if test="${!empty errMsg}">
     <div class="alert alert-danger">${errMsg}</div>
 </c:if>
 <div class="d-flex justify-content-between mb-3 align-items-end">
     <form action="<c:url value="/feedbacks" />" class="d-flex mt-4 w-100 justify-content-end align-items-end">
         <div class="me-4">
-            <label class="d-flex justify-content-center mb-2" for="roomId">Room</label>
+            <label class="d-flex justify-content-center mb-2" for="roomId"><fmt:message key="room"/></label>
             <select style="width: 140px;" class="form-select ms-3 me-4" id="roomId" name="roomId">
                 <c:forEach items="${roomsUsing}" var="r">
                     <option value="${r.id}" >${r.name}</option>
                 </c:forEach>
             </select>
         </div> 
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit"><fmt:message key="search"/></button>
     </form>
 </div>
 <table class="table table-hover mt-4">
     <tr>
-        <th>Id</th> 
-        <th>Title</th>
-        <th>Content</th>
-        <th>Room</th>
-        <th>Created at</th>
-        <th>Updated at</th>
-        <th>Action</th>
+        <th><fmt:message key="id"/></th> 
+        <th><fmt:message key="Title"/></th>
+        <th><fmt:message key="content"/></th>
+        <th><fmt:message key="room"/></th>
+        <th><fmt:message key="Createdat"/></th>
+        <th><fmt:message key="Updatedat"/></th>
+        <th><fmt:message key="Action"/></th>
     </tr>
     <c:forEach items="${feedbacks}" var="fb">
         <tr>

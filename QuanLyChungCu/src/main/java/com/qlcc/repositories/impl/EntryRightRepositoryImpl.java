@@ -108,4 +108,15 @@ public class EntryRightRepositoryImpl implements EntryRightRepository {
         return ((Number) query.getSingleResult()).intValue();
     }
 
+    @Override
+    public List<EntryRight> getEntryRights(int customerId) {
+        Session s = factory.getObject().getCurrentSession();
+        javax.persistence.Query query = s.createQuery(""
+                + "FROM EntryRight er WHERE er.relativeId.userId.id =: customerId");
+
+        query.setParameter("customerId", customerId);
+
+        return query.getResultList();
+    }
+
 }

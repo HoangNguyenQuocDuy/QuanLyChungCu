@@ -29,5 +29,10 @@ public class StatsServiceImpl implements StatsService{
     public List<Object[]> getCountResponseForSurvey() {
         return statsRepo.getCountResponseForSurvey();
     }
+
+    @Override
+    public List<Object[]> getRevenueByMonth(int month, int year) {
+        return statsRepo.getRevenueByMonth(month, year);
+    }
     
 }

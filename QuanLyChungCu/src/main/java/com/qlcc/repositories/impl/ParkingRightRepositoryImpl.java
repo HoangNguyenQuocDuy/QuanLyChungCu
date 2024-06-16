@@ -108,4 +108,15 @@ public class ParkingRightRepositoryImpl implements ParkingRightRepository {
         return ((Number) query.getSingleResult()).intValue();
     }
 
+    @Override
+    public List<ParkingRight> getParkings(int customerId) {
+        Session s = factory.getObject().getCurrentSession();
+        javax.persistence.Query query = s.createQuery(""
+                + "FROM ParkingRight pr WHERE pr.relativeId.userId.id =: customerId");
+
+        query.setParameter("customerId", customerId);
+
+        return query.getResultList();
+    }
+
 }

@@ -1,15 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<h1 class="text-center text-info mt-1">Statistic</h1>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:choose>
+    <c:when test="${not empty sessionScope.basename}">
+        <fmt:setBundle basename="static_${sessionScope.basename}" scope="session" />
+    </c:when>
+    <c:otherwise>
+        <fmt:setBundle basename="static" scope="session" />
+    </c:otherwise>
+</c:choose>
+<h1 class="text-center text-info mt-1"><fmt:message key="title"/></h1>
+
+
+<h3 style="margin-top: 40px"><fmt:message key="Survey"/></h3>
 
 <div class="row">
     <div class="col-md-5 col-12" style="max-height: 280px; overflow-y: scroll">
         <table class="table ">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Response Count</th>
+                    <th><fmt:message key="Id"/></th>
+                    <th><fmt:message key="Title"/></th>
+                    <th><fmt:message key="ResponseCount"/></th>
                 </tr>
             </thead>
             <tbody>
@@ -32,8 +44,8 @@
     <div class="col-md-5 col-12">
         <div>
             <div class="alert alert-info">
-                <h5 id="surveyTitle">Survey:</h5>
-                <h5 id="questionTitle">Question:</h5>
+                <h5 id="surveyTitle"><fmt:message key="Survey"/>:</h5>
+                <h5 id="questionTitle"><fmt:message key="Question"/>:</h5>
             </div>
             <form>
                 <div class="form-floating  mb-3 mt-3">
@@ -42,7 +54,7 @@
                             <option value="${survey.id}">${survey.title}</option>
                         </c:forEach>
                     </select>
-                    <label for="surveyId" class="form-label">Survey name:</label>
+                    <label for="surveyId" class="form-label"><fmt:message key="Survey"/>:</label>
                 </div>
                 <div class="form-floating  mb-3 mt-3">
                     <select class="form-select" id="questionId" name="questionId">
@@ -50,17 +62,17 @@
                             <option value="${question.id}">${question.questionText}</option>
                         </c:forEach>
                     </select>
-                    <label for="questionId" class="form-label">Question name:</label>
+                    <label for="questionId" class="form-label"><fmt:message key="Question"/>:</label>
                 </div>
                 <div class="form-floating  mb-3 mt-3">
-                    <button class="btn btn-info">Filter</button>
+                    <button class="btn btn-info"><fmt:message key="Filter"/>:</button>
                 </div>
             </form>
         </div>
         <table class="table">
             <tr>
-                <th>Option</th>
-                <th>Response count</th>
+                <th><fmt:message key="Option"/></th>
+                <th><fmt:message key="ResponseCount"/></th>
             </tr>
             <c:forEach items="${statsCountQuestion}" var="sqc">
                 <tr>
@@ -74,7 +86,53 @@
     <div class="col-md-7 col-12">
         <canvas id="myChart2"></canvas>
     </div>
+</div>
 
+<h3 style="margin-top: 60px"><fmt:message key="MonthlyRevenue"/></h3>
+
+<div class="row mt-4">
+    <div class="d-flex">
+        <div class="col-md-5 col-12 me-4">
+            <div>
+                <div class="alert alert-info">
+                    <h5 id="yearTitle"><fmt:message key="Year"/>:</h5>
+                    <h5 id="monthTitle"><fmt:message key="Month"/>:</h5>
+                </div>
+                <form>
+                    <div class="form-floating mb-3">
+                        <input name="year" type="number" class="form-control" id="year" placeholder="2024">
+                        <label for="year"><fmt:message key="Year"/></label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input name="month" type="number" class="form-control" id="floatingInput" placeholder="5">
+                        <label for="floatingInput"><fmt:message key="Month"/></label>
+                    </div>
+                    <div class="form-floating  mb-3 mt-3">
+                        <button class="btn btn-info"><fmt:message key="Filter"/>:</button>
+                    </div>
+                </form>
+            </div>
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="InvoiceType"/></th>
+                        <th><fmt:message key="Amount"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${statsRevenueByMonth}" var="stats">
+                        <tr>
+                            <td>${stats[0]}</td>
+                            <td>${stats[1]}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-7 col-12">
+            <canvas id="statsRevenueByMonth"></canvas>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -113,6 +171,13 @@
     data2.push(${sc[4]});
     </c:forEach>
 
+    let labels3 = [];
+    let data3 = [];
+    <c:forEach items="${statsRevenueByMonth}" var="sc">
+    labels3.push('${sc[0]}');
+    data3.push(${sc[1]});
+    </c:forEach>
+
     function drawChart(ctx, labels, data, title) {
         new Chart(ctx, {
             type: 'bar',
@@ -141,13 +206,21 @@
     window.onload = function () {
         let ctx1 = document.getElementById("myChart1");
         let ctx2 = document.getElementById("myChart2");
-        drawChart(ctx1, labels, data, 'Responses count');
+        let ctx3 = document.getElementById("statsRevenueByMonth");
+
+        drawChart(ctx1, labels, data, 'Responses Count');
         drawChart(ctx2, labels2, data2, '${statsCountQuestion[0][1]}');
+        drawChart(ctx3, labels3, data3, 'Monthly Revenue');
 
         let surveyTitle = document.getElementById("surveyTitle");
         let questionTitle = document.getElementById("questionTitle");
+        let monthTitle = document.getElementById("monthTitle");
+        let yearTitle = document.getElementById("yearTitle");
 
         surveyTitle.innerText += ' ${statsCountQuestion[0][0]}';
         questionTitle.innerText += ' ${statsCountQuestion[0][2]}';
+
+        monthTitle.innerText += ' ${month}';
+        yearTitle.innerText += ' ${year}'
     };
 </script>
