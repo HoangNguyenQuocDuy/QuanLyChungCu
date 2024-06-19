@@ -13,7 +13,6 @@ import Feedbacks from './pages/Feedbacks';
 import Personal from './pages/Personal';
 import Service from './pages/Service';
 import 'react-toastify/dist/ReactToastify.css';
-import ChangeAvatar from './pages/ChangeAvatar';
 function App() {
 
   return (
@@ -29,7 +28,6 @@ function App() {
         <Route path={routes.personal} element={<Personal />} />
         <Route path={routes.services} element={<DefaultLayout children={<Service />} />} />
         <Route path={routes.login} element={<Login />} />
-        <Route path={routes.newUser} element={<ChangeAvatar />} />
       </Routes>
     </BrowserRouter>
   );

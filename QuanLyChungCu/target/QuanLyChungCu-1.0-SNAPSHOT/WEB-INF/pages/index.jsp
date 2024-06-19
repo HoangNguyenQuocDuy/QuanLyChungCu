@@ -64,7 +64,7 @@
             <td>${r.roomtype.price} $</td>
             <td><img class="rounded img-fluid" src="${r.image}" width="200" alt="${r.name}"></td>
             <td>
-                <c:url value="/rooms/${r.id}" var="url" />
+                <c:url value="/api/rooms/${r.id}" var="url" />
                 <button onclick="deleteRoom('${url}')" class="btn btn-danger"><fmt:message key="delete"/></button>
                 <a href="${url}" class="btn btn-info"><fmt:message key="update"/></a>
             </td>

@@ -26,4 +26,6 @@ public interface EntryRightService {
 
     List<EntryRight> getEntryRights(int customerId);
 
+    boolean isEntryRightRelativeExitsts(int relativeId);
+
 }

@@ -32,28 +32,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class StatsRepositoryImpl implements StatsRepository {
-    
+
     @Autowired
     private LocalSessionFactoryBean factory;
-    
+
     @Override
     public List<Object[]> getReportForSurveyQuestion(int surveyId, int questionId) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root surveyQuestion = q.from(Surveyquestion.class);
-        
+
         q.where(
                 b.equal(surveyQuestion.get("surveyId").get("id"), surveyId),
                 b.equal(surveyQuestion.get("id"), questionId)
         );
-        
+
         Join<Surveyquestion, Surveyoption> optionsJoin = surveyQuestion.join("surveyoptionSet", JoinType.LEFT);
         Join<Surveyoption, Surveyanswer> answersJoin = optionsJoin.join("surveyanswerSet", JoinType.LEFT);
-        
+
         Expression<Long> answersCount = b.count(answersJoin);
-        
+
         q.multiselect(
                 surveyQuestion.get("surveyId").get("title"),
                 surveyQuestion.get("questionText"),
@@ -61,69 +61,86 @@ public class StatsRepositoryImpl implements StatsRepository {
                 optionsJoin.get("optionText"),
                 answersCount
         );
-        
+
         q.groupBy(
                 surveyQuestion.get("id"), // Group by question
                 optionsJoin.get("id") // Group by option
         );
-        
+
         List<Object[]> reportResults = s.createQuery(q).getResultList();
-        
+
         return reportResults;
     }
-    
+
     @Override
     public List<Object[]> getCountResponseForSurvey() {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root survey = q.from(Survey.class);
-        
+
         Join<Survey, Surveyresponse> responsesJoin = survey.join("surveyresponseSet", JoinType.LEFT);
-        
+
         q.multiselect(
                 survey.get("id"),
                 survey.get("title"),
-                b.count(responsesJoin)
+                b.countDistinct(responsesJoin.get("userId"))
         );
-        
+
         q.groupBy(survey.get("id"));
-        
+
+        //List dont have survey is null in join BC GroupBy and CountDistinct
         List<Object[]> results = s.createQuery(q).getResultList();
-        
+
+        //Make a list to get survey is null in join
+        CriteriaQuery<Survey> noResponseQuery = b.createQuery(Survey.class);
+        Root<Survey> surveyNoResponse = noResponseQuery.from(Survey.class);
+        surveyNoResponse.join("surveyresponseSet", JoinType.LEFT);
+
+        noResponseQuery.select(surveyNoResponse)
+                .distinct(true)
+                .where(b.isEmpty(surveyNoResponse.get("surveyresponseSet")));
+
+        List<Survey> surveysWithoutResponses = s.createQuery(noResponseQuery).getResultList();
+
+        for (Survey surveyWithoutResponse : surveysWithoutResponses) {
+            // '0L' - 0: Response count=0 BC it's null, L: data type(Long)
+            results.add(new Object[]{surveyWithoutResponse.getId(), surveyWithoutResponse.getTitle(), 0L});
+        }
+
         return results;
     }
-    
+
     @Override
     public List<Object[]> getRevenueByMonth(int month, int year) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        
+
         Root invoice = q.from(Invoice.class);
         Join<Invoice, Invoicetype> invoiceType = invoice.join("invoiceType");
-        
+
         Expression<Integer> invoiceMonth = b.function("MONTH", Integer.class, invoice.get("dueDate"));
         Expression<Integer> invoiceYear = b.function("YEAR", Integer.class, invoice.get("dueDate"));
-        
+
         q.multiselect(
                 invoiceType.get("type"),
                 b.sum(invoice.get("amount"))
         );
-        
+
         q.where(
                 b.equal(invoice.get("status"), "Paid"),
                 b.equal(invoiceMonth, month),
                 b.equal(invoiceYear, year)
         );
-        
+
         q.groupBy(invoiceType.get("type"));
         q.orderBy(b.asc(invoiceType.get("type")));
-        
+
         List<Object[]> results = s.createQuery(q).getResultList();
-        
+
         return results;
     }
-    
+
 }

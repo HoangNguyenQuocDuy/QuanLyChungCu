@@ -41,7 +41,7 @@ public class ApiOrderController {
 
     @DeleteMapping("/{orderId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRoom(Model model, @PathVariable("orderId") int orderId) {
+    public void deleteOrder(Model model, @PathVariable("orderId") int orderId) {
         try {
             userOrderService.deleteOrder(orderId);
         } catch (Exception ex) {

@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
 
-    &.success, &.paid, &.open {
+    &.success, &.received, &.paid, &.open {
         background-color: var(--success-bg);
 
         .text {

@@ -4,6 +4,7 @@ com\qlcc\services\SurveyService.class
 com\qlcc\controllers\ApiEntryRightController.class
 com\qlcc\pojo\Room.class
 com\qlcc\formatters\RoomTypeFormatter.class
+com\qlcc\controllers\NotifyController.class
 com\qlcc\services\EntryRightService.class
 com\qlcc\pojo\Userorder.class
 com\qlcc\repositories\SurveyRepository.class
@@ -25,9 +26,12 @@ com\qlcc\converter\StringToDateConverter.class
 com\qlcc\repositories\impl\InvoicetypeRepositoryImpl.class
 com\qlcc\services\impl\StatsServiceImpl.class
 com\qlcc\controllers\ParkingRightController.class
+customAnnotation\EntryRightUnique.class
 com\qlcc\services\SurveyAnswerService.class
 com\qlcc\configs\SpringSecrityConfig.class
 com\qlcc\services\impl\UserServiceImpl.class
+validators\EntryRightUniqueValidator.class
+com\qlcc\configs\WebSocketConfig.class
 com\qlcc\services\PaymentService.class
 com\qlcc\pojo\EntryRight.class
 com\qlcc\repositories\impl\LockerRepositoryImpl.class
@@ -110,6 +114,7 @@ com\qlcc\repositories\impl\ParkingRightRepositoryImpl.class
 com\qlcc\repositories\RoomRepository.class
 validators\RoomUniqueValidator.class
 com\qlcc\configs\HibernateConfig.class
+com\qlcc\configs\WebSocketConfig$1.class
 com\qlcc\repositories\impl\StatsRepositoryImpl.class
 com\qlcc\controllers\ApiParkingRightController.class
 com\qlcc\services\LockerService.class

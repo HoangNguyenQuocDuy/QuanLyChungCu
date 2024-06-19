@@ -34,4 +34,8 @@ public interface UserService extends UserDetailsService{
     User getUserByUsername(String username);
     
     void blockUser(int id) throws Exception;
+    
+    void forgotPassword(String email) throws Exception;
+    
+    void resetPassword(String email, String verificationCode, String newPassword) throws Exception;
 }

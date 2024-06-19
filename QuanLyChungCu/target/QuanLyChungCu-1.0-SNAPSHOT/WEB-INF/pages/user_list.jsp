@@ -92,8 +92,8 @@
             <td>${u.room.name}</td>
             <td>
                 <c:choose>
-                    <c:when test="${u.status == 'Active'}">
-                        <c:url value="/api/users/${u.id}" var="url" />
+                    <c:when test="${u.status != 'Block'}">
+                        <c:url value="/api/users/block/${u.id}" var="url" />
                         <button onclick="blockUser('${url}')" class="btn btn-danger"><fmt:message key="block"/></button>
                     </c:when>
                 </c:choose>

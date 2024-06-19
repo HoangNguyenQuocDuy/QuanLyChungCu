@@ -26,16 +26,16 @@ import com.qlcc.services.UserOrderService;
  */
 @Service
 public class UserOrderServiceImpl implements UserOrderService {
-    
+
     @Autowired
     private UserOrderRepository orderRepo;
-    
+
     @Autowired
     private LockerService lockerService;
-    
+
     @Autowired
     private Cloudinary cloudinary;
-    
+
     @Override
     public List<Userorder> getOrders(Map<String, String> params) throws Exception {
         try {
@@ -44,7 +44,7 @@ public class UserOrderServiceImpl implements UserOrderService {
             throw new Exception(ex.getMessage());
         }
     }
-    
+
     @Override
     public void addOrUpdate(Userorder order) {
         if (order.getFile() != null && !order.getFile().isEmpty()) {
@@ -61,35 +61,30 @@ public class UserOrderServiceImpl implements UserOrderService {
         } else {
             order.setUpdatedAt(new Date());
         }
-        
+
         orderRepo.addOrUpdate(order);
     }
-    
+
     @Override
     public Userorder getOrderById(int id) {
         return orderRepo.getOrderById(id);
     }
-    
+
     @Override
     public void deleteOrder(int id) throws Exception {
         Userorder order = this.getOrderById(id);
-        
+
         if (order.getStatus().equals("Received")) {
-            if (order.getLockerId() != null) {
-                Locker locker = lockerService.getLockerById(order.getLockerId().getId());
-                locker.getUserorderSet().remove(order);
-                
-                lockerService.addOrUpdate(locker);
-            }
-            
+            orderRepo.deleteOrder(id);
+
         } else {
             throw new Exception("Order is not in received status, cannot be deleted.");
         }
     }
-    
+
     @Override
     public int getTotalOrders() {
         return orderRepo.getTotalOrders();
     }
-    
+
 }

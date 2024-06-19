@@ -5,9 +5,10 @@ const initialState = []
 
 export const fetchSurvey = createAsyncThunk(
     'payments/fetchSurvey',
-    async ({ page, accessToken }, { rejectWithValue }) => {
+    async ({ page, userId, accessToken }, { rejectWithValue }) => {
+        console.log(page, userId, accessToken)
         try {
-            const response = await newRequest.get(`/surveyoptions/?page=${page}`, {
+            const response = await newRequest.get(`/surveyoptions/?page=${page}&userId=${userId}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

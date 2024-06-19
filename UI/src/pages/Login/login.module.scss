@@ -108,6 +108,20 @@
                     position: relative;
                     z-index: 2;
                 }
+
+                &.form-resetpassword {
+
+                    .form-item {
+
+                        input {
+                            margin: 12px 0!important;
+                        }
+                    }
+
+                    &.active {
+                        z-index: -1;
+                    }
+                }
             }
 
             .form-login {

@@ -33,4 +33,6 @@ public interface UserRepository {
     int getTotalUsers();
     
     User getUserByUsername(String username);
+    
+    User getUserByEmail(String email);
 }

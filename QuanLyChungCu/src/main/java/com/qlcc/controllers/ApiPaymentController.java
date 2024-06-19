@@ -68,7 +68,7 @@ public class ApiPaymentController {
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(Integer.parseInt(req.getParameter("amount")) * 100));
         vnp_Params.put("vnp_CurrCode", "VND");
-//        vnp_Params.put("vnp_BankCode", "NCB");
+        vnp_Params.put("vnp_BankCode", "NCB");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", vnp_OrderInfo);
         vnp_Params.put("vnp_OrderType", orderType);

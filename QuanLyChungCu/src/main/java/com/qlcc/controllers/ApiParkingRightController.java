@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,9 @@ public class ApiParkingRightController {
 
     @Autowired
     private RelativeService relativeService;
+    
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/")
     public ResponseEntity<?> getParkingRights(@RequestParam int userId) {
@@ -87,6 +91,11 @@ public class ApiParkingRightController {
             pr.setStatus(params.get("status"));
 
             parkingRightService.addOrUpdate(pr);
+            
+            messagingTemplate.convertAndSend(
+                    String.format("/notification/relatives/user/%s",
+                            pr.getRelativeId().getUserId().getId().toString()),
+                    "Your Parking Right has been " + params.get("status"));
 
             return ResponseEntity.status(HttpStatus.OK).body(
                     "Update parking successfully!");

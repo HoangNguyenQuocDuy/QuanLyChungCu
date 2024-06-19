@@ -25,5 +25,7 @@ public interface EntryRightRepository {
     int getTotalEntryRights();
 
     List<EntryRight> getEntryRights(int customerId);
+    
+    boolean isEntryRightRelativeExitsts(int relativeId);
 
 }

@@ -23,11 +23,12 @@ function Feedbacks() {
     const [feedbacks, setFeedbacks] = useState([])
     const { user } = useSelector(state => state.user)
     const [page, setPage] = useState(1);
+    const [isCountinueFetch, setIsCountinueFetch] = useState(true)
 
     useEffect(() => {
         setIsLoading(false)
         dispatch(setIsActiveNavbar(true))
-        handleGetFeedbacks()
+        handleGetFeedbacks(page, false)
     }, [])
 
     useEffect(() => {
@@ -52,12 +53,14 @@ function Feedbacks() {
         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) {
             return;
         }
-        handleGetFeedbacks();
+        handleGetFeedbacks(page, false);
     };
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        if (isCountinueFetch) {
+            window.addEventListener('scroll', handleScroll);
+            return () => window.removeEventListener('scroll', handleScroll);
+        }
     }, [isLoading]);
 
     const handleAddFB = async (e) => {
@@ -78,7 +81,7 @@ function Feedbacks() {
             })
                 .then(data => {
                     setIsShowAddBox(false)
-                    handleGetFeedbacks()
+                    handleGetFeedbacks(1, true)
                     notify('Feedback has been created!', 'success')
                 })
                 .catch(err => {
@@ -90,7 +93,7 @@ function Feedbacks() {
         }
     }
 
-    const handleGetFeedbacks = async () => {
+    const handleGetFeedbacks = async (page, isNewFetch) => {
         setIsLoading(true)
         await newRequest.get(`/feedbacks/?userId=${user.id}&page=${page}`, {
             headers: {
@@ -98,16 +101,26 @@ function Feedbacks() {
             }
         })
             .then((data) => {
-                console.log(data.data)
-                setFeedbacks(prevItems => [...prevItems, ...data.data]);
-                setPage(prevPage => prevPage + 1);
-                setIsLoading(false)
+                console.log('data.data: ', data.data)
+                if (data.data.length === 0) {
+                    setIsCountinueFetch(false)
+                    return
+                }
                 if (isShowAddBox) {
                     setIsShowAddBox(false)
                 }
+                if (isNewFetch) {
+                    setFeedbacks([...data.data]);
+                } else {
+                    setFeedbacks(prevItems => [...prevItems, ...data.data]);
+                    setPage(prevPage => prevPage + 1);
+                }
             })
             .catch(err => {
-                alert('Error when get feedbacks: ', err)
+                notify('Error when get feedbacks: ' + err, 'success')
+            })
+            .finally(() => {
+                setIsLoading(false)
             })
     }
 
@@ -121,7 +134,7 @@ function Feedbacks() {
             })
                 .then((data) => {
                     notify('Feedback has been deleted!', 'success')
-                    handleGetFeedbacks()
+                    handleGetFeedbacks(1, true)
                     if (isShowAddBox) {
                         setIsShowAddBox(false)
                     }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.qlcc.services.UserOrderService;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 /**
  *
@@ -31,6 +32,9 @@ public class OrderController {
     private LockerService lockerService;
 
     @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
     private Environment env;
 
     @GetMapping("/orders")
@@ -40,7 +44,6 @@ public class OrderController {
             int totalOrders = orderService.getTotalOrders();
             int pageSize = Integer.parseInt(env.getProperty("user.pageSize"));
             int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
-
 
             model.addAttribute("totalPages", totalPages);
             model.addAttribute("userOrders", orderService.getOrders(paramsRequest));
@@ -62,6 +65,9 @@ public class OrderController {
     public String addOrderProcess(Model model, @ModelAttribute(value = "userOrder") Userorder userOrder) {
         try {
             orderService.addOrUpdate(userOrder);
+            messagingTemplate.convertAndSend(
+                    String.format("/notification/lockers/%s", userOrder.getLockerId().getId().toString()),
+                    "You have new order");
 
             return "redirect:/orders";
         } catch (Exception ex) {

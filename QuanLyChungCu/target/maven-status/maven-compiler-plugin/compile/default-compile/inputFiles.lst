@@ -11,6 +11,7 @@ D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\Ap
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\repositories\impl\InvoiceRepositoryImpl.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\repositories\LockerRepository.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\SurveyService.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\validators\EntryRightUniqueValidator.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\InvoiceController.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Invoicetype.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\ParkingRightController.java
@@ -44,6 +45,7 @@ D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\dto\SurveyForm
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\repositories\impl\StatsRepositoryImpl.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\configs\ConfigVNPay.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\impl\FeedbackServiceImpl.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\NotifyController.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\RelativeService.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\impl\EntryRightServiceImpl.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\SurveyController.java
@@ -88,6 +90,7 @@ D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\Fe
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\impl\RoomTypeServiceImpl.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\ApiRoomController.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\impl\SurveyAnswerServiceImpl.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\customAnnotation\EntryRightUnique.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\AuthService.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\impl\EmailServiceImpl.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Surveyanswer.java
@@ -131,6 +134,7 @@ D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\dto\Question.j
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\ApiSurveyOptionController.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\pojo\Feedback.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\repositories\RelativeRepository.java
+D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\configs\WebSocketConfig.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\IndexController.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\controllers\ApiSurveyController.java
 D:\spring\QLCC\QuanLyChungCu\QuanLyChungCu\src\main\java\com\qlcc\services\impl\JWTServiceImpl.java

@@ -8,6 +8,7 @@ import com.qlcc.dto.AuthRequest;
 import com.qlcc.pojo.User;
 import com.qlcc.services.AuthService;
 import com.qlcc.services.UserService;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,6 +55,33 @@ public class AuthController {
                     "Failed when register "
                     + e.getMessage()
             );
+        }
+    }
+    
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> body) {
+        try {
+            userService.forgotPassword(body.get("email"));
+            return ResponseEntity.status(HttpStatus.OK).body("Verify token has been sent");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    ex.getMessage());
+        }
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> data) {
+        try {
+            String email = data.get("email");
+            String verificationCode = data.get("verificationCode");
+            String newPassword = data.get("newPassword");
+            
+            userService.resetPassword(email, verificationCode, newPassword);
+            
+            return ResponseEntity.status(HttpStatus.OK).body("Change password successful");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    ex.getMessage());
         }
     }
 }

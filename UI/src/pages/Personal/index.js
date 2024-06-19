@@ -16,6 +16,8 @@ import { deleteRelative } from '../../store/slice/relativesSlice';
 import { loadUser } from '../../store/slice/userSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import { notify } from '../../untils/notification'
+import SockJS from 'sockjs-client';
+import { Client } from '@stomp/stompjs';
 
 const cx = classnames.bind(styles)
 
@@ -50,6 +52,8 @@ function Personal() {
     const [isChangeAvatar, setIsChangeAvatar] = useState(false)
     const [updatingUser, setUpdatingUser] = useState(false)
 
+    const [stompClient, setStompClient] = useState(null);
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -69,6 +73,63 @@ function Personal() {
         dispatch(setIsActiveNavbar(true))
         getUserById()
     }, [])
+
+
+    useEffect(() => {
+        if (user) {
+
+            const accessToken = localStorage.getItem("accessToken")
+            const socket = new SockJS('http://localhost:8080/QuanLyChungCu/ws');
+            const client = new Client({
+                webSocketFactory: () => socket,
+                connectHeaders: {
+                    Authorization: `Bearer ${accessToken}`
+                },
+                debug: (str) => console.log(str),
+            });
+
+            client.onConnect = () => {
+                console.log('Stomp client connected');
+                setStompClient(client);
+            };
+
+            client.onStompError = (frame) => {
+                console.error('Stomp client error:', frame);
+            };
+
+            client.activate();
+
+            return () => {
+                client.deactivate();
+            };
+        }
+    }, []);
+
+    useEffect(() => {
+        if (stompClient) {
+            const subscriptionOrderNotify = stompClient.subscribe(`/notification/lockers/${user.locker.id}`, (message) => {
+                notify(message.body, 'success')
+            })
+            const subscriptionCardNotify = stompClient.subscribe(`/notification/relatives/user/${user.id}`, (message) => {
+                let status = ''
+                if (message.body.toLowerCase().includes('confirmed')) {
+                    status = 'success'
+                } else {
+                    status = 'warn'
+                }
+                notify(message.body, status)
+            })
+            const subscriptionSurveyNotify = stompClient.subscribe(`/notification/surveys`, (message) => {
+                notify(message.body, 'success')
+            })
+
+            return () => {
+                subscriptionOrderNotify.unsubscribe()
+                subscriptionCardNotify.unsubscribe()
+                subscriptionSurveyNotify.unsubscribe()
+            };
+        }
+    }, [stompClient])
 
     const handleDeleteRelative = async (id) => {
         if (window.confirm('Do you want to delete this relative?')) {

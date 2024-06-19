@@ -51,5 +51,10 @@ public class EntryRightServiceImpl implements  EntryRightService{
     public List<EntryRight> getEntryRights(int customerId) {
         return entryRightRepo.getEntryRights(customerId);
     }
+
+    @Override
+    public boolean isEntryRightRelativeExitsts(int relativeId) {
+        return entryRightRepo.isEntryRightRelativeExitsts(relativeId);
+    }
     
 }

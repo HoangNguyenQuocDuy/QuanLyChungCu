@@ -115,3 +115,7 @@
 </div>
 
 <script src="<c:url value="/js/script.js" />"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.4.0/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script src="<c:url value="/js/ws.js" />"></script>
+

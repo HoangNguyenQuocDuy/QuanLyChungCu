@@ -185,12 +185,27 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = factory.getObject().getCurrentSession();
         User user = getUserById(id);
 
-        if (user != null && user.getStatus().equals("Active")) {
+        if (user != null && !user.getStatus().equals("Block")) {
             user.setStatus("Block");
             user.setRoom(null);
             user.setLocker(null);
 
             s.update(user);
+        }
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Session s = factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User WHERE email=:email");
+        q.setParameter("email", email);
+
+        User user = null;
+        try {
+            user = (User) q.getSingleResult();
+            return user;
+        } catch (NoResultException e) {
+            return null;
         }
     }
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.qlcc.services.EntryRightService;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,16 +32,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ApiEntryRightController {
 
     @Autowired
-    private EntryRightService parkingRightService;
+    private EntryRightService entryRightService;
 
     @Autowired
     private RelativeService relativeService;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     @GetMapping("/")
     public ResponseEntity<?> getParkingRights(@RequestParam int userId) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    parkingRightService.getEntryRights(userId));
+            return ResponseEntity.status(HttpStatus.OK).body(entryRightService.getEntryRights(userId));
         } catch (NumberFormatException ex) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ex.getMessage());
         }
@@ -62,7 +65,7 @@ public class ApiEntryRightController {
             EntryRight pr = new EntryRight();
             pr.setRelativeId(relative);
 
-            parkingRightService.addOrUpdate(pr);
+            entryRightService.addOrUpdate(pr);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(
                     "Create entry right successfully!");
@@ -77,16 +80,21 @@ public class ApiEntryRightController {
     public ResponseEntity<?> updateEntryRight(@RequestBody Map<String, String> params,
             @PathVariable("pId") int pId) {
         try {
-            EntryRight pr = parkingRightService.getEntryRightById(pId);
+            EntryRight er = entryRightService.getEntryRightById(pId);
 
-            if (pr == null) {
+            if (er == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                         "Entry right not found with ID: " + pId);
             }
 
-            pr.setStatus(params.get("status"));
+            er.setStatus(params.get("status"));
 
-            parkingRightService.addOrUpdate(pr);
+            entryRightService.addOrUpdate(er);
+
+            messagingTemplate.convertAndSend(
+                    String.format("/notification/relatives/user/%s",
+                            er.getRelativeId().getUserId().getId().toString()),
+                    "Your Entry Right has been " + params.get("status"));
 
             return ResponseEntity.status(HttpStatus.OK).body(
                     "Update entry right successfully!");

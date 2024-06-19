@@ -21,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class SurveyOptionRepositoryImpl implements SurveyOptionRepository{
-    
+public class SurveyOptionRepositoryImpl implements SurveyOptionRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
@@ -31,12 +31,26 @@ public class SurveyOptionRepositoryImpl implements SurveyOptionRepository{
         Session s = factory.getObject().getCurrentSession();
         String hql = "FROM Surveyoption so WHERE 1=1";
 
+        if (params.containsKey("userId")) {
+            hql = "SELECT DISTINCT so FROM Surveyoption so "
+                    + "JOIN so.questionId q "
+                    + "JOIN q.surveyId sr "
+                    + "WHERE 1=1";
+        }
+
         if (params.containsKey("questionId") && !params.get("questionId").equals("")) {
             hql += " AND so.questionId.id = :questionId";
         }
-        
+
         if (params.containsKey("surveyId") && !params.get("surveyId").equals("")) {
             hql += " AND so.questionId.surveyId.id = :surveyId";
+        }
+
+        if (params.containsKey("userId") && !params.get("userId").equals("")) {
+            hql += " AND NOT EXISTS (SELECT 1 FROM Surveyanswer sa "
+                    + "JOIN sa.questionId aq "
+                    + "JOIN sa.responseId rs "
+                    + "WHERE aq.id = so.questionId.id AND rs.userId.id = :userId)";
         }
 
         Query query = s.createQuery(hql);
@@ -44,9 +58,13 @@ public class SurveyOptionRepositoryImpl implements SurveyOptionRepository{
         if (params.containsKey("questionId") && !params.get("questionId").equals("")) {
             query.setParameter("questionId", Integer.valueOf(params.get("questionId")));
         }
-        
+
         if (params.containsKey("surveyId") && !params.get("surveyId").equals("")) {
             query.setParameter("surveyId", Integer.valueOf(params.get("surveyId")));
+        }
+
+        if (params.containsKey("userId") && !params.get("userId").isEmpty()) {
+            query.setParameter("userId", Integer.valueOf(params.get("userId")));
         }
 
         return query.getResultList();
@@ -75,5 +93,5 @@ public class SurveyOptionRepositoryImpl implements SurveyOptionRepository{
     public void deleteSurveyOption(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

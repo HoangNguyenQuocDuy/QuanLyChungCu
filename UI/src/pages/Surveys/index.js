@@ -24,7 +24,7 @@ function Surveys() {
 
     useEffect(() => {
         dispatch(setIsActiveNavbar(true))
-        dispatch(fetchSurvey({ page, accessToken }))
+        dispatch(fetchSurvey({ page, userId: user.id, accessToken }))
     }, [])
 
     console.log('surveys: ', surveys && surveys)

@@ -119,4 +119,19 @@ public class EntryRightRepositoryImpl implements EntryRightRepository {
         return query.getResultList();
     }
 
+    @Override
+    public boolean isEntryRightRelativeExitsts(int relativeId) {
+        Session s = factory.getObject().getCurrentSession();
+        Query query = s.createQuery("FROM EntryRight er WHERE er.relativeId.id = :relativeId");
+        query.setParameter("relativeId", relativeId);
+
+        List<EntryRight> result = query.getResultList();
+
+        if (result == null) {
+            return false;
+        }
+
+        return result.size() > 0;
+    }
+
 }

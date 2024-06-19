@@ -28,8 +28,13 @@ function Login() {
     const [isChangeAvatar, setIsChangeAvatar] = useState(false)
     const [isNewUser, setIsNewUser] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
-    const [isResetPassword, setIsResetPassword] = useState(false)
+    const [isForgotPassword, setIsForgotPassword] = useState(false)
     const [isUpdateUser, setIsUpdateUser] = useState(false)
+    const [isResetPassword, setIsResetPassword] = useState(false)
+    const [resetNewPassword, setResetNewPassword] = useState('')
+    const [confirmResetNewPassword, setConfirmResetNewPassword] = useState('')
+    const [verifyCode, setVerifyCode] = useState('')
+    // const [isResettingPassword, setIsResettingPassword] = useState(false)
 
     const [userId, setUserId] = useState()
 
@@ -125,12 +130,69 @@ function Login() {
         }
     }
 
+    const handleForgotPassword = async (e) => {
+        e.preventDefault()
+        if (email.trim() === '') {
+            notify('Email is required!', 'error')
+        } else {
+            setIsForgotPassword(true)
+            await newRequest.post(`/auth/forgotPassword`, { email })
+                .then(data => {
+                    setIsResetPassword(true)
+                    console.log(data.data)
+                    notify('Check your email to get verify code!', 'success')
+                })
+                .catch(err => {
+                    notify('Error forgotting password: ' + err.response.data, 'error')
+                })
+                .finally(() => {
+                    setIsForgotPassword(false)
+                })
+        }
+    }
+
+    const handleResetPassword = async (e) => {
+        e.preventDefault()
+
+        if (verifyCode.trim() === null) {
+            notify('Verify code is required!', 'error')
+        }
+        else if (resetNewPassword.trim() === '') {
+            notify('Reset password is required!', 'error')
+        } else if (confirmResetNewPassword.trim() === '') {
+            notify('Confirmed reset password is required!', 'error')
+        }
+        else if (confirmResetNewPassword.trim() !== resetNewPassword.trim()) {
+            notify('Confirmed reset password and Reset pasword does not match', 'error')
+        } else {
+            await newRequest.post(`/auth/resetPassword`, {
+                email, verificationCode: verifyCode, newPassword: confirmResetNewPassword
+            })
+                .then(data => {
+                    setConfirmedNewPassword('')
+                    setConfirmResetNewPassword('')
+                    setVerifyCode('')
+                    setIsResetPassword(false)
+                    setIsActive(false)
+                    console.log(data.data)
+                    notify('Your password has been changed!', 'success')
+                })
+                .catch(err => {
+                    console.log(err.response.data)
+                    notify('Error resetting password: ' + err.response.data, 'error')
+                })
+                .finally(() => {
+                    setIsForgotPassword(false)
+                })
+        }
+    }
+    console.log(isActive)
     return (
         <div className={cx('container')}>
             <ToastContainer />
             <div className={cx('wrapper')}>
                 <div className={cx('formBox')}>
-                    <form className={cx('form-forgot', { 'active': !isActive })}>
+                    <form onSubmit={(e) => { handleForgotPassword(e) }} className={cx('form-forgot', { 'active': !isActive && !isResetPassword })}>
                         <h3>Forgot password</h3>
                         <div className={cx('form-item')}>
                             <input
@@ -151,14 +213,68 @@ function Login() {
                             <button type="submit" className="btn btn-primary">
                                 Submit
                             </button>
-                            {!isResetPassword && <ReactLoading className={cx('loading')} type='spin' color={'#999'} height={'5%'} width={'5%'} />}
+                            {!isForgotPassword && <ReactLoading className={cx('loading')} type='spin' color={'#999'} height={'5%'} width={'5%'} />}
                         </div>
 
                         {/* <div className={cx('btnBox')}>
-                            <button type='submit' className={cx('btn', { prevent: isResetPassword })}>
+                            <button type='submit' className={cx('btn', { prevent: isForgotPassword })}>
                                 Submit
                             </button>
                         </div> */}
+                        <div className={cx('over')}></div>
+                    </form>
+
+                    <form onSubmit={(e) => { handleResetPassword(e) }} className={cx('form-forgot', 'form-resetpassword', { 'active': !isResetPassword })}>
+                        <h3>Reset password</h3>
+                        <div className={cx('form-item')}>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Verify code"
+                                value={verifyCode}
+                                onChange={(e) => {
+                                    if (err !== '') {
+                                        setErr('')
+                                    }
+                                    setVerifyCode(e.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className={cx('form-item')}>
+                            <input
+                                type="password"
+                                className="form-control"
+                                placeholder="New password"
+                                value={resetNewPassword}
+                                onChange={(e) => {
+                                    if (err !== '') {
+                                        setErr('')
+                                    }
+                                    setResetNewPassword(e.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className={cx('form-item')}>
+                            <input
+                                type="password"
+                                className="form-control"
+                                placeholder="Confirm new password"
+                                value={confirmResetNewPassword}
+                                onChange={(e) => {
+                                    if (err !== '') {
+                                        setErr('')
+                                    }
+                                    setConfirmResetNewPassword(e.target.value)
+                                }}
+                            />
+                        </div>
+
+                        <div className={cx('buttonBox')}>
+                            <button type="submit" className="btn btn-primary">
+                                Submit
+                            </button>
+                            {!isForgotPassword && <ReactLoading className={cx('loading')} type='spin' color={'#999'} height={'5%'} width={'5%'} />}
+                        </div>
                         <div className={cx('over')}></div>
                     </form>
 
@@ -270,7 +386,11 @@ function Login() {
                         <h3>Don't worry to much about that</h3>
                         <p>Let us know your email to get token to reset your password!</p>
                         <div className={cx('buttonBox')}>
-                            <button onClick={() => setIsActive(!isActive)}>
+                            <button onClick={() => {
+                                setIsActive(!isActive)
+                                setIsResetPassword(false)
+                            }
+                            }>
                                 <span>Login</span>
                                 <HiOutlineArrowRight size={24} />
                             </button>

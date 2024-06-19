@@ -19,6 +19,7 @@ import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,6 +47,9 @@ public class SurveyController {
 
     @Autowired
     private Environment env;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/surveys")
     public String createView(Model model, @RequestParam Map<String, String> params) {
@@ -119,6 +123,9 @@ public class SurveyController {
                         surveyOptionService.addOrUpdate(so);
                     }
                 }
+
+                messagingTemplate.convertAndSend("/notification/surveys",
+                        "Admin has created new survey");
 
                 return "redirect:/surveys";
             } catch (Exception ex) {

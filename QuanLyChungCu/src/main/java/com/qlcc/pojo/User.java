@@ -96,6 +96,10 @@ public class User implements Serializable {
     @Column(name = "roleName")
     private String roleName;
     @JsonIgnore
+    @Size(max = 50)
+    @Column(name = "resetpasswordcode")
+    private String resetPasswordCode;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Surveyresponse> surveyresponseSet;
     @JsonIgnore
@@ -313,6 +317,20 @@ public class User implements Serializable {
      */
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    /**
+     * @return the resetPasswordCode
+     */
+    public String getResetPasswordCode() {
+        return resetPasswordCode;
+    }
+
+    /**
+     * @param resetPasswordCode the resetPasswordCode to set
+     */
+    public void setResetPasswordCode(String resetPasswordCode) {
+        this.resetPasswordCode = resetPasswordCode;
     }
     
 }

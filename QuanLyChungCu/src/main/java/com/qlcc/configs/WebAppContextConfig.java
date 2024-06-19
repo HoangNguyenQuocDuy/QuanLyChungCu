@@ -129,7 +129,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 
         return mailSender;
     }
-    
+
     @Bean
     public LocaleResolver localeResolver() {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
@@ -138,6 +138,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         resolver.setCookieMaxAge(4800);
         return resolver;
     }
+
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();

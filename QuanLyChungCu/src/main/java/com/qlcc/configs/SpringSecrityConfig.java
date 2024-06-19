@@ -113,6 +113,7 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/feedbacks/**").access("hasRole('ROLE_CUSTOMER')")
                 .antMatchers(HttpMethod.DELETE, "/api/feedbacks/**").access("hasRole('ROLE_CUSTOMER')")
                 .antMatchers(HttpMethod.POST, "/api/surveyAnswers/").access("hasRole('ROLE_CUSTOMER')")
+                .antMatchers(HttpMethod.GET, "/api/surveyoptions/**").access("hasRole('ROLE_CUSTOMER')")
                 .antMatchers(HttpMethod.GET, "/api/parkings/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.POST, "/api/parkings/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.GET, "/api/entries/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
@@ -130,7 +131,8 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
                 .access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.POST, "/api/users/block/**", "/api/lockers/**").access("hasRole('ROLE_ADMIN')")
                 //                "/api/payments/callback/**/**", "/api/payments/**"
-                .antMatchers("/api/auth/login").permitAll()
+                .antMatchers("/api/auth/login", "/api/auth/forgotPassword", 
+                        "/api/auth/resetPassword", "/ws/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

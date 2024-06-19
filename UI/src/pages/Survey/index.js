@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 import Questions from '../../components/Questions';
 import { clearQuestions } from '../../store/slice/questionSubmitSlice';
 import newRequest from '../../untils/request';
+import ReactLoading from 'react-loading';
+import { notify } from '../../untils/notification';
 
 const cx = classNames.bind(styles)
 
@@ -19,10 +21,13 @@ function Survey() {
     const questionsSubmit = useSelector(state => state.questionsSubmit)
     const { user } = useSelector(state => state.user)
     const accessToken = localStorage.getItem("accessToken")
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmitSurvey = () => {
         // console.log('questionsSubmit: ', quest   ionsSubmit)
         if (questionsSubmit.singleChoise.length > 0) {
+
+            setIsLoading(true)
             questionsSubmit.singleChoise.forEach(async q => {
                 const data = {
                     surveyId: parseInt(surveyId),
@@ -39,9 +44,13 @@ function Survey() {
                 })
                     .then(data => {
                         console.log(data)
+                        notify('Submit survey successfully!', 'success')
                     })
                     .catch(err => {
-                        alert("ERR when post answer to survey: ", err)
+                        notify('Error when post answer to survey:' + err, 'error')
+                    })
+                    .finally(() => {
+                        setIsLoading(false)
                     })
             })
         }
@@ -74,8 +83,6 @@ function Survey() {
     useEffect(() => {
         dispatch(setIsActiveNavbar(true))
         dispatch(clearQuestions())
-        // dispatch(setIsSubmitServey(false))
-        // dispatch(clearQuestions())
     }, [])
 
 
@@ -96,7 +103,10 @@ function Survey() {
                     </div>
 
                     <div className={cx('btnBox')}>
-                        <button onClick={() => { handleSubmitSurvey() }}>Submit</button>
+                        <button onClick={handleSubmitSurvey} className={cx('btn', { prevent: isLoading })}>
+                            Submit
+                        </button>
+                        {isLoading && <ReactLoading className={cx('loading')} type='spin' color={'#999'} height={'4%'} width={'4%'} />}
                     </div>
                 </>
             }
