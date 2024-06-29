@@ -4,7 +4,7 @@
  */
 package com.qlcc.repositories.impl;
 
-import com.qlcc.pojo.Surveyoption;
+import com.qlcc.pojo.SurveyOption;
 import com.qlcc.repositories.SurveyOptionRepository;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +27,14 @@ public class SurveyOptionRepositoryImpl implements SurveyOptionRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Surveyoption> getSurveyOptions(Map<String, String> params) {
+    public List<SurveyOption> getSurveyOptions(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
-        String hql = "FROM Surveyoption so WHERE 1=1";
+        String hql = "FROM SurveyOption so WHERE 1=1";
 
         if (params.containsKey("userId")) {
-            hql = "SELECT DISTINCT so FROM Surveyoption so "
+            hql = "SELECT so FROM SurveyOption so "
                     + "JOIN so.questionId q "
-                    + "JOIN q.surveyId sr "
+                    + "JOIN q.surveyId sv "
                     + "WHERE 1=1";
         }
 
@@ -47,10 +47,9 @@ public class SurveyOptionRepositoryImpl implements SurveyOptionRepository {
         }
 
         if (params.containsKey("userId") && !params.get("userId").equals("")) {
-            hql += " AND NOT EXISTS (SELECT 1 FROM Surveyanswer sa "
-                    + "JOIN sa.questionId aq "
-                    + "JOIN sa.responseId rs "
-                    + "WHERE aq.id = so.questionId.id AND rs.userId.id = :userId)";
+            hql += " AND NOT EXISTS (SELECT sr FROM SurveyResponse sr "
+                    + "JOIN sr.surveyId sv2 "
+                    + "WHERE sv2.id = sv.id AND sr.userId.id = :userId)";
         }
 
         Query query = s.createQuery(hql);
@@ -71,7 +70,7 @@ public class SurveyOptionRepositoryImpl implements SurveyOptionRepository {
     }
 
     @Override
-    public int addOrUpdate(Surveyoption surveyOption) {
+    public int addOrUpdate(SurveyOption surveyOption) {
         Session s = factory.getObject().getCurrentSession();
 
         if (surveyOption.getId() != null) {
@@ -83,10 +82,10 @@ public class SurveyOptionRepositoryImpl implements SurveyOptionRepository {
     }
 
     @Override
-    public Surveyoption getSurveyOptionById(int id) {
+    public SurveyOption getSurveyOptionById(int id) {
         Session s = factory.getObject().getCurrentSession();
 
-        return s.get(Surveyoption.class, id);
+        return s.get(SurveyOption.class, id);
     }
 
     @Override

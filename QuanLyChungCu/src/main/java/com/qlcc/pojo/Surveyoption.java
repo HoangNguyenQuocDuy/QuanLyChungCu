@@ -34,9 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "surveyoption")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Surveyoption.findAll", query = "SELECT s FROM Surveyoption s"),
-    @NamedQuery(name = "Surveyoption.findById", query = "SELECT s FROM Surveyoption s WHERE s.id = :id")})
-public class Surveyoption implements Serializable {
+    @NamedQuery(name = "SurveyOption.findAll", query = "SELECT s FROM SurveyOption s"),
+    @NamedQuery(name = "SurveyOption.findById", query = "SELECT s FROM SurveyOption s WHERE s.id = :id")})
+public class SurveyOption implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,19 +52,19 @@ public class Surveyoption implements Serializable {
     private String optionText;
     @JoinColumn(name = "questionId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Surveyquestion questionId;
+    private SurveyQuestion questionId;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "optionId")
-    private Set<Surveyanswer> surveyanswerSet;
+    private Set<SurveyAnswer> surveyanswerSet;
 
-    public Surveyoption() {
+    public SurveyOption() {
     }
 
-    public Surveyoption(Integer id) {
+    public SurveyOption(Integer id) {
         this.id = id;
     }
 
-    public Surveyoption(Integer id, String optionText) {
+    public SurveyOption(Integer id, String optionText) {
         this.id = id;
         this.optionText = optionText;
     }
@@ -85,20 +85,20 @@ public class Surveyoption implements Serializable {
         this.optionText = optionText;
     }
 
-    public Surveyquestion getQuestionId() {
+    public SurveyQuestion getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Surveyquestion questionId) {
+    public void setQuestionId(SurveyQuestion questionId) {
         this.questionId = questionId;
     }
 
     @XmlTransient
-    public Set<Surveyanswer> getSurveyanswerSet() {
+    public Set<SurveyAnswer> getSurveyanswerSet() {
         return surveyanswerSet;
     }
 
-    public void setSurveyanswerSet(Set<Surveyanswer> surveyanswerSet) {
+    public void setSurveyanswerSet(Set<SurveyAnswer> surveyanswerSet) {
         this.surveyanswerSet = surveyanswerSet;
     }
 
@@ -112,10 +112,10 @@ public class Surveyoption implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Surveyoption)) {
+        if (!(object instanceof SurveyOption)) {
             return false;
         }
-        Surveyoption other = (Surveyoption) object;
+        SurveyOption other = (SurveyOption) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

@@ -16,7 +16,6 @@ com\qlcc\dto\AuthRequest.class
 com\qlcc\configs\TilesConfig.class
 com\qlcc\controllers\OrderController.class
 com\qlcc\repositories\SurveyOptionRepository.class
-com\qlcc\pojo\Surveyanswer.class
 com\qlcc\services\StatsService.class
 com\qlcc\repositories\impl\SurveyQuestionRepositoryImpl.class
 com\qlcc\services\impl\RoomTypeServiceImpl.class
@@ -31,6 +30,7 @@ com\qlcc\services\SurveyAnswerService.class
 com\qlcc\configs\SpringSecrityConfig.class
 com\qlcc\services\impl\UserServiceImpl.class
 validators\EntryRightUniqueValidator.class
+com\qlcc\pojo\RoomType.class
 com\qlcc\configs\WebSocketConfig.class
 com\qlcc\services\PaymentService.class
 com\qlcc\pojo\EntryRight.class
@@ -47,6 +47,7 @@ com\qlcc\services\impl\SurveyQuestionServiceImpl.class
 com\qlcc\controllers\ApiSurveyAnswerController.class
 com\qlcc\controllers\ApiRoomController.class
 com\qlcc\dto\Question.class
+com\qlcc\pojo\SurveyOption.class
 com\qlcc\pojo\Invoicetype.class
 com\qlcc\repositories\impl\RoomRepositoryImpl.class
 com\qlcc\services\SurveyQuestionService.class
@@ -63,13 +64,13 @@ com\qlcc\pojo\User.class
 com\qlcc\services\JWTService.class
 com\qlcc\services\AuthService.class
 com\qlcc\controllers\IndexController.class
-com\qlcc\pojo\Surveyoption.class
 com\qlcc\repositories\impl\SurveyAnswerRepositoryImpl.class
 com\qlcc\repositories\ParkingRightRepository.class
 com\qlcc\repositories\LockerRepository.class
 com\qlcc\repositories\RoomTypeRepository.class
 com\qlcc\controllers\Invoices.class
 com\qlcc\services\RelativeService.class
+com\qlcc\pojo\SurveyResponse.class
 com\qlcc\repositories\impl\SurveyRepositoryImpl.class
 com\qlcc\services\impl\PaymenServiceImpl.class
 com\qlcc\services\impl\SurveyReponseServiceImpl.class
@@ -82,7 +83,6 @@ com\qlcc\repositories\FeedbackRepository.class
 com\qlcc\dto\PaymentResponse.class
 com\qlcc\formatters\RoomFormatter.class
 com\qlcc\controllers\ApiSurveyQuestionController.class
-com\qlcc\pojo\Surveyquestion.class
 customAnnotation\UserUnique.class
 com\qlcc\services\SurveyOptionService.class
 com\qlcc\configs\JwtRequestFilter.class
@@ -96,7 +96,6 @@ com\qlcc\configs\DispatcherServeletInit.class
 customAnnotation\RoomUnique.class
 com\qlcc\pojo\Feedback.class
 com\qlcc\pojo\Invoice.class
-com\qlcc\pojo\Surveyresponse.class
 com\qlcc\services\RoomTypeService.class
 com\qlcc\services\impl\RoomServiceImpl.class
 com\qlcc\services\SurveyResponseService.class
@@ -105,12 +104,12 @@ com\qlcc\services\UserOrderService.class
 com\qlcc\controllers\ApiUserController.class
 com\qlcc\controllers\StatsController.class
 com\qlcc\formatters\InvoicetypeFormatter.class
-com\qlcc\pojo\Roomtype.class
 com\qlcc\repositories\InvoiceRepository.class
 com\qlcc\services\InvoicetypeService.class
 com\qlcc\controllers\ApiPaymentController.class
 com\qlcc\formatters\SurveyOptionFormatter.class
 com\qlcc\repositories\impl\ParkingRightRepositoryImpl.class
+com\qlcc\pojo\SurveyAnswer.class
 com\qlcc\repositories\RoomRepository.class
 validators\RoomUniqueValidator.class
 com\qlcc\configs\HibernateConfig.class
@@ -145,6 +144,7 @@ com\qlcc\services\impl\InvoicetypeServiceImpl.class
 com\qlcc\configs\WebAppContextConfig.class
 com\qlcc\configs\JwtTokenUtil.class
 com\qlcc\repositories\impl\FeedbackRepositoryImpl.class
+com\qlcc\pojo\SurveyQuestion.class
 com\qlcc\repositories\impl\RoomTypeRepositoryImpl.class
 com\qlcc\pojo\Survey.class
 com\qlcc\formatters\RelativeFormatter.class

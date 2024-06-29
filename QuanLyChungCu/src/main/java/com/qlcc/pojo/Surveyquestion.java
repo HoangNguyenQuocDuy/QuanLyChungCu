@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "surveyquestion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Surveyquestion.findAll", query = "SELECT s FROM Surveyquestion s"),
-    @NamedQuery(name = "Surveyquestion.findById", query = "SELECT s FROM Surveyquestion s WHERE s.id = :id"),
-    @NamedQuery(name = "Surveyquestion.findByQuestionType", query = "SELECT s FROM Surveyquestion s WHERE s.questionType = :questionType")})
-public class Surveyquestion implements Serializable {
+    @NamedQuery(name = "SurveyQuestion.findAll", query = "SELECT s FROM SurveyQuestion s"),
+    @NamedQuery(name = "SurveyQuestion.findById", query = "SELECT s FROM SurveyQuestion s WHERE s.id = :id"),
+    @NamedQuery(name = "SurveyQuestion.findByQuestionType", query = "SELECT s FROM SurveyQuestion s WHERE s.questionType = :questionType")})
+public class SurveyQuestion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,22 +56,22 @@ public class Surveyquestion implements Serializable {
     private String questionType;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionId")
-    private List<Surveyoption> surveyoptionSet;
+    private List<SurveyOption> surveyoptionSet;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionId")
-    private List<Surveyanswer> surveyanswerSet;
+    private List<SurveyAnswer> surveyanswerSet;
     @JoinColumn(name = "surveyId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Survey surveyId;
 
-    public Surveyquestion() {
+    public SurveyQuestion() {
     }
 
-    public Surveyquestion(Integer id) {
+    public SurveyQuestion(Integer id) {
         this.id = id;
     }
 
-    public Surveyquestion(Integer id, String questionText, String questionType) {
+    public SurveyQuestion(Integer id, String questionText, String questionType) {
         this.id = id;
         this.questionText = questionText;
         this.questionType = questionType;
@@ -102,20 +102,20 @@ public class Surveyquestion implements Serializable {
     }
 
     @XmlTransient
-    public List<Surveyoption> getSurveyoptionSet() {
+    public List<SurveyOption> getSurveyoptionSet() {
         return surveyoptionSet;
     }
 
-    public void setSurveyoptionSet(List<Surveyoption> surveyoptionSet) {
+    public void setSurveyoptionSet(List<SurveyOption> surveyoptionSet) {
         this.surveyoptionSet = surveyoptionSet;
     }
 
     @XmlTransient
-    public List<Surveyanswer> getSurveyanswerSet() {
+    public List<SurveyAnswer> getSurveyanswerSet() {
         return surveyanswerSet;
     }
 
-    public void setSurveyanswerSet(List<Surveyanswer> surveyanswerSet) {
+    public void setSurveyanswerSet(List<SurveyAnswer> surveyanswerSet) {
         this.surveyanswerSet = surveyanswerSet;
     }
 
@@ -137,10 +137,10 @@ public class Surveyquestion implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Surveyquestion)) {
+        if (!(object instanceof SurveyQuestion)) {
             return false;
         }
-        Surveyquestion other = (Surveyquestion) object;
+        SurveyQuestion other = (SurveyQuestion) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

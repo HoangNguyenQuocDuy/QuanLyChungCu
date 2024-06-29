@@ -4,7 +4,7 @@
  */
 package com.qlcc.services.impl;
 
-import com.qlcc.pojo.Surveyoption;
+import com.qlcc.pojo.SurveyOption;
 import com.qlcc.repositories.SurveyOptionRepository;
 import com.qlcc.services.SurveyOptionService;
 import java.util.List;
@@ -23,17 +23,17 @@ public class SurveyOptionServiceImpl implements SurveyOptionService{
     private SurveyOptionRepository surveyOptionRepo;
 
     @Override
-    public List<Surveyoption> getSurveyOptions(Map<String, String> params) {
+    public List<SurveyOption> getSurveyOptions(Map<String, String> params) {
         return surveyOptionRepo.getSurveyOptions(params);
     }
 
     @Override
-    public int addOrUpdate(Surveyoption surveyOption) {
+    public int addOrUpdate(SurveyOption surveyOption) {
         return surveyOptionRepo.addOrUpdate(surveyOption);
     }
 
     @Override
-    public Surveyoption getSurveyOptionById(int id) {
+    public SurveyOption getSurveyOptionById(int id) {
         return surveyOptionRepo.getSurveyOptionById(id);
     }
 

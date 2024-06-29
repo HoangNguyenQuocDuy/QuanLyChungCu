@@ -4,7 +4,7 @@
  */
 package com.qlcc.services;
 
-import com.qlcc.pojo.Surveyquestion;
+import com.qlcc.pojo.SurveyQuestion;
 import java.util.List;
 import java.util.Map;
 
@@ -14,11 +14,11 @@ import java.util.Map;
  */
 public interface SurveyQuestionService {
     
-    List<Surveyquestion> getSurveyQuestions(Map<String, String> params); 
+    List<SurveyQuestion> getSurveyQuestions(Map<String, String> params); 
     
-    int addOrUpdate(Surveyquestion surveyQuestion);
+    int addOrUpdate(SurveyQuestion surveyQuestion);
 
-    Surveyquestion getSurveyQuestionById(int id);
+    SurveyQuestion getSurveyQuestionById(int id);
     
     void deleteSurveyQuestion(int id);
     

@@ -4,7 +4,7 @@
  */
 package com.qlcc.services.impl;
 
-import com.qlcc.pojo.Surveyresponse;
+import com.qlcc.pojo.SurveyResponse;
 import com.qlcc.repositories.SurveyResponseRepository;
 import com.qlcc.services.SurveyResponseService;
 import java.util.Date;
@@ -24,19 +24,19 @@ public class SurveyReponseServiceImpl implements SurveyResponseService{
     private SurveyResponseRepository surveyResponseRepo;
 
     @Override
-    public List<Surveyresponse> getSurveys(Map<String, String> params) {
+    public List<SurveyResponse> getSurveys(Map<String, String> params) {
         return surveyResponseRepo.getSurveys(params);
     }
 
     @Override
-    public int addSurveyResponse(Surveyresponse surveyResponse) {
+    public int addSurveyResponse(SurveyResponse surveyResponse) {
         surveyResponse.setCreatedAt(new Date());
         
         return surveyResponseRepo.addSurveyResponse(surveyResponse);
     }
 
     @Override
-    public Surveyresponse getSurveyResponseById(int id) {
+    public SurveyResponse getSurveyResponseById(int id) {
         return surveyResponseRepo.getSurveyResponseById(id);
     }
     

@@ -4,7 +4,7 @@
  */
 package com.qlcc.formatters;
 
-import com.qlcc.pojo.Roomtype;
+import com.qlcc.pojo.RoomType;
 import java.text.ParseException;
 import java.util.Locale;
 import org.springframework.format.Formatter;
@@ -13,16 +13,16 @@ import org.springframework.format.Formatter;
  *
  * @author DELL
  */
-public class RoomTypeFormatter implements Formatter<Roomtype>{
+public class RoomTypeFormatter implements Formatter<RoomType>{
 
     @Override
-    public String print(Roomtype t, Locale locale) {
+    public String print(RoomType t, Locale locale) {
         return String.valueOf(t.getId());
     }
 
     @Override
-    public Roomtype parse(String rtId, Locale locale) throws ParseException {
-        Roomtype rt = new Roomtype();
+    public RoomType parse(String rtId, Locale locale) throws ParseException {
+        RoomType rt = new RoomType();
         rt.setId(Integer.parseInt(rtId));
         
         return rt;

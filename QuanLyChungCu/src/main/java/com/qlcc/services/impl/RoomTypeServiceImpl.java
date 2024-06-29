@@ -4,7 +4,7 @@
  */
 package com.qlcc.services.impl;
 
-import com.qlcc.pojo.Roomtype;
+import com.qlcc.pojo.RoomType;
 import com.qlcc.repositories.RoomTypeRepository;
 import com.qlcc.services.RoomTypeService;
 import java.util.List;
@@ -22,7 +22,7 @@ public class RoomTypeServiceImpl implements RoomTypeService{
     private RoomTypeRepository roomTypeRepo;
 
     @Override
-    public List<Roomtype> getRoomtypes() {
+    public List<RoomType> getRoomtypes() {
         return roomTypeRepo.getRoomtypes();
     }
     

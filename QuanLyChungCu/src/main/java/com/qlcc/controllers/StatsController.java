@@ -4,7 +4,7 @@
  */
 package com.qlcc.controllers;
 
-import com.qlcc.pojo.Surveyquestion;
+import com.qlcc.pojo.SurveyQuestion;
 import com.qlcc.services.StatsService;
 import com.qlcc.services.SurveyQuestionService;
 import java.time.LocalDate;
@@ -40,7 +40,7 @@ public class StatsController {
 
         Map<String, String> questionParams = new HashMap<>();
         questionParams.put("surveyId", surveyId);
-        List<Surveyquestion> surveyQuestions = surveyQuestionService.getSurveyQuestions(questionParams);
+        List<SurveyQuestion> surveyQuestions = surveyQuestionService.getSurveyQuestions(questionParams);
         model.addAttribute("questions", surveyQuestions);
 
         List<Object[]> statsCountQuestion = statsService.getReportForSurveyQuestion(

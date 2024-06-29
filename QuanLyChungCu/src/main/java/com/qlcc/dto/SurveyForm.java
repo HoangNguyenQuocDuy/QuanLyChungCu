@@ -5,7 +5,7 @@
 package com.qlcc.dto;
 
 import com.qlcc.pojo.Survey;
-import com.qlcc.pojo.Surveyquestion;
+import com.qlcc.pojo.SurveyQuestion;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +21,5 @@ import lombok.NoArgsConstructor;
 public class SurveyForm {
     private Survey survey;
     
-    private List<Surveyquestion> questions;
+    private List<SurveyQuestion> questions;
 }

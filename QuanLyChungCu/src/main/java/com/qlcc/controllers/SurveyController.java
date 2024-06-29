@@ -7,8 +7,8 @@ package com.qlcc.controllers;
 import com.qlcc.dto.Question;
 import com.qlcc.dto.SurveyForm;
 import com.qlcc.pojo.Survey;
-import com.qlcc.pojo.Surveyoption;
-import com.qlcc.pojo.Surveyquestion;
+import com.qlcc.pojo.SurveyOption;
+import com.qlcc.pojo.SurveyQuestion;
 import com.qlcc.services.SurveyOptionService;
 import com.qlcc.services.SurveyQuestionService;
 import com.qlcc.services.SurveyService;
@@ -77,17 +77,17 @@ public class SurveyController {
 
         Map<String, String> params = new HashMap<>();
         params.put("surveyId", sv.getId().toString());
-        List<Surveyquestion> surveyQuestions = surveyQuestionService.getSurveyQuestions(params);
+        List<SurveyQuestion> surveyQuestions = surveyQuestionService.getSurveyQuestions(params);
 
         List<Question> questions = new ArrayList<>();
 
-        for (Surveyquestion sq : surveyQuestions) {
+        for (SurveyQuestion sq : surveyQuestions) {
             Question q = new Question();
 
             Map<String, String> paramQuestion = new HashMap<>();
             paramQuestion.put("questionId", sq.getId().toString());
 
-            List<Surveyoption> options = surveyOptionService.getSurveyOptions(paramQuestion);
+            List<SurveyOption> options = surveyOptionService.getSurveyOptions(paramQuestion);
             q.setQuestion(sq);
             q.setOptions(options);
 
@@ -110,15 +110,15 @@ public class SurveyController {
 
                 Survey survey = surveyService.getSurveyById(id);
 
-                for (Surveyquestion sq : surveyForm.getQuestions()) {
+                for (SurveyQuestion sq : surveyForm.getQuestions()) {
                     sq.setSurveyId(survey);
-                    List<Surveyoption> options = sq.getSurveyoptionSet();
+                    List<SurveyOption> options = sq.getSurveyoptionSet();
                     sq.setSurveyoptionSet(null);
                     int sqId = surveyQuestionService.addOrUpdate(sq);
 
-                    Surveyquestion nsq = surveyQuestionService.getSurveyQuestionById(sqId);
+                    SurveyQuestion nsq = surveyQuestionService.getSurveyQuestionById(sqId);
 
-                    for (Surveyoption so : options) {
+                    for (SurveyOption so : options) {
                         so.setQuestionId(nsq);
                         surveyOptionService.addOrUpdate(so);
                     }

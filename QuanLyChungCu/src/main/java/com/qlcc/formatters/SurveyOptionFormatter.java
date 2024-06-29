@@ -4,7 +4,7 @@
  */
 package com.qlcc.formatters;
 
-import com.qlcc.pojo.Surveyoption;
+import com.qlcc.pojo.SurveyOption;
 import java.text.ParseException;
 import java.util.Locale;
 import org.springframework.format.Formatter;
@@ -13,15 +13,15 @@ import org.springframework.format.Formatter;
  *
  * @author DELL
  */
-public class SurveyOptionFormatter implements Formatter<Surveyoption>{
+public class SurveyOptionFormatter implements Formatter<SurveyOption>{
     @Override
-    public String print(Surveyoption t, Locale locale) {
+    public String print(SurveyOption t, Locale locale) {
         return String.valueOf(t.getId());
     }
 
     @Override
-    public Surveyoption parse(String rtId, Locale locale) throws ParseException {
-        Surveyoption rt = new Surveyoption();
+    public SurveyOption parse(String rtId, Locale locale) throws ParseException {
+        SurveyOption rt = new SurveyOption();
         rt.setId(Integer.parseInt(rtId));
         
         return rt;

@@ -7,10 +7,10 @@ package com.qlcc.repositories.impl;
 import com.qlcc.pojo.Invoice;
 import com.qlcc.pojo.Invoicetype;
 import com.qlcc.pojo.Survey;
-import com.qlcc.pojo.Surveyanswer;
-import com.qlcc.pojo.Surveyoption;
-import com.qlcc.pojo.Surveyquestion;
-import com.qlcc.pojo.Surveyresponse;
+import com.qlcc.pojo.SurveyAnswer;
+import com.qlcc.pojo.SurveyOption;
+import com.qlcc.pojo.SurveyQuestion;
+import com.qlcc.pojo.SurveyResponse;
 import com.qlcc.repositories.StatsRepository;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -42,15 +42,15 @@ public class StatsRepositoryImpl implements StatsRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
 
-        Root surveyQuestion = q.from(Surveyquestion.class);
+        Root surveyQuestion = q.from(SurveyQuestion.class);
 
         q.where(
                 b.equal(surveyQuestion.get("surveyId").get("id"), surveyId),
                 b.equal(surveyQuestion.get("id"), questionId)
         );
 
-        Join<Surveyquestion, Surveyoption> optionsJoin = surveyQuestion.join("surveyoptionSet", JoinType.LEFT);
-        Join<Surveyoption, Surveyanswer> answersJoin = optionsJoin.join("surveyanswerSet", JoinType.LEFT);
+        Join<SurveyQuestion, SurveyOption> optionsJoin = surveyQuestion.join("surveyoptionSet", JoinType.LEFT);
+        Join<SurveyOption, SurveyAnswer> answersJoin = optionsJoin.join("surveyanswerSet", JoinType.LEFT);
 
         Expression<Long> answersCount = b.count(answersJoin);
 
@@ -80,7 +80,7 @@ public class StatsRepositoryImpl implements StatsRepository {
 
         Root survey = q.from(Survey.class);
 
-        Join<Survey, Surveyresponse> responsesJoin = survey.join("surveyresponseSet", JoinType.LEFT);
+        Join<Survey, SurveyResponse> responsesJoin = survey.join("surveyresponseSet", JoinType.LEFT);
 
         q.multiselect(
                 survey.get("id"),
@@ -136,7 +136,7 @@ public class StatsRepositoryImpl implements StatsRepository {
         );
 
         q.groupBy(invoiceType.get("type"));
-        q.orderBy(b.asc(invoiceType.get("type")));
+//        q.orderBy(b.asc(invoiceType.get("type")));
 
         List<Object[]> results = s.createQuery(q).getResultList();
 

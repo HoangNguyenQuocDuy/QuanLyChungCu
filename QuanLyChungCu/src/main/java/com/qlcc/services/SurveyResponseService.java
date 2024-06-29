@@ -4,7 +4,7 @@
  */
 package com.qlcc.services;
 
-import com.qlcc.pojo.Surveyresponse;
+import com.qlcc.pojo.SurveyResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +13,9 @@ import java.util.Map;
  * @author DELL
  */
 public interface SurveyResponseService {
-    List<Surveyresponse> getSurveys(Map<String, String> params); 
+    List<SurveyResponse> getSurveys(Map<String, String> params); 
     
-    int addSurveyResponse(Surveyresponse surveyResponse);
+    int addSurveyResponse(SurveyResponse surveyResponse);
     
-    Surveyresponse getSurveyResponseById(int id);
+    SurveyResponse getSurveyResponseById(int id);
 }

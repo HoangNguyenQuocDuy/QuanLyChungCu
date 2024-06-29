@@ -4,7 +4,7 @@
  */
 package com.qlcc.repositories.impl;
 
-import com.qlcc.pojo.Surveyanswer;
+import com.qlcc.pojo.SurveyAnswer;
 import com.qlcc.repositories.SurveyAnswerRepository;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +27,9 @@ public class SurveyAnswerRepositoryImpl implements SurveyAnswerRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Surveyanswer> getSurveyAnswers(Map<String, String> params) {
+    public List<SurveyAnswer> getSurveyAnswers(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
-        String hql = "FROM Surveyanswer sa WHERE 1=1";
+        String hql = "FROM SurveyAnswer sa WHERE 1=1";
         
         if (params.containsKey("surveyId") && !params.get("surveyId").equals("")) {
             hql += " AND sa.responseId.surveyId.id = :surveyId";
@@ -51,7 +51,7 @@ public class SurveyAnswerRepositoryImpl implements SurveyAnswerRepository {
     }
 
     @Override
-    public void addSurveyAnswer(Surveyanswer surveyAnswer) {
+    public void addSurveyAnswer(SurveyAnswer surveyAnswer) {
         Session s = factory.getObject().getCurrentSession();
 
         s.save(surveyAnswer);

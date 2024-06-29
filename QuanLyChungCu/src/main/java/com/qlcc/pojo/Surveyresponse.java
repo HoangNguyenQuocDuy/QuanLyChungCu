@@ -34,10 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "surveyresponse")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Surveyresponse.findAll", query = "SELECT s FROM Surveyresponse s"),
-    @NamedQuery(name = "Surveyresponse.findById", query = "SELECT s FROM Surveyresponse s WHERE s.id = :id"),
-    @NamedQuery(name = "Surveyresponse.findByCreatedAt", query = "SELECT s FROM Surveyresponse s WHERE s.createdAt = :createdAt")})
-public class Surveyresponse implements Serializable {
+    @NamedQuery(name = "SurveyResponse.findAll", query = "SELECT s FROM SurveyResponse s"),
+    @NamedQuery(name = "SurveyResponse.findById", query = "SELECT s FROM SurveyResponse s WHERE s.id = :id"),
+    @NamedQuery(name = "SurveyResponse.findByCreatedAt", query = "SELECT s FROM SurveyResponse s WHERE s.createdAt = :createdAt")})
+public class SurveyResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,12 +56,12 @@ public class Surveyresponse implements Serializable {
     private User userId;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "responseId")
-    private Set<Surveyanswer> surveyanswerSet;
+    private Set<SurveyAnswer> surveyanswerSet;
 
-    public Surveyresponse() {
+    public SurveyResponse() {
     }
 
-    public Surveyresponse(Integer id) {
+    public SurveyResponse(Integer id) {
         this.id = id;
     }
 
@@ -98,11 +98,11 @@ public class Surveyresponse implements Serializable {
     }
 
     @XmlTransient
-    public Set<Surveyanswer> getSurveyanswerSet() {
+    public Set<SurveyAnswer> getSurveyanswerSet() {
         return surveyanswerSet;
     }
 
-    public void setSurveyanswerSet(Set<Surveyanswer> surveyanswerSet) {
+    public void setSurveyanswerSet(Set<SurveyAnswer> surveyanswerSet) {
         this.surveyanswerSet = surveyanswerSet;
     }
 
@@ -116,10 +116,10 @@ public class Surveyresponse implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Surveyresponse)) {
+        if (!(object instanceof SurveyResponse)) {
             return false;
         }
-        Surveyresponse other = (Surveyresponse) object;
+        SurveyResponse other = (SurveyResponse) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

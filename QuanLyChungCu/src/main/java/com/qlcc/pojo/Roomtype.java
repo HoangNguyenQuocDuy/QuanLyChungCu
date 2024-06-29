@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "roomtype")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Roomtype.findAll", query = "SELECT r FROM Roomtype r"),
-    @NamedQuery(name = "Roomtype.findById", query = "SELECT r FROM Roomtype r WHERE r.id = :id"),
-    @NamedQuery(name = "Roomtype.findByPrice", query = "SELECT r FROM Roomtype r WHERE r.price = :price"),
-    @NamedQuery(name = "Roomtype.findByType", query = "SELECT r FROM Roomtype r WHERE r.type = :type")})
-public class Roomtype implements Serializable {
+    @NamedQuery(name = "RoomType.findAll", query = "SELECT r FROM RoomType r"),
+    @NamedQuery(name = "RoomType.findById", query = "SELECT r FROM RoomType r WHERE r.id = :id"),
+    @NamedQuery(name = "RoomType.findByPrice", query = "SELECT r FROM RoomType r WHERE r.price = :price"),
+    @NamedQuery(name = "RoomType.findByType", query = "SELECT r FROM RoomType r WHERE r.type = :type")})
+public class RoomType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,10 +52,10 @@ public class Roomtype implements Serializable {
     @OneToMany(mappedBy = "roomtype")
     private Set<Room> roomSet;
 
-    public Roomtype() {
+    public RoomType() {
     }
 
-    public Roomtype(Integer id) {
+    public RoomType(Integer id) {
         this.id = id;
     }
 
@@ -102,10 +102,10 @@ public class Roomtype implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Roomtype)) {
+        if (!(object instanceof RoomType)) {
             return false;
         }
-        Roomtype other = (Roomtype) object;
+        RoomType other = (RoomType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

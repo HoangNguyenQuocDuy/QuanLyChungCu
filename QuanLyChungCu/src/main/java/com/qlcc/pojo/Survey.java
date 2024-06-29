@@ -66,10 +66,10 @@ public class Survey implements Serializable {
     private String status;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
-    private Set<Surveyresponse> surveyresponseSet;
+    private Set<SurveyResponse> surveyresponseSet;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
-    private List<Surveyquestion> surveyquestionSet;
+    private List<SurveyQuestion> surveyquestionSet;
 
     public Survey() {
     }
@@ -124,20 +124,20 @@ public class Survey implements Serializable {
     }
 
     @XmlTransient
-    public Set<Surveyresponse> getSurveyresponseSet() {
+    public Set<SurveyResponse> getSurveyresponseSet() {
         return surveyresponseSet;
     }
 
-    public void setSurveyresponseSet(Set<Surveyresponse> surveyresponseSet) {
+    public void setSurveyresponseSet(Set<SurveyResponse> surveyresponseSet) {
         this.surveyresponseSet = surveyresponseSet;
     }
 
     @XmlTransient
-    public List<Surveyquestion> getSurveyquestionSet() {
+    public List<SurveyQuestion> getSurveyquestionSet() {
         return surveyquestionSet;
     }
 
-    public void setSurveyquestionSet(List<Surveyquestion> surveyquestionSet) {
+    public void setSurveyquestionSet(List<SurveyQuestion> surveyquestionSet) {
         this.surveyquestionSet = surveyquestionSet;
     }
 

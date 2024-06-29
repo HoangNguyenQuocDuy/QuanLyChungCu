@@ -101,7 +101,7 @@ public class User implements Serializable {
     private String resetPasswordCode;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<Surveyresponse> surveyresponseSet;
+    private Set<SurveyResponse> surveyresponseSet;
     @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private Set<Feedback> feedbackSet;
@@ -201,11 +201,11 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Set<Surveyresponse> getSurveyresponseSet() {
+    public Set<SurveyResponse> getSurveyresponseSet() {
         return surveyresponseSet;
     }
 
-    public void setSurveyresponseSet(Set<Surveyresponse> surveyresponseSet) {
+    public void setSurveyresponseSet(Set<SurveyResponse> surveyresponseSet) {
         this.surveyresponseSet = surveyresponseSet;
     }
 

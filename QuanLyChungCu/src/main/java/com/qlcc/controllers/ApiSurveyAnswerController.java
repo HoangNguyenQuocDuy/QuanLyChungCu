@@ -4,8 +4,8 @@
  */
 package com.qlcc.controllers;
 
-import com.qlcc.pojo.Surveyanswer;
-import com.qlcc.pojo.Surveyresponse;
+import com.qlcc.pojo.SurveyAnswer;
+import com.qlcc.pojo.SurveyResponse;
 import com.qlcc.services.SurveyAnswerService;
 import com.qlcc.services.SurveyOptionService;
 import com.qlcc.services.SurveyQuestionService;
@@ -62,21 +62,21 @@ public class ApiSurveyAnswerController {
         params.put("surveyId", surveyId);
         params.put("userId", userId);
 
-        List<Surveyresponse> sr = surveyResponseService.getSurveys(params);
+        List<SurveyResponse> sr = surveyResponseService.getSurveys(params);
 
         int srId;
 
         if (sr != null && !sr.isEmpty()) {
             srId = sr.get(0).getId();
         } else {
-            Surveyresponse nSr = new Surveyresponse();
+            SurveyResponse nSr = new SurveyResponse();
             nSr.setSurveyId(surveyService.getSurveyById(Integer.parseInt(surveyId)));
             nSr.setUserId(userService.getUserById(Integer.parseInt(userId)));
 
             srId = surveyResponseService.addSurveyResponse(nSr);
         }
 
-        Surveyanswer sa = new Surveyanswer();
+        SurveyAnswer sa = new SurveyAnswer();
         sa.setResponseId(surveyResponseService.getSurveyResponseById(srId));
         sa.setOptionId(optionService.getSurveyOptionById(Integer.parseInt(body.get("optionId"))));
         sa.setQuestionId(questionService.getSurveyQuestionById(Integer.parseInt(body.get("questionId"))));

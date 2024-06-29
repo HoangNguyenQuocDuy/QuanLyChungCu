@@ -26,9 +26,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "surveyanswer")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Surveyanswer.findAll", query = "SELECT s FROM Surveyanswer s"),
-    @NamedQuery(name = "Surveyanswer.findById", query = "SELECT s FROM Surveyanswer s WHERE s.id = :id")})
-public class Surveyanswer implements Serializable {
+    @NamedQuery(name = "SurveyAnswer.findAll", query = "SELECT s FROM SurveyAnswer s"),
+    @NamedQuery(name = "SurveyAnswer.findById", query = "SELECT s FROM SurveyAnswer s WHERE s.id = :id")})
+public class SurveyAnswer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,18 +38,18 @@ public class Surveyanswer implements Serializable {
     private Integer id;
     @JoinColumn(name = "optionId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Surveyoption optionId;
+    private SurveyOption optionId;
     @JoinColumn(name = "questionId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Surveyquestion questionId;
+    private SurveyQuestion questionId;
     @JoinColumn(name = "responseId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Surveyresponse responseId;
+    private SurveyResponse responseId;
 
-    public Surveyanswer() {
+    public SurveyAnswer() {
     }
 
-    public Surveyanswer(Integer id) {
+    public SurveyAnswer(Integer id) {
         this.id = id;
     }
 
@@ -61,27 +61,27 @@ public class Surveyanswer implements Serializable {
         this.id = id;
     }
 
-    public Surveyoption getOptionId() {
+    public SurveyOption getOptionId() {
         return optionId;
     }
 
-    public void setOptionId(Surveyoption optionId) {
+    public void setOptionId(SurveyOption optionId) {
         this.optionId = optionId;
     }
 
-    public Surveyquestion getQuestionId() {
+    public SurveyQuestion getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Surveyquestion questionId) {
+    public void setQuestionId(SurveyQuestion questionId) {
         this.questionId = questionId;
     }
 
-    public Surveyresponse getResponseId() {
+    public SurveyResponse getResponseId() {
         return responseId;
     }
 
-    public void setResponseId(Surveyresponse responseId) {
+    public void setResponseId(SurveyResponse responseId) {
         this.responseId = responseId;
     }
 
@@ -95,10 +95,10 @@ public class Surveyanswer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Surveyanswer)) {
+        if (!(object instanceof SurveyAnswer)) {
             return false;
         }
-        Surveyanswer other = (Surveyanswer) object;
+        SurveyAnswer other = (SurveyAnswer) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

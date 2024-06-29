@@ -4,7 +4,7 @@
  */
 package com.qlcc.repositories.impl;
 
-import com.qlcc.pojo.Roomtype;
+import com.qlcc.pojo.RoomType;
 import com.qlcc.repositories.RoomTypeRepository;
 import java.util.List;
 import org.hibernate.Session;
@@ -25,10 +25,10 @@ public class RoomTypeRepositoryImpl implements RoomTypeRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Roomtype> getRoomtypes() {
+    public List<RoomType> getRoomtypes() {
         Session s = factory.getObject().getCurrentSession();
         
-        return s.createQuery("FROM Roomtype", Roomtype.class).list();
+        return s.createQuery("FROM RoomType", RoomType.class).list();
     }
 
 }

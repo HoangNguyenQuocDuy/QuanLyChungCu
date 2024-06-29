@@ -4,7 +4,7 @@
  */
 package com.qlcc.services;
 
-import com.qlcc.pojo.Roomtype;
+import com.qlcc.pojo.RoomType;
 import java.util.List;
 
 /**
@@ -12,5 +12,5 @@ import java.util.List;
  * @author DELL
  */
 public interface RoomTypeService {
-        List<Roomtype> getRoomtypes();
+        List<RoomType> getRoomtypes();
 }

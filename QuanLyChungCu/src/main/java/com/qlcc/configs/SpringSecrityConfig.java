@@ -138,8 +138,8 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    //Make room rental invoice at 9am on the 25th of each month
-    @Scheduled(cron = "0 47 18 14 * ?")
+    //Make room rental invoice at 6pm on the 25th of each month
+    @Scheduled(cron = "0 59 18 25 * ?")
     public void createInvoices() {
         Map<String, String> paramsRoom = new HashMap<>();
         paramsRoom.put("status", "Rented");

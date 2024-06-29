@@ -15,15 +15,15 @@
     <class>com.qlcc.pojo.Payment</class>
     <class>com.qlcc.pojo.ResidentOrder</class>
     <class>com.qlcc.pojo.UserOrder</class>
-    <class>com.qlcc.pojo.Roomtype</class>
     <class>com.qlcc.pojo.Package</class>
     <class>com.qlcc.pojo.Userorder</class>
     <class>com.qlcc.pojo.Invoicetype</class>
-    <class>com.qlcc.pojo.Surveyanswer</class>
-    <class>com.qlcc.pojo.Surveyresponse</class>
-    <class>com.qlcc.pojo.Surveyquestion</class>
-    <class>com.qlcc.pojo.Surveyoption</class>
     <class>com.qlcc.pojo.ParkingRight</class>
     <class>com.qlcc.pojo.EntryRight</class>
+    <class>com.qlcc.pojo.RoomType</class>
+    <class>com.qlcc.pojo.SurveyAnswer</class>
+    <class>com.qlcc.pojo.SurveyOption</class>
+    <class>com.qlcc.pojo.SurveyQuestion</class>
+    <class>com.qlcc.pojo.SurveyResponse</class>
   </persistence-unit>
 </persistence>

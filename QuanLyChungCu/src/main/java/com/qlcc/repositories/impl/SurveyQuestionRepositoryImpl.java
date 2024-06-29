@@ -4,7 +4,7 @@
  */
 package com.qlcc.repositories.impl;
 
-import com.qlcc.pojo.Surveyquestion;
+import com.qlcc.pojo.SurveyQuestion;
 import com.qlcc.repositories.SurveyQuestionRepository;
 import com.qlcc.repositories.SurveyRepository;
 import java.util.List;
@@ -28,9 +28,9 @@ public class SurveyQuestionRepositoryImpl implements SurveyQuestionRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Surveyquestion> getSurveyQuestions(Map<String, String> params) {
+    public List<SurveyQuestion> getSurveyQuestions(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
-        String hql = "FROM Surveyquestion sq WHERE 1=1";
+        String hql = "FROM SurveyQuestion sq WHERE 1=1";
 
         if (params.containsKey("surveyId") && !params.get("surveyId").equals("")) {
             hql += " AND sq.surveyId.id = :surveyId";
@@ -54,7 +54,7 @@ public class SurveyQuestionRepositoryImpl implements SurveyQuestionRepository {
     }
 
     @Override
-    public int addOrUpdate(Surveyquestion surveyQuestion) {
+    public int addOrUpdate(SurveyQuestion surveyQuestion) {
         Session s = factory.getObject().getCurrentSession();
 
         if (surveyQuestion.getId() != null) {
@@ -66,10 +66,10 @@ public class SurveyQuestionRepositoryImpl implements SurveyQuestionRepository {
     }
 
     @Override
-    public Surveyquestion getSurveyQuestionById(int id) {
+    public SurveyQuestion getSurveyQuestionById(int id) {
         Session s = factory.getObject().getCurrentSession();
 
-        return s.get(Surveyquestion.class, id);
+        return s.get(SurveyQuestion.class, id);
     }
 
     @Override

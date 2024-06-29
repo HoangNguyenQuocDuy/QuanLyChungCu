@@ -61,7 +61,7 @@ public class Room implements Serializable {
     private String image;
     @JoinColumn(name = "roomType", referencedColumnName = "id")
     @ManyToOne
-    private Roomtype roomtype;
+    private RoomType roomtype;
     @JsonIgnore
     @OneToMany(mappedBy = "room")
     private Set<Invoice> invoiceSet;
@@ -112,11 +112,11 @@ public class Room implements Serializable {
         this.image = image;
     }
 
-    public Roomtype getRoomtype() {
+    public RoomType getRoomtype() {
         return roomtype;
     }
 
-    public void setRoomtype(Roomtype roomtype) {
+    public void setRoomtype(RoomType roomtype) {
         this.roomtype = roomtype;
     }
 

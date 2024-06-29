@@ -4,7 +4,7 @@
  */
 package com.qlcc.repositories;
 
-import com.qlcc.pojo.Surveyoption;
+import com.qlcc.pojo.SurveyOption;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +13,11 @@ import java.util.Map;
  * @author DELL
  */
 public interface SurveyOptionRepository {
-    List<Surveyoption> getSurveyOptions(Map<String, String> params); 
+    List<SurveyOption> getSurveyOptions(Map<String, String> params); 
     
-    int addOrUpdate(Surveyoption surveyOption);
+    int addOrUpdate(SurveyOption surveyOption);
 
-    Surveyoption getSurveyOptionById(int id);
+    SurveyOption getSurveyOptionById(int id);
     
     void deleteSurveyOption(int id);
 }

@@ -4,8 +4,8 @@
  */
 package com.qlcc.dto;
 
-import com.qlcc.pojo.Surveyoption;
-import com.qlcc.pojo.Surveyquestion;
+import com.qlcc.pojo.SurveyOption;
+import com.qlcc.pojo.SurveyQuestion;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +19,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question {
-    private Surveyquestion question;
-    private List<Surveyoption> options;
+    private SurveyQuestion question;
+    private List<SurveyOption> options;
 }

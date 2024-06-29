@@ -4,7 +4,7 @@
  */
 package com.qlcc.services.impl;
 
-import com.qlcc.pojo.Surveyanswer;
+import com.qlcc.pojo.SurveyAnswer;
 import com.qlcc.repositories.SurveyAnswerRepository;
 import com.qlcc.services.SurveyAnswerService;
 import java.util.List;
@@ -23,12 +23,12 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService{
     private SurveyAnswerRepository surveyAnswerRepo;
 
     @Override
-    public List<Surveyanswer> getSurveyAnswers(Map<String, String> params) {
+    public List<SurveyAnswer> getSurveyAnswers(Map<String, String> params) {
         return surveyAnswerRepo.getSurveyAnswers(params);
     }
 
     @Override
-    public void addSurveyAnswer(Surveyanswer surveyAnswer) {
+    public void addSurveyAnswer(SurveyAnswer surveyAnswer) {
 
         surveyAnswerRepo.addSurveyAnswer(surveyAnswer);
     }
